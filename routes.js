@@ -2,15 +2,15 @@
 const express = require('express');
 const router = express.Router();
 
-const { authCtrl, recommSongsCtrl, usersCtrl, worshipSetsCtrl } = require('./controllers');
+const { authCtrl, songsCtrl, usersCtrl, setsCtrl } = require('./controllers');
 
 // ----- user and auth routes -----
 router.use('/login', authCtrl);
 router.use('/users', usersCtrl);
 
 // ----- api routes -----
-router.use('/api/recommsongs', recommSongsCtrl);
-router.use('/api/review/sets', worshipSetsCtrl);
+router.use('/api/recommsongs', songsCtrl);
+router.use('/api/review/sets', setsCtrl);
 
 // ---- views routes -----
 router.get('/', (req, res) => {
