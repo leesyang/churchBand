@@ -1,7 +1,7 @@
 'use strict';
-const { router: authCtrl } = require('./authCtrl');
-const { router: songsCtrl } = require('./songsCtrl');
-const { router: usersCtrl } = require('./usersCtrl');
-const { router: setsCtrl } = require('./setsCtrl');
+const authCtrl = require('./authCtrl');
+const setsCtrl = require('./setsCtrl');
+const songsCtrl = require('./songsCtrl');
+const usersCtrl = require('./usersCtrl');
 
-module.exports = { authCtrl, songsCtrl, usersCtrl, setsCtrl };
+module.exports = { authCtrl, setsCtrl, songsCtrl, usersCtrl };

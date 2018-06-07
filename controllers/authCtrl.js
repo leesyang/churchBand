@@ -1,11 +1,12 @@
 'use strict';
-const express = require('express');
-const router = express.Router();
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
+// ----- auth strategies -----
+const { localStrategy } = require('../config/passport');
 
-router.use('/', (req,res) => {
-    console.log('getting authCtrl');
-});
+const authCtrl = {};
 
-module.exports = { router };
+authCtrl.console = function(res, req) {
+    console.log('auth control working');
+};
+
+
+module.exports = authCtrl;

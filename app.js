@@ -2,15 +2,18 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
-const { DATABASE_URL, PORT } = require('./config/config');
+// ----- constants -----
+const { DATABASE_URL, PORT } = require('./config/constants');
+
+// ----- imports -----
 const { router } = require('./routes');
 
 const app = express();
 
 // ----- http logging -----
 app.use(morgan('common'));
-
 
 // ----- routes =====
 app.use('/', router);
@@ -24,10 +27,9 @@ app.use(function (req, res, next) {
       return res.send(204);
     }
     next();
-  });
+});
 
-//
-  
+// ----- server -----
 let server;
 
 function runServer(databaseUrl, port = PORT) {
@@ -64,5 +66,5 @@ function closeServer() {
 };
 
 if (require.main === module) {
-runServer(DATABASE_URL).catch(err => console.error(err));
+  runServer(DATABASE_URL).catch(err => console.error(err));
 }

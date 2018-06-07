@@ -1,11 +1,9 @@
 'use strict';
-const express = require('express');
-const router = express.Router();
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
+const { Set } = require('../models');
+const setsCtrl = {};
 
-router.get('/', (req,res) => {
-    console.log('getting worshipSetsCtrl');
-});
+setsCtrl.console = function (req, res) {
+    console.log('sets controller is working');
+}
 
-module.exports = { router };
+module.exports = setsCtrl;

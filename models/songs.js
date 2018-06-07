@@ -5,23 +5,31 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const songCommentsSchema = new Schema({
-    addedby: {type: ObjectId, ref:'User'},
+    addedby: { type: ObjectId, ref:'User' },
+    dateAdded: { type: Date, default: Date.now() },
     comment: String,
 });
 
-const SongSchema = new Schema({
+const songLinkSchema = new Schema({
+    youtube: String,
+    spotify: String,
+    other: String,
+    _id: false,
+    id: false,
+});
+
+const songSchema = new Schema({
+    dateAdded: { type: Date, default: Date.now() },
+    addedBy: { type: ObjectId, ref:'User' },
     artist: String,
     title: String,
-    dateAdded: {type: Date, default: Date.now()},
-    addedBy: {type: ObjectId, ref:'User'},
-    youtubeLink: String,
-    spotifyLink: String,
+    links: songLinkSchema,
     lyrics: String,
-    rating: Number,
-    comments: [songCommentsSchema]
+    rank: Number,
+    comments: [ songCommentsSchema ]
 });
 
 
-const Song = mongoose.model('song', SongSchema);
+const Song = mongoose.model('Song', songSchema);
 
 module.exports = { Song };

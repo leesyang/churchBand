@@ -1,11 +1,8 @@
 'use strict';
-const express = require('express');
-const router = express.Router();
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
+const songsCtrl = {};
 
-router.get('/', (req,res) => {
-    console.log('getting recommSongs');
-});
+songsCtrl.console = function (req, res) {
+    console.log('songs controller is working');
+}
 
-module.exports = { router };
+module.exports = songsCtrl;

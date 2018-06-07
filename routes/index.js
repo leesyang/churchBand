@@ -1,19 +1,31 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
+const passport = require('passport')
 
-const { authCtrl, songsCtrl, usersCtrl, setsCtrl } = require('./controllers');
+// ----- auth imports -----
+const { localStrategy, jwtStrategy } = require('../config/passport');
+
+// ----- activate authentication -----
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+// ---- import routes -----
+const { router: authRoute } = require('./authRoute');
+const { router: songsRoute } = require('./songsRoute');
+const { router: usersRoute } = require('./usersRoute');
+const { router: setsRoute } = require('./setsRoute');
 
 // ----- user and auth routes -----
-router.use('/login', authCtrl);
-router.use('/users', usersCtrl);
+router.use('/auth', authRoute); // serves a JWT, requires login info, uses localauth
+router.use('/users', usersRoute); // signup a new user
 
 // ----- api routes -----
-router.use('/api/recommsongs', songsCtrl);
-router.use('/api/review/sets', setsCtrl);
+router.use('/api/songs', songsRoute); // access songs database, need jwt
+router.use('/api/review/sets', setsRoute); // access sets database, need jwt
 
 // ---- views routes -----
-router.get('/', (req, res) => {
+/* router.get('/', (req, res) => {
     console.log('generate a view');
     res.send('login page');
 });
@@ -46,6 +58,6 @@ router.get('/review', (req, res) => {
 router.get('/about', (req, res) => {
     console.log('generate a view');
     res.send('about page');
-});
+}); */
 
 module.exports = { router };
