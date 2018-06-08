@@ -7,7 +7,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const songCommentsSchema = new Schema({
     addedby: { type: ObjectId, ref:'User' },
     dateAdded: { type: Date, default: Date.now() },
-    comment: String,
+    comment: String
 });
 
 const songLinkSchema = new Schema({
@@ -29,6 +29,9 @@ const songSchema = new Schema({
     comments: [ songCommentsSchema ]
 });
 
+songSchema.methods.serialize = function () {
+    return this.comments;
+}
 
 const Song = mongoose.model('Song', songSchema);
 
