@@ -11,6 +11,9 @@ const { localStrategy, jwtStrategy } = require('../config/passport');
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
+// ----- cookies -----
+router.use(cookieParser());
+
 // ---- import routes -----
 const { router: authRoute } = require('./authRoute');
 const { router: songsRoute } = require('./songsRoute');
@@ -26,7 +29,8 @@ router.use('/api/songs', songsRoute); // access songs database, need jwt
 router.use('/api/review/sets', setsRoute); // access sets database, need jwt
 
 // ---- views routes -----
-/* router.get('/', cookieParser, (req, res) => {
+router.get('/', (req, res) => {
+    console.log(req.cookies);
     console.log('generate a view');
     res.send('login page');
 });
@@ -59,6 +63,6 @@ router.get('/review', (req, res) => {
 router.get('/about', (req, res) => {
     console.log('generate a view');
     res.send('about page');
-}); */
+});
 
 module.exports = { router };

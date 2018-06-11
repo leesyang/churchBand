@@ -31,11 +31,13 @@ const createAuthToken = function(user) {
 /// --- login with username and password ---
 router.post('/login', localAuth, (req, res) => {
     let authToken = createAuthToken(req.user);
-    res.json({ authToken: authToken });
+    res.cookie('authToken', authToken);
+    res.send('logged in');
 })
 /// --- get a new token with current token ---
-router.post('/refresh', jwtAuth, (req, res) => {
-    console.log('refresh token working');
+router.get('/refresh', jwtAuth, (req, res) => {
+    console.log(req.user);
+    res.send('refresh token working');
 })
 
 module.exports = { router };

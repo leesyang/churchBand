@@ -18,7 +18,6 @@ const localStrategy = new LocalStrategy(
     User.findOne({ username: username })
       .then(_user => {
         user = _user;
-        console.log(user);
         if (!user) {
           return Promise.reject({
             reason: 'LoginError',
@@ -44,12 +43,22 @@ const localStrategy = new LocalStrategy(
       });
   });
 
+// ----- cookie extractor -----
+const cookieExtractor = function(req) {
+    var token = null;
+    if (req && req.cookies)
+    {
+        token = req.cookies['authToken'];
+    }
+    return token;
+};
+
 // ----- jwt strategy -----
 const jwtStrategy = new JwtStrategy(
     {
         secretOrKey: JWT_SECRET,
         // Look for the JWT as a Bearer auth header
-        jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
+        jwtFromRequest: cookieExtractor,
         // Only allow HS256 tokens - the same as the ones we issue
         algorithms: ['HS256']
       },

@@ -11,6 +11,11 @@ const skillSchema = new Schema({
     yearsOfExp: Number,
 });
 
+const likesSchema = new Schema({
+    songs: String,
+    sets: String,
+})
+
 const profileSchema = new Schema({
     experience: {type: Array},
     yearsOnBand: Number,
@@ -34,7 +39,7 @@ const profileSchema = new Schema({
         title: {type: String, default: ''},
         releaseYear: Number,
         youtubelink: String,
-    }
+    },
 })
 
 const userSchema = new Schema({
@@ -53,7 +58,8 @@ userSchema.methods.serialize = function() {
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
-        profilePicture: this.profilePicture
+        profilePicture: this.profilePicture,
+        id: this._id
     };
 };
 

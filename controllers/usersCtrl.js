@@ -10,7 +10,7 @@ usersCtrl.console = function (req, res) {
 };
 
 usersCtrl.addNewUser = function (req, res) {
-    let { username, password, firstName, lastName, email } = req.body;
+  let { username, password, firstName, lastName, email } = req.body;
 
   firstName = firstName.trim();
   lastName = lastName.trim();
@@ -35,7 +35,8 @@ usersCtrl.addNewUser = function (req, res) {
       firstName,
       lastName,
       email
-    });
+    })
+    .catch(err => console.log(err));
   })
   .then(user => {
     return res.status(201);

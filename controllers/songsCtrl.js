@@ -8,10 +8,6 @@ const { Song } = require('../models');
 const songsCtrl = {};
 
 // ----- functions -----
-songsCtrl.console = function (req, res) {
-    console.log('songs controller is working');
-}
-
 /// -- get list of songs --
 songsCtrl.getListOfSongs = function(req, res) {
     Song.find({})
@@ -40,8 +36,11 @@ songsCtrl.addNewSong = function(req, res) {
 songsCtrl.addNewComment = function(req, res) {
     const newPost = req.body;
     const comment = {
-        addedBy: req.body.addedBy, comment: req.body.comment
+        addedBy: req.user.id,
+        comment: req.body.comment,
     };
+
+    console.log(comment);
     
     Song.findOneAndUpdate({_id: req.params.songId},{$push:{comments: comment}})
     .then(post => res.status(201).end())
@@ -55,22 +54,53 @@ songsCtrl.getComments = function(req, res) {
     .catch(err => console.log(err));
 };
 
-// -- update a comment --
+// -- update a comment, validate that user owns comment --
 songsCtrl.updateComment = function(req, res) {
+    let updatedRequestFrom = req.user.id;
+
     Song.findById(req.params.songId, function (err, song){
         let subDoc = song.comments.id(req.body.commentId);
-        subDoc.$set({comment: req.body.comment});
-        subDoc.$set({dateAdded: Date.now()});
-        song.save()
-        .then(function(updatedComment) {
-            res.send(updatedComment.serialize());
-        })
-        .catch(err => console.log(err));
+        let commentOwner = subDoc.addedBy;
+
+        if( commentOwner == updatedRequestFrom ){
+            subDoc.$set({comment: req.body.comment});
+            subDoc.$set({dateAdded: Date.now()});
+            song.save()
+            .then(function(updatedComment) {
+                res.send(updatedComment.serialize());
+            })
+            .catch(err => console.log(err));
+        }
+        else {
+            res.json({
+                code: 422,
+                reason: 'Denied',
+                message: 'Unable to modify. Not Authorized.',
+            })
+        }
     })
 }
 
 songsCtrl.deleteComment = function(req, res) {
-    console.log('delete song');
+    let deleteRequestFrom = req.user.id;
+
+    Song.findById(req.params.songId, function (err, song){
+        let subDoc = song.comments.id(req.body.commentId);
+        let commentOwner = subDoc.addedBy;
+
+        if( commentOwner == deleteRequestFrom ){
+            subDoc.remove();
+            song.save().catch(err => console.log(err));
+            res.status(204).end();
+        }
+        else {
+            res.json({
+                code: 422,
+                reason: 'Denied',
+                message: 'Unable to delete. Not Authorized.',
+            })
+        }
+    })
 }
 
 module.exports = songsCtrl;

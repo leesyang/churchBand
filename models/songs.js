@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const songCommentsSchema = new Schema({
-    addedby: { type: ObjectId, ref:'User' },
+    addedBy: { type: ObjectId, ref:'User' },
     dateAdded: { type: Date, default: Date.now() },
     comment: String
 });
@@ -31,7 +31,7 @@ const songSchema = new Schema({
 
 songSchema.methods.serialize = function () {
     return this.comments;
-}
+};
 
 const Song = mongoose.model('Song', songSchema);
 
