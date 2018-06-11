@@ -2,9 +2,8 @@
 // ----- imports -----
 const { checkReq } = require('../common/common');
 
-// ----- exports -----
-
-const newUserInputCheck = function(req, res, next){
+// ----- users routes -----
+const newUserInputCheck = function(req, res, next) {
     const fieldIs = {
         required: ['username', 'password'],
         string: ['username', 'password', 'firstName', 'lastName'],
@@ -32,9 +31,10 @@ const newUserInputCheck = function(req, res, next){
       };
 
       next();
-}
+};
 
-const newSongFieldsCheck = function(req, res, next){
+// ----- songs route -----
+const newSongFieldsCheck = function(req, res, next) {
   const fieldIs = {
       required: ['artist', 'title']
   };
@@ -45,6 +45,22 @@ const newSongFieldsCheck = function(req, res, next){
     }
 
     next();
-}
+};
 
-module.exports = { newUserInputCheck, newSongFieldsCheck };
+const updateComFieldCheck = function(req, res, next) {
+  const fieldIs = {
+    required: ['commentId', 'addedBy', 'comment']
+  };
+
+  const isMissing = checkReq.missingFields(fieldIs.required, req.body);
+  if (isMissing) {
+    return res.status(isMissing.code).json(isMissing);
+  }
+
+  next();
+};
+
+module.exports = { 
+  newUserInputCheck, 
+  newSongFieldsCheck, 
+  updateComFieldCheck };

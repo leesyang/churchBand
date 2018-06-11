@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport')
+const cookieParser = require('cookie-parser');
 
 // ----- auth imports -----
 const { localStrategy, jwtStrategy } = require('../config/passport');
@@ -25,7 +26,7 @@ router.use('/api/songs', songsRoute); // access songs database, need jwt
 router.use('/api/review/sets', setsRoute); // access sets database, need jwt
 
 // ---- views routes -----
-/* router.get('/', (req, res) => {
+/* router.get('/', cookieParser, (req, res) => {
     console.log('generate a view');
     res.send('login page');
 });

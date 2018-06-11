@@ -7,15 +7,16 @@ const jsonParser = bodyParser.json();
 mongoose.Promise = global.Promise;
 
 // ----- authentication -----
-const { jwtAuth } = require('../middlewares/auth');
+const { isCurrentUser, jwtAuth } = require('../middlewares/auth');
 
 // ----- controllers -----
 const { songsCtrl } = require('../controllers');
 
 // ----- middleware -----
 router.use(jsonParser);
-const { newSongFieldsCheck } = require('../middlewares');
-
+const { 
+    newSongFieldsCheck, 
+    updateComFieldCheck } = require('../middlewares/fieldReqCheck');
 
 // ----- routes -----
 // -- get a list of songs --
@@ -25,9 +26,15 @@ router.get('/', songsCtrl.getListOfSongs);
 router.post('/', newSongFieldsCheck, songsCtrl.addNewSong);
 
 // -- add a new comment to a song --
-router.post('/:songId/comments', songsCtrl.addNewComment);
+router.post('/:songId/comments', songsCtrl.addNewComment); 
 
 // -- get all comments from a song --
 router.get('/:songId/comments', songsCtrl.getComments);
+
+// -- update comment of a song --
+router.put('/:songId/comments', updateComFieldCheck, songsCtrl.updateComment);
+
+// -- delete comment of a song, only for user who posted song --
+router.delete('/:songId/comments', isCurrentUser, songsCtrl.deleteComment);
 
 module.exports = { router };

@@ -14,7 +14,7 @@ const { User } = require('../models');
 
 // ----- middleware -----
 router.use(jsonParser);
-const { newUserInputCheck } = require('../middlewares');
+const { newUserInputCheck } = require('../middlewares/fieldReqCheck');
 
 // ----- routes -----
 // -- create new user --

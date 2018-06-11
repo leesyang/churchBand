@@ -44,12 +44,33 @@ songsCtrl.addNewComment = function(req, res) {
     };
     
     Song.findOneAndUpdate({_id: req.params.songId},{$push:{comments: comment}})
-    .then(post => res.status(201).end());
-}
+    .then(post => res.status(201).end())
+    .catch(err => console.log(err));
+};
 
+// -- get list of comments --
 songsCtrl.getComments = function(req, res) {
     Song.findById({_id: req.params.songId})
-    .then(post => res.status(200).json(post.serialize()));
+    .then(post => res.status(200).json(post.serialize()))
+    .catch(err => console.log(err));
+};
+
+// -- update a comment --
+songsCtrl.updateComment = function(req, res) {
+    Song.findById(req.params.songId, function (err, song){
+        let subDoc = song.comments.id(req.body.commentId);
+        subDoc.$set({comment: req.body.comment});
+        subDoc.$set({dateAdded: Date.now()});
+        song.save()
+        .then(function(updatedComment) {
+            res.send(updatedComment.serialize());
+        })
+        .catch(err => console.log(err));
+    })
+}
+
+songsCtrl.deleteComment = function(req, res) {
+    console.log('delete song');
 }
 
 module.exports = songsCtrl;
