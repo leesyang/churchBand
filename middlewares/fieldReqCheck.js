@@ -72,8 +72,24 @@ const deleteComFieldCheck = function(req, res, next) {
 
   next();
 };
+
+const newSetFieldsCheck = function(req, res, next) {
+  const fieldIs = {
+    required: ['eventDate', 'mainLead', 'file', 'bandMembers']
+  };
+
+  const isMissing = checkReq.missingFields(fieldIs.required, req.body);
+  if (isMissing) {
+    return res.status(isMissing.code).json(isMissing);
+  }
+
+  next();
+};
+
+
 module.exports = { 
   newUserInputCheck, 
   newSongFieldsCheck, 
   updateComFieldCheck,
-  deleteComFieldCheck };
+  deleteComFieldCheck,
+  newSetFieldsCheck };

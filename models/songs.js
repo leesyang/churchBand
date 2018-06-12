@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const songCommentsSchema = new Schema({
+// ----- imports -----
+const { User } = require('./users');
+
+// ----- song schema -----
+const songCommentSchema = new Schema({
     addedBy: { type: ObjectId, ref:'User' },
     dateAdded: { type: Date, default: Date.now() },
     comment: String
@@ -26,10 +30,10 @@ const songSchema = new Schema({
     links: songLinkSchema,
     lyrics: String,
     rank: Number,
-    comments: [ songCommentsSchema ]
+    comments: [ songCommentSchema ]
 });
 
-songSchema.methods.serialize = function () {
+songSchema.methods.commentsOnly = function () {
     return this.comments;
 };
 

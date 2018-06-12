@@ -34,10 +34,12 @@ router.post('/login', localAuth, (req, res) => {
     res.cookie('authToken', authToken);
     res.send('logged in');
 })
+
+/*
 /// --- get a new token with current token ---
 router.get('/refresh', jwtAuth, (req, res) => {
     console.log(req.user);
     res.send('refresh token working');
-})
+}) */
 
 module.exports = { router };

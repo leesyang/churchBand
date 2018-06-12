@@ -25,7 +25,7 @@ const {
 router.get('/', songsCtrl.getListOfSongs);
 
 // -- add a new song --
-router.post('/', newSongFieldsCheck, songsCtrl.addNewSong);
+router.post('/', jwtAuth, newSongFieldsCheck, songsCtrl.addNewSong);
 
 // -- add a new comment to a song --
 router.post('/:songId/comments', jwtAuth, songsCtrl.addNewComment); 

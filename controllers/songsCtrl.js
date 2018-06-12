@@ -7,19 +7,27 @@ const { Song } = require('../models');
 // ----- exports -----
 const songsCtrl = {};
 
+// ----- common functions -----
+// -- populate user --
+const filterUserInfo = '-password -firstName -lastName -email -__v';
+
 // ----- functions -----
 /// -- get list of songs --
 songsCtrl.getListOfSongs = function(req, res) {
     Song.find({})
-        .then(_res => res.json(_res))
-        .catch((err) => console.log(err));
+    .populate('addedBy', filterUserInfo)
+    .populate('comments.addedBy', filterUserInfo)
+    .then(_res => res.status(200).json(_res))
+    .catch((err) => console.log(err));
 };
 
 // -- post a new songs --
 songsCtrl.addNewSong = function(req, res) {
-    const newSongPost = req.body;
+    let newSongPost = req.body;
+    console.log(req.user);
 
-    const song = new Song({
+    let song = new Song({
+        addedBy: req.user.id,
         artist: req.body.artist,
         title: req.body.title,
         links: {
@@ -50,7 +58,8 @@ songsCtrl.addNewComment = function(req, res) {
 // -- get list of comments --
 songsCtrl.getComments = function(req, res) {
     Song.findById({_id: req.params.songId})
-    .then(post => res.status(200).json(post.serialize()))
+    .populate('comments.addedBy', '-password -firstName -lastName -email -__v')
+    .then(post => res.status(200).json(post))
     .catch(err => console.log(err));
 };
 
@@ -67,7 +76,7 @@ songsCtrl.updateComment = function(req, res) {
             subDoc.$set({dateAdded: Date.now()});
             song.save()
             .then(function(updatedComment) {
-                res.send(updatedComment.serialize());
+                res.send(updatedComment.commentsOnly());
             })
             .catch(err => console.log(err));
         }
