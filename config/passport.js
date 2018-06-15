@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
+const passport = require('passport');
 mongoose.Promise = global.Promise;
 
 // ----- constants -----
@@ -11,9 +11,22 @@ const { JWT_SECRET, JWT_EXPIRY } = require('./constants');
 // ----- imports -----
 const { User } = require('../models');
 
+// ----- serializing/deserializing user login -----
+passport.serializeUser(function(user, cb) {
+    cb(null, user.id);
+  });
+  
+  passport.deserializeUser(function(id, cb) {
+    User.findById(id, function (err, user) {
+      if (err) { return cb(err); }
+      cb(null, user);
+    });
+  });
+
 // ----- local strategy -----
 const localStrategy = new LocalStrategy(
-    function (username, password, callback) {
+  { passReqToCallback: true },
+    function (req, username, password, callback) {
     let user;
     User.findOne({ username: username })
       .then(_user => {
@@ -21,7 +34,7 @@ const localStrategy = new LocalStrategy(
         if (!user) {
           return Promise.reject({
             reason: 'LoginError',
-            message: 'Incorrect username or password'
+            message: 'Incorrect username'
           });
         }
         return user.validatePassword(password);
@@ -30,16 +43,16 @@ const localStrategy = new LocalStrategy(
         if (!isValid) {
           return Promise.reject({
             reason: 'LoginError',
-            message: 'Incorrect username or password'
+            message: 'Incorrect password'
           });
         }
         return callback(null, user.serialize());
       })
       .catch(err => {
-        if (err.reason === 'LoginError') {
-          return callback(null, false, err);
+         if (err.reason === 'LoginError') {
+          return callback(null, false, req.flash('loginMessage', err.message));
         }
-        return callback(err, false);
+        return callback(null, false, req.flash('loginMessage', err.message));
       });
   });
 
@@ -66,5 +79,8 @@ const jwtStrategy = new JwtStrategy(
         done(null, payload.user);
       }
 );
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 module.exports = { localStrategy, jwtStrategy };

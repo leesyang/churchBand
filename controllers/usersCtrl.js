@@ -39,11 +39,16 @@ usersCtrl.addNewUser = function (req, res) {
     .catch(err => console.log(err));
   })
   .then(user => {
-    return res.status(201);
+    return res.redirect('/');
   })
   .catch(err => {
-    console.log(err);
-    res.json(err);
+    if (err.reason === 'ValidationError') {
+      req.flash('registerMessage', err.message);
+      res.redirect('/register');
+    }
+    else {
+      res.status(500).send('Internal Server Error')
+    }
   });
 };
 

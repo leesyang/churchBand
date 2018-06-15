@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-const passport = require('passport');
+const urlParser = bodyParser.urlencoded({ type: 'application/x-www-form-urlencoded', extended: true });
 const jwt = require('jsonwebtoken');
 
 // ----- constants -----
@@ -17,6 +17,7 @@ const { authCtrl } = require('../controllers');
 
 // ----- middleware -----
 router.use(jsonParser);
+router.use(urlParser);
 
 // ----- json web token -----
 /// --- generates a jwt token ---
@@ -29,11 +30,11 @@ const createAuthToken = function(user) {
 
 // ----- routes -----
 /// --- login with username and password ---
-router.post('/login', localAuth, (req, res) => {
+router.post('/login', urlParser, localAuth, (req, res) => {
     let authToken = createAuthToken(req.user);
     res.cookie('authToken', authToken);
-    res.send('logged in');
-})
+    res.status(200).end();
+});
 
 /*
 /// --- get a new token with current token ---

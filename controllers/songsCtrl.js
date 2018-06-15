@@ -6,26 +6,34 @@ const { Song } = require('../models');
 
 // ----- exports -----
 const songsCtrl = {};
+const songsUtil = {};
 
 // ----- common functions -----
 // -- populate user --
 const filterUserInfo = '-password -firstName -lastName -email -__v';
 
-// ----- functions -----
-/// -- get list of songs --
-songsCtrl.getListOfSongs = function(req, res) {
-    Song.find({})
+// ----- utility functions -----
+songsUtil.getListOfSongsPromise = function() {
+    return Song.find({})
     .populate('addedBy', filterUserInfo)
     .populate('comments.addedBy', filterUserInfo)
+};
+
+songsUtil.getCommentsPromise = function(songId) {
+    return Song.findById({_id: songId})
+    .populate('comments.addedBy', '-password -firstName -lastName -email -__v')
+};
+
+// ----- route controllers -----
+// -- get list of songs --
+songsCtrl.getListOfSongs = function(req, res) {
+    songsUtil.getListOfSongsPromise()
     .then(_res => res.status(200).json(_res))
     .catch((err) => console.log(err));
 };
 
 // -- post a new songs --
 songsCtrl.addNewSong = function(req, res) {
-    let newSongPost = req.body;
-    console.log(req.user);
-
     let song = new Song({
         addedBy: req.user.id,
         artist: req.body.artist,
@@ -35,8 +43,14 @@ songsCtrl.addNewSong = function(req, res) {
             spotify: req.body.spotify,
         }
     });
-    song.save((err, res) => {
-        console.log(res);
+    song.save((err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send({
+                Message: err.message
+            });
+        }
+        res.status(201).send(result);
     })
 };
 
@@ -57,8 +71,7 @@ songsCtrl.addNewComment = function(req, res) {
 
 // -- get list of comments --
 songsCtrl.getComments = function(req, res) {
-    Song.findById({_id: req.params.songId})
-    .populate('comments.addedBy', '-password -firstName -lastName -email -__v')
+    songsUtil.getCommentsPromise(req.params.songId)
     .then(post => res.status(200).json(post))
     .catch(err => console.log(err));
 };
@@ -112,4 +125,5 @@ songsCtrl.deleteComment = function(req, res) {
     })
 }
 
-module.exports = songsCtrl;
+module.exports = { songsCtrl, songsUtil };
+

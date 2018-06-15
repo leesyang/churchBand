@@ -4,6 +4,7 @@ const { checkReq } = require('../common/common');
 
 // ----- users routes -----
 const newUserInputCheck = function(req, res, next) {
+  console.log(req.body);
     const fieldIs = {
         required: ['username', 'password'],
         string: ['username', 'password', 'firstName', 'lastName'],
@@ -16,7 +17,8 @@ const newUserInputCheck = function(req, res, next) {
     
       const isMissing = checkReq.missingFields(fieldIs.required, req.body);
       if (isMissing) {
-        return res.status(isMissing.code).json(isMissing);
+        req.flash('registerMessage', isMissing.message)
+        return res.redirect('/register');
       }
 
       const isNonString = checkReq.nonStringFields(fieldIs.string, req.body);
@@ -26,7 +28,8 @@ const newUserInputCheck = function(req, res, next) {
       const fieldError = [isNonString, hasWhitespace, improperlySized];
       for (let i = 0; i < fieldError.length; i++) {
         if(fieldError[i]) {
-          return res.status(fieldError[i].code).json(fieldError[i]);
+          req.flash('registerMessage', fieldError[i].message);
+          return res.redirect('/register');
         }
       };
 
