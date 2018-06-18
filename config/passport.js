@@ -24,8 +24,7 @@ passport.serializeUser(function(user, cb) {
   });
 
 // ----- local strategy -----
-const localStrategy = new LocalStrategy(
-  { passReqToCallback: true },
+const localStrategy = new LocalStrategy({ passReqToCallback: true },
     function (req, username, password, callback) {
     let user;
     User.findOne({ username: username })
@@ -50,9 +49,9 @@ const localStrategy = new LocalStrategy(
       })
       .catch(err => {
          if (err.reason === 'LoginError') {
-          return callback(null, false, req.flash('loginMessage', err.message));
+          return callback(null, false, err);
         }
-        return callback(null, false, req.flash('loginMessage', err.message));
+        return callback(null, err);
       });
   });
 

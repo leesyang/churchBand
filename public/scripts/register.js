@@ -1,5 +1,6 @@
 
 function evaluateServerResponse (res) {
+    console.log(res);
     const responseJSON = res.responseJSON;
     if (responseJSON) {
         let errorMessage = responseJSON.message;
@@ -19,7 +20,7 @@ function showMsg (message) {
 };
 
 function showRedirectMsg () {
-    $('.alert').html('<a href="/">Go to Login</a>').fadeTo(1000, 1);
+    $('.container-feedback').hide().html('<div class="alert alert-primary"><a href="/">Go to Login</a></div>').fadeIn(1000);
 };
 
 function hideForm () {
@@ -52,7 +53,8 @@ function objectifyForm(formArray) {
 };
 
 function verifyPassword (formValues) {
-    if ( formValues.inputPassword === formValues.confirmPassword) {
+    console.log(formValues);
+    if ( formValues.password === formValues.confirmPassword) {
         return true;
     }
     else {
@@ -66,7 +68,7 @@ function watchSubmit () {
         let formArray = $(this).serializeArray();
         let formValues = objectifyForm(formArray);
         let passwordMatch = verifyPassword(formValues);
-        if (formValues && passwordMatch){
+        if (passwordMatch){
             submitNewUser(formValues, evaluateServerResponse);
         }
         else {

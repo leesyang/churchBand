@@ -1,8 +1,8 @@
 'use strict';
 const router = require('express').Router();
 const jsonParser = require('body-parser').json();
-const urlParser = require('body-parser').urlencoded({ type: 'application/x-www-form-urlencoded', extended: true });
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 
 // ----- constants -----
 const { JWT_SECRET, JWT_EXPIRY } = require('../config/constants')
@@ -15,7 +15,6 @@ const { authCtrl } = require('../controllers');
 
 // ----- middleware -----
 router.use(jsonParser);
-router.use(urlParser);
 
 // ----- json web token -----
 /// --- generates a jwt token ---
@@ -28,11 +27,11 @@ const createAuthToken = function(user) {
 
 // ----- routes -----
 /// --- login with username and password ---
-router.post('/login', urlParser, localAuth, (req, res) => {
+router.post('/login', localAuth, (req, res) => {
+    console.log('Successful login');
     let authToken = createAuthToken(req.user);
     res.cookie('authToken', authToken);
-    console.log('Successful login');
-    res.redirect('/home');
+    res.status(201).json({ code: 201, message: 'Successful login', authToken: authToken });
 });
 
 /*

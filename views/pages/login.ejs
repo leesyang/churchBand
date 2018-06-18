@@ -2,16 +2,17 @@
 <html lang="en">
   <head>
       <%- include('../partials/head.ejs') %>
-      <!-- specific css -->
+      <!-- Specific CSS -->
       <link href="stylesheets/login.css" rel="stylesheet">
-      <!-- end css -->
+      <!-- Specific Script -->
+      <script src="scripts/login.js"></script>
       <title>Sign In Page</title>
   </head>
 
   <body class="text-center">
-      <% if (message[0] != null) { %>
-        <div class="alert alert-primary input-feedback"><%= message %></div>
-      <% } %>
+    <div class="conatiner-feedback">
+      <div class="alert alert-primary input-feedback">User Input Feedback</div>
+    </div>
     <div class="container">
       <form class="form-signin" action="/auth/login" method="post">
         <img class="mb-4" src="/images/favicon-256.png" alt="" width="72" height="72">

@@ -19,9 +19,6 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
-.input-feedback {
-  opacity: 0;
-}
 .h3 {
   color: #ffffff;
 }
@@ -64,4 +61,10 @@ body {
       opacity: 0;
       visibility: hidden;
   }
+}
+
+
+/* CSS Effects Using JQuery*/
+.input-feedback {
+  opacity: 0;
 }

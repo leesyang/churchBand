@@ -22,17 +22,8 @@ body {
 .container {
   margin: 0 auto;
 }
-.alert {
-  top: -30px;
-  margin-bottom: 0px;
-}
 .input-feedback {
-  position: absolute;
-  top: 20px;
   opacity: 0;
-  text-align: center;
-  animation-name: fadeinout;
-  animation-duration: 3s;
 }
 .h3 {
   color: #ffffff;
