@@ -11,44 +11,41 @@ usersCtrl.console = function (req, res) {
 
 usersCtrl.addNewUser = function (req, res) {
   let { username, password, firstName, lastName, email } = req.body;
-
+  console.log('REQBODY', req.body);
   firstName = firstName.trim();
   lastName = lastName.trim();
 
   return User.find({username})
   .count()
   .then(count => {
-    if(count > 0){
+    if (count > 0) {
       return Promise.reject({
         code: 422,
         reason: 'ValidationError',
         message: 'Username already taken',
         location: 'username'
-      })
+      });
     }
     return User.hashPassword(password);
   })
   .then(hash => {
-    User.create({
+    return User.create({
       username,
       password: hash,
       firstName,
       lastName,
       email
-    })
-    .catch(err => console.log(err));
+    });
   })
   .then(user => {
-    return res.redirect('/');
+    return res.status(201).json(user.serialize());
   })
   .catch(err => {
     if (err.reason === 'ValidationError') {
-      req.flash('registerMessage', err.message);
-      res.redirect('/register');
+      return res.status(err.code).json(err);
     }
-    else {
-      res.status(500).send('Internal Server Error')
-    }
+    console.log(err);
+    res.status(500).json({code: 500, message: 'Internal server error'});
   });
 };
 

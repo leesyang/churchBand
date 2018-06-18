@@ -6,6 +6,8 @@ body {
 body {
   display: -ms-flexbox;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   -ms-flex-align: center;
   align-items: center;
   padding-top: 40px;
@@ -16,6 +18,21 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+.container {
+  margin: 0 auto;
+}
+.alert {
+  top: -30px;
+  margin-bottom: 0px;
+}
+.input-feedback {
+  position: absolute;
+  top: 20px;
+  opacity: 0;
+  text-align: center;
+  animation-name: fadeinout;
+  animation-duration: 3s;
 }
 .h3 {
   color: #ffffff;
@@ -37,13 +54,12 @@ body {
   height: auto;
   padding: 10px;
   font-size: 16px;
-  margin: 1px;
 }
 .form-signin .form-control:focus {
   z-index: 2;
 }
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
+.form-signin input[id="inputUsername"] {
+  margin-bottom: 0px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -51,4 +67,18 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+/* CSS effects */
+@-webkit-keyframes fadeinout { /* Safari and Chrome */
+  0% {
+      opacity:0;
+  }
+  50% {
+      opacity:1;
+  }
+  100% {
+      opacity: 0;
+      visibility: none;
+  }
 }

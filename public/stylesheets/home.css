@@ -7,6 +7,39 @@ body {
   padding-top: 56px;
 }
 
+.logo {
+  height: 3em;
+  width: 3em;
+}
+.navbar {
+  padding: .5rem .5rem;
+}
+.navbar-collapse {
+  flex-grow: 0;
+}
+.temp-photo {
+  width: 3em;
+  height: 3em;
+}
+.nav {
+  justify-content: center;
+}
+
+@media (min-width: 992px) {
+.navbar-expand-lg {
+  justify-content: space-between;
+}
+}
+.nav-spacer {
+  width: 2rem;
+}
+.bg-img {
+  background-image: url(../images/home-banner.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+}
+
 @media (max-width: 991.98px) {
   .offcanvas-collapse {
     position: fixed;
@@ -26,6 +59,13 @@ body {
   .offcanvas-collapse.open {
     left: 0;
     visibility: visible;
+  }
+  .navbar {
+    display: flex;
+    justify-content: center;
+  }
+  .bg-img {
+    background-image: url(../images/home-banner-edit.jpg);
   }
 }
 

@@ -7,20 +7,16 @@ const { songsUtil }  = require('./songsCtrl');
 // ----- exports -----
 const viewsCtrl = {};
 
-viewsCtrl.loginerror = function(req, res) {
-    res.render('pages/loginerror');
-};
-
 viewsCtrl.login = function(req, res) {
     res.render('pages/login', { message: req.flash('loginMessage')});
 };
 
 viewsCtrl.register = function(req, res) {
-    res.render('pages/register', { message: req.flash('registerMessage') });
+    res.render('pages/register');
 }
 
 viewsCtrl.home = function (req, res) {
-    res.render('pages/home.ejs');
+    res.render('pages/home');
 }
 
 

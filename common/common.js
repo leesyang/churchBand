@@ -9,8 +9,8 @@ checkReq.missingFields = function(expectedFields, reqBody) {
             reason: 'ValidationError',
             message: 'Missing field',
             location: missingField
-        };
-    };
+        }
+    }
 };
 
 checkReq.nonStringFields = function(expectedFields, reqBody) {

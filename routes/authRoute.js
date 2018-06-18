@@ -1,9 +1,7 @@
 'use strict';
-const express = require('express');
-const router = express.Router();
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
-const urlParser = bodyParser.urlencoded({ type: 'application/x-www-form-urlencoded', extended: true });
+const router = require('express').Router();
+const jsonParser = require('body-parser').json();
+const urlParser = require('body-parser').urlencoded({ type: 'application/x-www-form-urlencoded', extended: true });
 const jwt = require('jsonwebtoken');
 
 // ----- constants -----
@@ -33,7 +31,8 @@ const createAuthToken = function(user) {
 router.post('/login', urlParser, localAuth, (req, res) => {
     let authToken = createAuthToken(req.user);
     res.cookie('authToken', authToken);
-    res.status(200).end();
+    console.log('Successful login');
+    res.redirect('/home');
 });
 
 /*
