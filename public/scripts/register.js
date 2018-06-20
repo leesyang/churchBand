@@ -1,3 +1,4 @@
+'use strict';
 
 function evaluateServerResponse (res) {
     console.log(res);

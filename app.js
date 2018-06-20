@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
-const session = require('express-session');
+//const session = require('express-session');
 mongoose.Promise = global.Promise;
 
 // ----- constants -----
@@ -19,13 +19,13 @@ const app = express();
 app.use(morgan('common'));
 
 // ---- sessions -----
-const sessConfig = {
+/* const sessConfig = {
   secret: 'thinkful',
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: null }
 };
-app.use(session(sessConfig));
+app.use(session(sessConfig)); */
 
 // ----- activate passport -----
 app.use(passport.initialize());

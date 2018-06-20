@@ -10,8 +10,7 @@ usersCtrl.console = function (req, res) {
 };
 
 usersCtrl.addNewUser = function (req, res) {
-  let { username, password, firstName, lastName, email } = req.body;
-  console.log('REQBODY', req.body);
+  let { username, password, firstName, lastName, email, profilePicture } = req.body;
   firstName = firstName.trim();
   lastName = lastName.trim();
 
@@ -34,7 +33,8 @@ usersCtrl.addNewUser = function (req, res) {
       password: hash,
       firstName,
       lastName,
-      email
+      email,
+      profilePicture
     });
   })
   .then(user => {

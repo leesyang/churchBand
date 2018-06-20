@@ -8,7 +8,7 @@ const { songsUtil }  = require('./songsCtrl');
 const viewsCtrl = {};
 
 viewsCtrl.login = function(req, res) {
-    res.render('pages/login', { message: req.flash('loginMessage')});
+    res.render('pages/login');
 };
 
 viewsCtrl.register = function(req, res) {

@@ -4,6 +4,7 @@
       <%- include('../partials/head.ejs') %>
       <!-- specific css -->
       <link href="stylesheets/home.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.plyr.io/3.3.17/plyr.css">
       <!-- end css -->
       <title>Home</title>
   </head>
@@ -28,16 +29,8 @@
     
         <div class="nav-scroller bg-white box-shadow">
           <nav class="nav nav-underline">
-            <div class="nav-spacer"></div>
             <a class="nav-link" href="#">Song Recommendations</a>
             <a class="nav-link" href="#">Set Reviews</a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
-              </div>
           </nav>
         </div>
     
@@ -50,26 +43,81 @@
             </div>
           </div>
     
-          <div class="my-3 p-3 bg-white rounded box-shadow">
-            <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
-            <div class="media text-muted pt-3">
-              <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@username</strong>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-              </p>
+          <div class="my-3 p-3 bg-white rounded box-shadow content-news">
+<!-- List of Song Recommendations -->
+            <h6 class="border-bottom border-gray pb-2 mb-0">Latest Recommendation</h6>
+            <div class="media text-muted pt-3 border-bottom border-gray">
+                <div class="container">
+                    <div class="row">
+                      <div class="col small">
+                          <img class="shadow rounded user-img" src="/images/user_profile/image-1.png">
+                          <strong class="text-gray-dark">@username</strong>
+                          Recommended a song by Hillsong called I Will Rise.
+                      </div>
+                      <div class="col col-md-auto">
+                          <img class="icon-link margin" data-toggle="collapse" href="#youtube-plyer" role="button" aria-expanded="false" aria-controls="collapseExample" src="/images/icons/youtube.png">
+                          <img class="icon-link margin" src="/images/icons/spotify.png">
+                          <a class="btn btn-primary btn-sm margin" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Comments</a>
+                          <a class="btn btn-secondary btn-sm margin" data-toggle="collapse" href="#songinfo" role="button" aria-expanded="false" aria-controls="collapseExample">Song Info</a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="media text-muted pt-3 centered">
+                <div class="collapse" id="songinfo">
+                  <div class="card card-body">
+                      <div class="container">
+                          <div class="row">
+                            <div class="col small">
+                              Date Added: <br>
+                              Artist: Hillsong United<br>
+                              Title: I Will Rise <br>
+                            </div>
+                            <div class="col small">
+                              Album: Hillsong<br>
+                              Release Year: I Will Rise<br>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div class="media text-muted pt-3 centered">
+                <div class="collapse" id="youtube-plyer">
+                  <div class="card card-body">
+                      <div class="container-youtube">
+                          <div id="player" data-plyr-provider="youtube" data-plyr-embed-id="http://www.youtube.com/embed/p2IPg-qS-_w"></div>
+                      </div>
+                  </div>
+                </div>
             </div>
             <div class="media text-muted pt-3">
-              <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
-              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@username</strong>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-              </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                    </div>
+                    <form action="#" method="post" class="form-horizontal" id="commentForm" role="form"> 
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label small">Comment</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" name="addComment" id="addComment" rows="1"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">                    
+                                <button class="btn btn-secondary btn-circle btn-sm" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Summit comment</button>
+                            </div>
+                        </div>            
+                    </form>
+                  </div>
             </div>
+<!-- end of single unit of song recommendation -->
+
             <div class="media text-muted pt-3">
               <img data-src="holder.js/32x32?theme=thumb&bg=6f42c1&fg=6f42c1&size=1" alt="" class="mr-2 rounded">
               <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@username</strong>
+                <img class="shadow rounded user-img" src="/images/user_profile/image-1.png">
+                <strong class="text-gray-dark">@username</strong>
                 Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
               </p>
             </div>
@@ -77,42 +125,8 @@
               <a href="#">All updates</a>
             </small>
           </div>
-    
-          <div class="my-3 p-3 bg-white rounded box-shadow">
-            <h6 class="border-bottom border-gray pb-2 mb-0">Suggestions</h6>
-            <div class="media text-muted pt-3">
-              <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-              <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <div class="d-flex justify-content-between align-items-center w-100">
-                  <strong class="text-gray-dark">Full Name</strong>
-                  <a href="#">Follow</a>
-                </div>
-                <span class="d-block">@username</span>
-              </div>
-            </div>
-            <div class="media text-muted pt-3">
-              <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-              <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <div class="d-flex justify-content-between align-items-center w-100">
-                  <strong class="text-gray-dark">Full Name</strong>
-                  <a href="#">Follow</a>
-                </div>
-                <span class="d-block">@username</span>
-              </div>
-            </div>
-            <div class="media text-muted pt-3">
-              <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-              <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <div class="d-flex justify-content-between align-items-center w-100">
-                  <strong class="text-gray-dark">Full Name</strong>
-                  <a href="#">Follow</a>
-                </div>
-                <span class="d-block">@username</span>
-              </div>
-            </div>
-            <small class="d-block text-right mt-3">
-              <a href="#">All suggestions</a>
-            </small>
-          </div>
+  
         </main>
-    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.3.17/plyr.js"></script>
+        <script src="scripts/home.js"></script>
+  </body>

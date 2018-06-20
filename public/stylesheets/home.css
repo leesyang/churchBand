@@ -7,6 +7,7 @@ body {
   padding-top: 56px;
 }
 
+/* ----- Navigation and Logo ----- */
 .logo {
   height: 3em;
   width: 3em;
@@ -117,3 +118,33 @@ body {
 .lh-100 { line-height: 1; }
 .lh-125 { line-height: 1.25; }
 .lh-150 { line-height: 1.5; }
+
+/* ----- Song recommendations ----- */
+/* user profile picture */
+.user-img {
+  width: 2em;
+  height: 2em;
+  display: inline-block;
+}
+.row {
+  margin-bottom: 10px;
+}
+/* icon links*/
+.icon-link {
+  width: 2em;
+  height: 2em;
+}
+
+/* song recommendation list*/
+.songinfo {
+  display: inline-block;
+}
+.centered {
+  justify-content: center;
+}
+.margin {
+  margin: 0px 3px 3px 3px;
+}
+.container-youtube {
+  width:500px;
+}

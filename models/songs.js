@@ -1,11 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
-
-// ----- imports -----
-const { User } = require('./users');
 
 // ----- song schema -----
 const songCommentSchema = new Schema({
@@ -27,6 +23,8 @@ const songSchema = new Schema({
     addedBy: { type: ObjectId, ref:'User' },
     artist: String,
     title: String,
+    tempo: String,
+    theme: String,
     links: songLinkSchema,
     lyrics: String,
     rank: Number,

@@ -41,7 +41,9 @@ songsCtrl.addNewSong = function(req, res) {
         links: {
             youtube: req.body.youtube,
             spotify: req.body.spotify,
-        }
+        },
+        theme: req.body.theme,
+        lyrics: req.body.lyrics
     });
     song.save((err, result) => {
         if (err) {
@@ -94,9 +96,9 @@ songsCtrl.updateComment = function(req, res) {
             .catch(err => console.log(err));
         }
         else {
-            res.json({
-                code: 422,
-                reason: 'Denied',
+            res.status(403).json({
+                code: 403,
+                reason: 'Forbidden',
                 message: 'Unable to modify. Not Authorized.',
             })
         }
@@ -126,4 +128,3 @@ songsCtrl.deleteComment = function(req, res) {
 }
 
 module.exports = { songsCtrl, songsUtil };
-
