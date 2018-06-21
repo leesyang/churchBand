@@ -1,10 +1,8 @@
 'use strict';
-const express = require('express');
-const router = express.Router();
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
-const passport = require('passport');
+const router = require('express').Router();
+const jsonParser = require('body-parser').json();
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 
 // ----- constants -----
 const { JWT_SECRET, JWT_EXPIRY } = require('../config/constants')
@@ -30,10 +28,11 @@ const createAuthToken = function(user) {
 // ----- routes -----
 /// --- login with username and password ---
 router.post('/login', localAuth, (req, res) => {
+    console.log('Successful login');
     let authToken = createAuthToken(req.user);
     res.cookie('authToken', authToken);
-    res.send('logged in');
-})
+    res.status(201).json({ code: 201, message: 'Successful login', authToken: authToken });
+});
 
 /*
 /// --- get a new token with current token ---

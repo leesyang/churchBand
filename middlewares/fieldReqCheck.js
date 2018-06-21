@@ -4,19 +4,19 @@ const { checkReq } = require('../common/common');
 
 // ----- users routes -----
 const newUserInputCheck = function(req, res, next) {
-    const fieldIs = {
-        required: ['username', 'password'],
-        string: ['username', 'password', 'firstName', 'lastName'],
-        explicityTrimmed: ['username', 'password'],
-        sizedFields: {
-          username: { min: 2 },
-          password: { min: 10, max: 72 }
-      }
-    };
+      const fieldIs = {
+          required: ['username', 'password', 'firstName', 'lastName', 'email'],
+          string: ['username', 'password', 'firstName', 'lastName'],
+          explicityTrimmed: ['username', 'password'],
+          sizedFields: {
+            username: { min: 2 },
+            password: { min: 10, max: 72 }
+        }
+      };
     
       const isMissing = checkReq.missingFields(fieldIs.required, req.body);
-      if (isMissing) {
-        return res.status(isMissing.code).json(isMissing);
+      if (isMissing && isMissing.code) {
+        return res.status(isMissing.code).json(isMissing)
       }
 
       const isNonString = checkReq.nonStringFields(fieldIs.string, req.body);
@@ -25,11 +25,10 @@ const newUserInputCheck = function(req, res, next) {
 
       const fieldError = [isNonString, hasWhitespace, improperlySized];
       for (let i = 0; i < fieldError.length; i++) {
-        if(fieldError[i]) {
+        if (fieldError[i] && fieldError[i].code) {
           return res.status(fieldError[i].code).json(fieldError[i]);
         }
       };
-
       next();
 };
 

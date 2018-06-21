@@ -1,9 +1,7 @@
 'use strict';
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
+const jsonParser = require('body-parser').json();
 mongoose.Promise = global.Promise;
 
 // ----- controllers -----

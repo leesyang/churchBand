@@ -1,4 +1,7 @@
 'use strict';
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
 // ----- models ----
 const { Song } = require('../models');
 
@@ -6,37 +9,58 @@ const { Song } = require('../models');
 
 // ----- exports -----
 const songsCtrl = {};
+const songsUtil = {};
 
 // ----- common functions -----
 // -- populate user --
 const filterUserInfo = '-password -firstName -lastName -email -__v';
 
-// ----- functions -----
-/// -- get list of songs --
-songsCtrl.getListOfSongs = function(req, res) {
-    Song.find({})
+// ----- utility functions -----
+songsUtil.getListOfSongsPromise = function() {
+    return Song.find({})
     .populate('addedBy', filterUserInfo)
     .populate('comments.addedBy', filterUserInfo)
+};
+
+songsUtil.getCommentsPromise = function(songId) {
+    return Song.findById({_id: songId})
+    .populate('comments.addedBy', '-password -firstName -lastName -email -__v')
+};
+
+// ----- route controllers -----
+// -- get list of songs --
+songsCtrl.getListOfSongs = function(req, res) {
+    songsUtil.getListOfSongsPromise()
     .then(_res => res.status(200).json(_res))
     .catch((err) => console.log(err));
 };
 
 // -- post a new songs --
 songsCtrl.addNewSong = function(req, res) {
-    let newSongPost = req.body;
-    console.log(req.user);
-
+    const { artist, album, title, theme, releaseYear, tempo, youtube } = req.body;
+    const addedBy = req.user.id;
     let song = new Song({
-        addedBy: req.user.id,
-        artist: req.body.artist,
-        title: req.body.title,
+        addedBy,
+        album,
+        artist,
+        title,
         links: {
-            youtube: req.body.youtube,
-            spotify: req.body.spotify,
-        }
+            youtube: youtube,
+        },
+        theme,
+        releaseYear,
+        tempo
     });
-    song.save((err, res) => {
-        console.log(res);
+    song.save()
+    .then(song => {
+        res.status(201).json(song);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            code: 500,
+            message: 'Internal Server Error'
+        })
     })
 };
 
@@ -57,8 +81,7 @@ songsCtrl.addNewComment = function(req, res) {
 
 // -- get list of comments --
 songsCtrl.getComments = function(req, res) {
-    Song.findById({_id: req.params.songId})
-    .populate('comments.addedBy', '-password -firstName -lastName -email -__v')
+    songsUtil.getCommentsPromise(req.params.songId)
     .then(post => res.status(200).json(post))
     .catch(err => console.log(err));
 };
@@ -81,9 +104,9 @@ songsCtrl.updateComment = function(req, res) {
             .catch(err => console.log(err));
         }
         else {
-            res.json({
-                code: 422,
-                reason: 'Denied',
+            res.status(403).json({
+                code: 403,
+                reason: 'Forbidden',
                 message: 'Unable to modify. Not Authorized.',
             })
         }
@@ -112,4 +135,4 @@ songsCtrl.deleteComment = function(req, res) {
     })
 }
 
-module.exports = songsCtrl;
+module.exports = { songsCtrl, songsUtil };

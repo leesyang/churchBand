@@ -9,8 +9,8 @@ checkReq.missingFields = function(expectedFields, reqBody) {
             reason: 'ValidationError',
             message: 'Missing field',
             location: missingField
-        };
-    };
+        }
+    }
 };
 
 checkReq.nonStringFields = function(expectedFields, reqBody) {
@@ -62,9 +62,9 @@ checkReq.improperlySizedFields = function(sizedFields, reqBody) {
         code: 422,
         reason: 'ValidationError',
         message: tooSmallField
-          ? `Must be at least ${sizedFields[tooSmallField]
+          ? `${tooSmallField.charAt(0).toUpperCase()+tooSmallField.slice(1)} must be at least ${sizedFields[tooSmallField]
             .min} characters long`
-          : `Must be at most ${sizedFields[tooLargeField]
+          : `${tooLargeField.charAt(0).toUpperCase()+tooLargeField.slice(1)} must be at most ${sizedFields[tooLargeField]
             .max} characters long`,
         location: tooSmallField || tooLargeField
       };

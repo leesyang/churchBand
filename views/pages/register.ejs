@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+      <%- include('../partials/head.ejs') %>
+      <!-- specific css -->
+      <link href="stylesheets/register.css" rel="stylesheet">
+      <!-- Specific Javascript -->
+      <script src="scripts/register.js"></script>
+      <title>Register for an Account</title>
+  </head>
+
+  <body class="text-center">
+    <div class="container-feedback">
+    <div class="alert alert-primary input-feedback">User Input Feedback</div>
+    </div>
+    <div class="container">
+    <form class="form-signup">
+      <h1 class="h3 mb-3 font-weight-normal">Register New Account</h1>
+        <div class="row">
+          <div class="col">
+              <label for="inputFrstname" class="sr-only">First Name</label>
+              <input type="text" id="inputFrstname" class="form-control inline" placeholder="First Name" name="firstName" autocomplete="given-name" required>
+          </div>
+          <div class="col">
+              <label for="inputLastname" class="sr-only">Last Name</label>
+              <input type="text" id="inputLastname" class="form-control inline" placeholder="Last Name" name="lastName" autocomplete="family-name" required>
+          </div>
+        </div>
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" id="inputUsername" class="form-control" placeholder="Username" name="username" required autofocus>
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="Email" name="email" autocomplete="email" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" autocomplete="off" required>
+        <label for="confirmPassword" class="sr-only">Password</label>
+        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" name="confirmPassword" autocomplete="off" required>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    </form>
+  </div>
+  </body>
+</html>
