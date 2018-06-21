@@ -26,6 +26,12 @@ body {
   justify-content: center;
 }
 
+/* banner */
+.top-spacer {
+  width: 30px;
+  height: 100px;
+}
+
 @media (min-width: 992px) {
 .navbar-expand-lg {
   justify-content: space-between;
@@ -122,8 +128,8 @@ body {
 /* ----- Song recommendations ----- */
 /* user profile picture */
 .user-img {
-  width: 2em;
-  height: 2em;
+  width: 3em;
+  height: 3em;
   display: inline-block;
 }
 .row {
@@ -136,8 +142,9 @@ body {
 }
 
 /* song recommendation list*/
-.songinfo {
-  display: inline-block;
+.song-info {
+  margin-top: 0rem;
+  margin-bottom: 1px;
 }
 .centered {
   justify-content: center;
@@ -146,5 +153,17 @@ body {
   margin: 0px 3px 3px 3px;
 }
 .container-youtube {
-  width:500px;
+  width:50vw;
+}
+.profile-img {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* new song forms */
+.form-control {
+  margin-bottom: 1rem;
+}
+.newSongForm {
+  text-align: right;
 }

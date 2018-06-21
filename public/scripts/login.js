@@ -6,43 +6,38 @@ function redirectHome () {
 function evaluateServerResponse (res) {
     console.log(res);
     const responseJSON = res.responseJSON;
-    if (responseJSON) {
-        let errorMessage = responseJSON.message;
-        showMsg(errorMessage);
-    }
-    if (res.message === 'Successful login') {
-        redirectHome();
+    if ( res.status === 422 && responseJSON.location ) {
+        $(`input[name="${responseJSON.location}"]`).addClass('input-error').focus();
+        showMsg(responseJSON.message);
     }
 };
 
 
-// ----- DOM Manipulation -----
+
+// ----- DOM manipulation -----
 function showMsg (message) {
     $('.alert').html(`${message}`).fadeTo(1000, 1, function(){
         $(this).fadeTo(1000, 0);
     })
 };
 
-// ----- Redirect -----
+// ----- redirect -----
 function redirectHome () {
     window.location.replace('/home');
 }
 
 // ----- ajax -----
 function submitLogin (formValues, callback) {
-    $.ajax({
+    return $.ajax({
         method: 'POST',
         url: '/auth/login',
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify(formValues),
-        success: callback,
-        statusCode: {
-            500: callback/* callback({ responseJSON: { code: 500, message: 'Internal Server Error' }}) */,
-            422: callback
-        }
     })
-}
+    .fail(evaluateServerResponse)
+    .done(callback || redirectHome)
+};
 
 // ----- handling form data -----
 function objectifyForm (formArray) {
@@ -59,7 +54,7 @@ function watchSubmit () {
         event.preventDefault();
         let formArray = $(this).serializeArray();
         let formValues = objectifyForm(formArray);
-        submitLogin(formValues, evaluateServerResponse);
+        submitLogin(formValues);
     })
 };
 

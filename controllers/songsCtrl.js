@@ -1,4 +1,7 @@
 'use strict';
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
 // ----- models ----
 const { Song } = require('../models');
 
@@ -34,25 +37,30 @@ songsCtrl.getListOfSongs = function(req, res) {
 
 // -- post a new songs --
 songsCtrl.addNewSong = function(req, res) {
+    const { artist, album, title, theme, releaseYear, tempo, youtube } = req.body;
+    const addedBy = req.user.id;
     let song = new Song({
-        addedBy: req.user.id,
-        artist: req.body.artist,
-        title: req.body.title,
+        addedBy,
+        album,
+        artist,
+        title,
         links: {
-            youtube: req.body.youtube,
-            spotify: req.body.spotify,
+            youtube: youtube,
         },
-        theme: req.body.theme,
-        lyrics: req.body.lyrics
+        theme,
+        releaseYear,
+        tempo
     });
-    song.save((err, result) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send({
-                Message: err.message
-            });
-        }
-        res.status(201).send(result);
+    song.save()
+    .then(song => {
+        res.status(201).json(song);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            code: 500,
+            message: 'Internal Server Error'
+        })
     })
 };
 

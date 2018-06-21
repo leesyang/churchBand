@@ -63,8 +63,11 @@ body {
   }
 }
 
-
 /* CSS Effects Using JQuery*/
 .input-feedback {
   opacity: 0;
+}
+.input-error:focus {
+  box-shadow: 0 0 10px rgb(255, 28, 28);
+  border: 1px solid rgb(255, 28, 28);
 }

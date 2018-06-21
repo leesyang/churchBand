@@ -33,6 +33,7 @@ const localStrategy = new LocalStrategy({ passReqToCallback: true },
         if (!user) {
           return Promise.reject({
             reason: 'LoginError',
+            location: 'username',
             message: 'Incorrect username'
           });
         }
@@ -42,6 +43,7 @@ const localStrategy = new LocalStrategy({ passReqToCallback: true },
         if (!isValid) {
           return Promise.reject({
             reason: 'LoginError',
+            location: 'password',
             message: 'Incorrect password'
           });
         }
