@@ -10,198 +10,199 @@
   </head>
 <body class="bg-light">
 
-        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-          <img class="shadow rounded-left logo" src="/images/favicon-256.png" alt="churchBand logo"href="/home">
-    
-          <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-              <img class="shadow rounded-circle logo" src="/images/user_profile/image-1.png" alt="churchBand logo" href="/home">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, <span>User</span></a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                  <a class="dropdown-item" href="#">Profile</a>
-                  <a class="dropdown-item" href="#">Log Out</a>
-                </div>
-              </li>
-            </ul>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+    <img class="shadow rounded-left logo" src="/images/favicon-256.png" alt="churchBand logo"href="/home">
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <img class="shadow rounded-circle logo" src="/images/user_profile/image-1.png" alt="churchBand logo" href="/home">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, <span>User</span></a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Log Out</a>
           </div>
-        </nav>
-    
-        <div class="nav-scroller bg-white box-shadow">
-          <nav class="nav nav-underline">
-            <a class="nav-link" href="#">Song Recommendations</a>
-            <a class="nav-link" href="#">Set Reviews</a>
-          </nav>
-        </div>
-    
-        <main role="main" class="container">
-          <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-img rounded box-shadow">
-            <div class="top-spacer"></div>
-            <div class="lh-100">
-              <h6 class="mb-0 text-white lh-100">churchBand</h6>
-              <small>Latest News, Recommendations, Review. All things worship band.</small>
-            </div>
-          </div>
-          <div class="my-3 p-3 bg-white rounded box-shadow content-news">
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-            <h6 class="border-bottom border-gray pb-2 mb-0">Latest Recommendations</h6>
-            <small class="text-right mt-3">
-                <a href="#" data-toggle="modal" data-target="#newSongInput">Add a song</a>
-            </small>
-<!-- List of Song Recommendations -->
-            <div class="media text-muted pt-3 border-bottom border-gray">
-                <div class="container">
-                    <div class="row">
-                      <div class="col small">
-                          <img class="shadow rounded user-img" src="/images/user_profile/image-1.png">
-                          <strong class="text-gray-dark">@username</strong>
-                          Recommended a song by <strong>Hillsong</strong> called <strong>I Will Rise</strong>.
-                      </div>
-                      <div class="col col-md-auto">
-                          <img class="icon-link margin" data-toggle="collapse" href="#youtube-plyer" role="button" aria-expanded="false" aria-controls="youtube-plyer" src="/images/icons/youtube.png">
-                          <!-- <img class="icon-link margin" data-toggle="collapse" href="#spotify-player" role="button" aria-expanded="false" aria-controls="collapseExample" src="/images/icons/spotify.png"> -->
-                          <a class="btn btn-primary btn-sm margin" data-toggle="collapse" href="#songComments" role="button" aria-expanded="false" aria-controls="songComments">Comments</a>
-                          <a class="btn btn-secondary btn-sm margin" data-toggle="collapse" href="#songInfo" role="button" aria-expanded="false" aria-controls="songInfo">Song Info</a>
-                      </div>
-                    </div>
-                  </div>
-            </div>
-            <div class="media text-muted pt-1 centered">
-                <div class="collapse" id="songInfo">
-                  <div class="card card-body">
-                      <div class="container">
-                          <div class="row">
-                            <div class="col small">
-                              <p class="song-info">Date Added: </p>
-                              <p class="song-info">Artist: </p>
-                              <p class="song-info">Title: </p>
-                            </div>
-                            <div class="col small">
-                              <p class="song-info">Album: </p>
-                              <p class="song-info">Release Year: </p>
-                            </div>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-            </div>
-            <div class="media text-muted pt-1 centered">
-                <div class="collapse" id="youtube-plyer">
-                  <div class="card card-body">
-                      <div class="container-youtube">
-                          <div id="player" data-plyr-provider="youtube" data-plyr-embed-id="https://www.youtube.com/embed/p2IPg-qS-_w"></div>
-                      </div>
-                  </div>
-                </div>
-            </div>
-            <div class="media text-muted pt-1">
-                <div class="collapse" id="songComments">
-                    <div class="card card-body">
-                          <div class="media">
-                              <img class="align-self-start mr-3 profile-img border-gray rounded" src="/images/user_profile/image-1.png" alt="user profile thumbnail">
-                              <div class="media-body">
-                                <h6 class="mt-0">Posted on December 5, 2017</h6>
-                                <p class="small">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                              </div>
-                            </div>
-                            <div class="media">
-                                <img class="align-self-start mr-3 profile-img" src="/images/user_profile/image-1.png" alt="user profile thumbnail">
-                                <div class="media-body">
-                                  <h6 class="mt-0">Posted on December 5, 2017</h6>
-                                  <p class="small">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                                </div>
-                              </div>
-                    </div>
-                    <form class="form-horizontal" id="commentForm" role="form"> 
-                        <div class="form-group">
-                            <label for="comment" class="col-sm-2 control-label small">Comment</label>
-                            <div class="col-sm-10">
-                              <textarea class="form-control" name="comment" id="comment" rows="1"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">                    
-                                <button class="btn btn-secondary btn-circle btn-sm" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Submit comment</button>
-                            </div>
-                        </div>            
-                    </form>
-                  </div>
-            </div>
-<!-- end of single unit of song recommendation -->
+  <div class="nav-scroller bg-white box-shadow">
+    <nav class="nav nav-underline">
+      <a class="nav-link" href="#">Song Recommendations</a>
+      <a class="nav-link" href="#">Set Reviews</a>
+    </nav>
+  </div>
+    
+  <main role="main" class="container">
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-img rounded box-shadow">
+      <div class="top-spacer"></div>
+      <div class="lh-100">
+        <h6 class="mb-0 text-white lh-100">churchBand</h6>
+        <small>Latest News, Recommendations, Review. All things worship band.</small>
+      </div>
+    </div>
+    <div class="my-3 p-3 bg-white rounded box-shadow content-news">
+      <h6 class="border-bottom border-gray pb-2 mb-0">Latest Recommendations</h6>
+      <small class="text-right mt-3">
+          <a href="#" data-toggle="modal" data-target="#newSongInput">Add a song</a>
+      </small>
+      <div class="song-recomm-main">
 <!-- unit of song recommendation -->
-
-
-<!-- end unit of song recommendation -->
-            <small class="d-block text-right mt-3">
-              <a href="#">See more</a>
-            </small>
-          </div>
-          <!-- Add a new song modal -->
-          <div class="modal fade" id="newSongInput" tabindex="-1" role="dialog" aria-labelledby="newSongInput" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="newSongInput">Song Info</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
+        <div class="media text-muted pt-3 border-bottom border-gray song-recomm-nav">
+            <div class="container">
+                <div class="row">
+                  <div class="col-md-auto small">
+                      <img class="shadow rounded user-img" src="/images/user_profile/image-2.png">
+                      <strong class="text-gray-dark">@username</strong>
                   </div>
-                  <div class="modal-body">
-                      <form class="newSongForm">
-                          <div class="form-row">
-                            <div class="col">
-                              <input type="text" id="inputArtist" name="artist" class="form-control" placeholder="Artist" required>
-                            </div>
-                            <div class="col">
-                              <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Title" required>
-                            </div>
-                          </div>
-                          <div class="form-row">
-                            <div class="col">
-                              <input type="text" id="inputAlbum" name="album" class="form-control" placeholder="Album">
-                            </div>
-                            <div class="col">
-                              <input type="text" id="inputReleaseYear" name="releaseYear" class="form-control" placeholder="Release Year">
-                            </div>
-                          </div>
-                          <div class="form-row">
-                            <div class="col">
-                              <select id="inputTheme" name="theme" class="form-control" required>
-                                <option value="">Theme</option>
-                                <option value="Adoration & Praise">Adoration & Praise</option>
-                                <option value="Call to Worship">Call to Worship</option>
-                                <option value="Christmas">Christmas</option>
-                                <option value="Church & Unity">Church & Unity</option>
-                                <option value="Commitment & Dedication">Commitment & Dedication</option>
-                                <option value="Communion & Reflection">Communion & Reflection</option>
-                                <option value="Easter">Easter</option>
-                                <option value="Faith & Trust">Faith & Trust</option>
-                                <option value="God's Attributes">God's Attributes</option>
-                                <option value="Grace & Mercy">Grace & Mercy</option>
-                                <option value="Missions">Missions</option>
-                                <option value="Peace & Hope">Peace & Hope</option>
-                                <option value="Prayer & Renewal">Prayer & Renewal</option>
-                                <option value="Resurrection & Sacrifice">Resurrection & Sacrifice</option>
-                                <option value="Other">Other</option>
-                              </select>
-                            </div>
-                            <div class="col">
-                              <select name="tempo" id="inputTempo" class="form-control" required>
-                                <option value="">Tempo</option>
-                                <option value="Slow">Slow</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Fast">Fast</option>
-                              </select>
-                            </div>
-                          </div>
-                          <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link">
-                          <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit">Submit</button>
-                        </form>
+                  <div class="col small">
+                      <strong>Hillsong</strong> - <strong class="no-wrap">So Will I</strong>
+                  </div>
+                  <div class="col col-md-auto no-wrap">
+                      <img class="icon-link margin" data-toggle="collapse" href="#youtube-plyer" role="button" aria-expanded="false" aria-controls="youtube-plyer" src="/images/icons/youtube.png">
+                      <a class="btn btn-primary btn-sm margin" data-toggle="collapse" href="#songComments" role="button" aria-expanded="false" aria-controls="songComments">Comments</a>
+                      <a class="btn btn-secondary btn-sm margin" data-toggle="collapse" href="#songInfo" role="button" aria-expanded="false" aria-controls="songInfo">Song Info</a>
                   </div>
                 </div>
+            </div>
+          </div>
+          <div class="text-muted pt-1 centered song-recomm-songinfo">
+            <div class="collapse" id="songInfo">
+              <div class="card card-body">
+                  <div class="container">
+                      <div class="row">
+                        <div class="col small">
+                          <p class="song-info">Date Added: </p>
+                          <p class="song-info">Artist: </p>
+                          <p class="song-info">Title: </p>
+                        </div>
+                        <div class="col small">
+                          <p class="song-info">Album: </p>
+                          <p class="song-info">Release Year: </p>
+                        </div>
+                      </div>
+                  </div>
               </div>
             </div>
-        </main>
-        <script src="/scripts/plyr.js"></script>
+          </div>
+          <div class="text-muted pt-1 centered song-recomm-youtube">
+            <div class="collapse" id="youtube-plyer">
+              <div class="card card-body container-youtube">
+                <div class="plyer"></div>
+                    <div id="player" class="player" data-plyr-provider="youtube" data-plyr-embed-id="https://www.youtube.com/embed/p2IPg-qS-_w"></div>
+                </div>
+                <div class="plyer"></div>
+                <div id="player2" data-plyr-provider="youtube" data-plyr-embed-id="https://www.youtube.com/embed/p2IPg-qS-_w"></div>
+              </div>
+            </div>
+          </div>
+          <div class="text-muted pt-1 song-recomm-comments">
+            <div class="collapse" id="songComments">
+              <div class="card card-body comments-container">
+                <div class="song-comment">
+                  <img class="align-self-start mr-3 profile-img border-gray rounded" src="/images/user_profile/image-1.png" alt="user profile thumbnail">
+                  <div class="media-body">
+                    <p class="small">Posted on December 5, 2017</p>
+                    <p >hi. good job.</p>
+                  </div>
+                </div>
+                <div class="song-comment">
+                    <img class="align-self-start mr-3 profile-img" src="/images/user_profile/image-1.png" alt="user profile thumbnail">
+                    <div class="media-body">
+                      <h6 class="small">Posted on December 5, 2017</h6>
+                      <p class="">hi. not bad.</p>
+                    </div>
+                </div>
+              </div>
+              <form class="form-horizontal" id="commentForm" role="form"> 
+                  <div class="form-group">
+                      <label for="comment" class="col-sm-2 control-label small">Comment</label>
+                      <div class="col-sm-10">
+                        <textarea class="form-control" name="comment" id="comment" rows="1"></textarea>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-sm-offset-2 col-sm-10">                    
+                          <button class="btn btn-secondary btn-circle btn-sm" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Submit comment</button>
+                      </div>
+                  </div>            
+              </form>
+            </div>
+          </div>
+        </div>
+          </div>
+            <!-- end unit of song recommendation -->
+        <small class="d-block text-right mt-3">
+          <a href="#">See more</a>
+        </small>
+    </div><!-- Add a new song modal -->
+      <div class="modal fade" id="newSongInput" tabindex="-1" role="dialog" aria-labelledby="newSongInput" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="newSongInput">Song Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form class="newSongForm">
+                      <div class="form-row">
+                        <div class="col">
+                          <input type="text" id="inputArtist" name="artist" class="form-control" placeholder="Artist" required>
+                        </div>
+                        <div class="col">
+                          <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Title" required>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="col">
+                          <input type="text" id="inputAlbum" name="album" class="form-control" placeholder="Album">
+                        </div>
+                        <div class="col">
+                          <input type="text" id="inputReleaseYear" name="releaseYear" class="form-control" placeholder="Release Year">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="col">
+                          <select id="inputTheme" name="theme" class="form-control" required>
+                            <option value="">Theme</option>
+                            <option value="Adoration & Praise">Adoration & Praise</option>
+                            <option value="Call to Worship">Call to Worship</option>
+                            <option value="Christmas">Christmas</option>
+                            <option value="Church & Unity">Church & Unity</option>
+                            <option value="Commitment & Dedication">Commitment & Dedication</option>
+                            <option value="Communion & Reflection">Communion & Reflection</option>
+                            <option value="Easter">Easter</option>
+                            <option value="Faith & Trust">Faith & Trust</option>
+                            <option value="God's Attributes">God's Attributes</option>
+                            <option value="Grace & Mercy">Grace & Mercy</option>
+                            <option value="Missions">Missions</option>
+                            <option value="Peace & Hope">Peace & Hope</option>
+                            <option value="Prayer & Renewal">Prayer & Renewal</option>
+                            <option value="Resurrection & Sacrifice">Resurrection & Sacrifice</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+                        <div class="col">
+                          <select name="tempo" id="inputTempo" class="form-control" required>
+                            <option value="">Tempo</option>
+                            <option value="Slow">Slow</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Fast">Fast</option>
+                          </select>
+                        </div>
+                      </div>
+                      <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link">
+                      <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit">Submit</button>
+                    </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+  </main>
+        <script src="scripts/plyr.js"></script>
         <script src="scripts/home.js"></script>
+        <script src="scripts/home-dom.js"></script>
   </body>

@@ -1,14 +1,17 @@
 'use strict';
-// ----- enpoints -----
-const Songs_endpoint = '/api/songs';
+// ----- constants: endpoints -----
+const SONGS_EP = '/api/songs';
 
 // ----- plyer settings -----
 // Change "{}" to your options:
 // https://github.com/sampotts/plyr/#options
-const player = new Plyr('#player', {});
+//const player = new Plyr('#player', {});
 
 // Expose player so it can be used from the console
-window.player = player;
+//window.player = player;
+
+//const players = Array.from(document.querySelectorAll('div.plyer')).map(p => { new Plyr(`#${p.nextElementSibling.id}`); console.log(p.nextElementSibling.id)})
+
 
 // ----- utility functions -----
 // -- turns form data into an object --
@@ -20,13 +23,6 @@ function objectifyForm(formInputs) {
     }
     return returnObject;
 };
-
-
-// ----- DOM Functions -----
-function generateSongTemplate () {
-
-}
-
 
 // ----- new song submit -----
 let newSongSubmitted = {};
@@ -69,7 +65,7 @@ function watchNewSongSubmit () {
         event.preventDefault();
         let formValues = objectifyForm(this);
         if (formValues) {
-            submitNewSong(Songs_endpoint, formValues, evalSubmitRes)
+            submitNewSong(SONGS_EP, formValues, evalSubmitRes)
         }
     })
 }
@@ -80,9 +76,7 @@ function watchNewSongSubmit () {
 function watchNewCommentSubmit () {
     $('.commentForm').submit(function(event) {
         event.preventDefault();
-        console.log('comment form ?')
         let formValues = objectifyForm(this);
-        console.log(formValues);
         if(formValues.message ){
         }
     })

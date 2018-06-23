@@ -132,13 +132,16 @@ body {
   height: 3em;
   display: inline-block;
 }
-.row {
-  margin-bottom: 10px;
+.user-img-spacer {
+  width: 15em;
 }
 /* icon links*/
 .icon-link {
   width: 2em;
   height: 2em;
+}
+.no-wrap {
+  white-space: nowrap;
 }
 
 /* song recommendation list*/
@@ -152,18 +155,34 @@ body {
 .margin {
   margin: 0px 3px 3px 3px;
 }
-.container-youtube {
-  width:50vw;
-}
 .profile-img {
   width: 2rem;
   height: 2rem;
+  margin-right: 1em;
 }
-
+.sr-nav {
+  display: block;
+}
 /* new song forms */
 .form-control {
   margin-bottom: 1rem;
 }
 .newSongForm {
   text-align: right;
+}
+.col {
+  margin: 0.5em;
+  text-align: center;
+}
+/* song comment */
+.song-comment {
+  display:inherit;
+}
+
+/* youtube */
+.container-youtube {
+  align-items: center;
+}
+.plyr {
+  width:50vw;
 }
