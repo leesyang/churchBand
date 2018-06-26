@@ -155,11 +155,6 @@ body {
 .margin {
   margin: 0px 3px 3px 3px;
 }
-.profile-img {
-  width: 2rem;
-  height: 2rem;
-  margin-right: 1em;
-}
 .sr-nav {
   display: block;
 }
@@ -172,13 +167,14 @@ body {
 }
 .col {
   margin: 0.5em;
-  text-align: center;
 }
 /* song comment */
 .song-comment {
   display:inherit;
 }
-
+.h6, h6 {
+  font-size: 0.7rem;
+}
 /* youtube */
 .container-youtube {
   align-items: center;

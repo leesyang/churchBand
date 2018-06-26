@@ -1,6 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
+const moment = require('moment');
 
 // ----- models ----
 const { Song } = require('../models');
@@ -22,9 +23,10 @@ songsUtil.getListOfSongsPromise = function() {
     .populate('comments.addedBy', filterUserInfo)
 };
 
-songsUtil.getCommentsPromise = function(songId) {
+songsUtil.getSongPromise = function(songId) {
     return Song.findById({_id: songId})
-    .populate('comments.addedBy', '-password -firstName -lastName -email -__v')
+    .populate('addedBy', filterUserInfo)
+    .populate('comments.addedBy', filterUserInfo)
 };
 
 // ----- route controllers -----
@@ -32,7 +34,12 @@ songsUtil.getCommentsPromise = function(songId) {
 songsCtrl.getListOfSongs = function(req, res) {
     songsUtil.getListOfSongsPromise()
     .then(_res => res.status(200).json(_res))
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        if(err) {
+            res.status(500).json({ code: 500, message: 'Internal Server Error'})
+        }
+        console.log(err)
+    });
 };
 
 // -- post a new songs --
@@ -53,7 +60,10 @@ songsCtrl.addNewSong = function(req, res) {
     });
     song.save()
     .then(song => {
-        res.status(201).json(song);
+        songsUtil.getSongPromise(song._id)
+        .then(_song => {
+            res.status(201).json(_song);
+        })
     })
     .catch(err => {
         console.log(err);
@@ -66,22 +76,22 @@ songsCtrl.addNewSong = function(req, res) {
 
 // -- add a new comment --
 songsCtrl.addNewComment = function(req, res) {
-    const newPost = req.body;
-    const comment = {
+    const { comment } = req.body;
+    const newComment = {
         addedBy: req.user.id,
-        comment: req.body.comment,
+        comment: comment,
     };
 
-    console.log(comment);
-    
-    Song.findOneAndUpdate({_id: req.params.songId},{$push:{comments: comment}})
-    .then(post => res.status(201).end())
+    return Song.findOneAndUpdate({_id: req.params.songId},{$push:{comments: newComment}}, {new: true})
+    .populate('addedBy', filterUserInfo)
+    .populate('comments.addedBy', filterUserInfo)
+    .then(post => res.status(201).json(post))
     .catch(err => console.log(err));
 };
 
 // -- get list of comments --
 songsCtrl.getComments = function(req, res) {
-    songsUtil.getCommentsPromise(req.params.songId)
+    songsUtil.getSongPromise(req.params.songId)
     .then(post => res.status(200).json(post))
     .catch(err => console.log(err));
 };
@@ -112,7 +122,7 @@ songsCtrl.updateComment = function(req, res) {
         }
     })
 }
-
+// -- delete a comment, validate that user owns comment --
 songsCtrl.deleteComment = function(req, res) {
     let deleteRequestFrom = req.user.id;
 
