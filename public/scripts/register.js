@@ -43,8 +43,8 @@ function submitNewUser (formValues) {
 }
 
 // ----- handling form data -----
-function objectifyForm(formArray) {
-    let formArray = $(this).serializeArray();
+function objectifyForm(formInputs) {
+    let formArray = $(formInputs).serializeArray();
     const returnObject = {};
     for (var i = 0; i < formArray.length; i++){
       returnObject[formArray[i]["name"]] = formArray[i]['value'];

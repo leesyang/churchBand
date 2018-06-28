@@ -13,6 +13,6 @@ router.get('/', viewsCtrl.login);
 
 router.get('/register', viewsCtrl.register);
 
-router.get('/home', viewsCtrl.home)
+router.get('/home', jwtAuth, viewsCtrl.home)
 
 module.exports = { router };
