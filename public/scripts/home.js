@@ -13,21 +13,51 @@ function objectifyForm(formInputs) {
     return returnObject;
 };
 
+// -- get songId / commentId from html --
+function getSongId (child) {
+    return $(child).closest('.song-recomm-unit').attr('id');
+}
+
+function getCommentId (child) {
+    return $(child).parent('.song-comment').attr('id')
+}
+
 // ------- error handling for ajax -------
 function evalError (err) {
     console.log(err);
-    const responseJSON = res.responseJSON;
+    const responseJSON = err.responseJSON;
     if (responseJSON) {
-        let errorMessage = responseJSON.message;
-        showErrorMessage(errorMessage);
+        showErrorMessage(responseJSON.message);
+    }
+    else {
+        showErrorMessage(err.statusText);
     }
 }
+
+// ----- update profile -----
+function submitUpdateProfile (endpoint, data) {
+    return $.ajax ({
+        method: 'POST',
+        url: endpoint,
+        data: data,
+        cache: false,
+        contentType: 'multipart/form-data',
+        processData: false
+    })
+}
+
+function watchProfileSubmit () {
+
+};
+
 
 // ----- add a new song -----
 function displayNewSong (res) {
     let song = res;
     let songUnit = generateMainSongUnit(song, song._id);
     $('.song-recomm-main').prepend(songUnit);
+    $('.modal').modal('hide');
+    watchYoutubeClick();
 }
 
 function submitNewSong (endpoint, data, callback) {
@@ -49,30 +79,28 @@ function watchNewSongSubmit () {
         if (formValues) {
             submitNewSong(SONGS_EP, formValues, displayNewSong)
         }
+        $(this).reset();
     })
 }
 
-
 // ---- add a new comment to a song -----
 function displayNewComment (res) {
-    let song = res;
-    let songId = res._id;
-    console.log(song);
-    let commentsArray = song.comments.map(comment => { 
-        return generateSongComments(comment)
+    let commentsArray = res.comments;
+    let newComment = commentsArray[commentsArray.length - 1];
+    let commentString = generateSongComment(newComment);
+    $(commentString).appendTo($(`#songComments-${res._id}`).children('.comments-container'))
+    .addClass(`.comment-delete-${newComment._id}`).css('display', 'none').show('normal', () => {
+        watchCommentDelete(newComment._id);
     });
-    let commentsString = commentsArray.join('');
-    $(`#songComments-${songId}`).children('.comments-container').html(commentsString);
 }
 
-function submitNewComment (endpoint, data, callback) {
+function submitNewComment (endpoint, data) {
     return $.ajax({
         method: 'POST',
         url: endpoint,
         contentType: 'application/json',
         data: JSON.stringify(data),
     })
-    .done(callback)
     .fail(evalError)
 }
 
@@ -83,12 +111,38 @@ function watchNewCommentSubmit () {
         const commentsEp = SONGS_EP+`/${formValues.songId}`+'/comments';
         if(formValues && formValues.comment) {
             submitNewComment(commentsEp, formValues, displayNewComment)
+            .done(displayNewComment)
         }
         this.reset();
     })
 }
 
-// ---- onload -----
+// ---- delete a comment from a song ---
+function deleteComment (endpoint, data) {
+    let commentObject = { "commentId": `${data}` };
+    return $.ajax({
+        method: 'DELETE',
+        url: endpoint,
+        contentType: 'application/json',
+        data: JSON.stringify(commentObject),
+    })
+    .fail(evalError)
+}
+
+function watchCommentDelete (id) {
+    let target = (id) ? `.comment-delete-${id}` :  '.comment-delete';
+    $(`${target}`).one('click', function() {
+        let songId = getSongId(this);
+        let commentId = getCommentId(this);
+        let commentsDelEp = SONGS_EP+`/${songId}`+'/comments';
+        deleteComment(commentsDelEp, commentId)
+        .then(() => {
+            $(this).closest('.song-comment').hide('normal', function() {$(this).remove()});
+        })
+    })
+}
+
+// ---- generate initial page -----
 function populateSongRecomm (endpoint, callback) {
     return $.ajax({
         method: 'GET',
@@ -98,10 +152,15 @@ function populateSongRecomm (endpoint, callback) {
     .done(callback)
 }
 
+function showErrorMessage(errMsg) {
+    $('.alert').html(errMsg);
+    $('.alert').slideDown('slow', function(){
+        $('.alert').delay(1000).slideUp();
+    })
+}
 
-function onLoad () {
-    watchNewSongSubmit();
+function onLoadHome () {
     watchNewSongSubmit();
 }
 
-$(onLoad)
+$(onLoadHome)

@@ -1,7 +1,6 @@
 'use strict';
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-const moment = require('moment');
 
 // ----- models ----
 const { Song } = require('../models');
@@ -81,12 +80,15 @@ songsCtrl.addNewComment = function(req, res) {
         addedBy: req.user.id,
         comment: comment,
     };
-
-    return Song.findOneAndUpdate({_id: req.params.songId},{$push:{comments: newComment}}, {new: true})
+    Song.findOneAndUpdate({_id: req.params.songId}, {$push: {comments: newComment}}, { new: true })
     .populate('addedBy', filterUserInfo)
     .populate('comments.addedBy', filterUserInfo)
-    .then(post => res.status(201).json(post))
-    .catch(err => console.log(err));
+    .then(song => {
+        res.status(201).json(song)
+    })
+    .catch(err => {
+        res.status(500).json({ message: 'Database Error'});
+    })
 };
 
 // -- get list of comments --
@@ -124,12 +126,13 @@ songsCtrl.updateComment = function(req, res) {
 }
 // -- delete a comment, validate that user owns comment --
 songsCtrl.deleteComment = function(req, res) {
+    console.log(req.body);
     let deleteRequestFrom = req.user.id;
 
-    Song.findById(req.params.songId, function (err, song){
+    Song.findById(req.params.songId)
+    .then(song => {
         let subDoc = song.comments.id(req.body.commentId);
         let commentOwner = subDoc.addedBy;
-
         if( commentOwner == deleteRequestFrom ){
             subDoc.remove();
             song.save().catch(err => console.log(err));
@@ -142,6 +145,13 @@ songsCtrl.deleteComment = function(req, res) {
                 message: 'Unable to delete. Not Authorized.',
             })
         }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            code: 500,
+            message: 'Internal Server Error'
+        })
     })
 }
 

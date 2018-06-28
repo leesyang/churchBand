@@ -9,23 +9,23 @@
       <title>Home</title>
   </head>
 <body class="bg-light">
-
   <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
     <img class="shadow rounded-left logo" src="/images/favicon-256.png" alt="churchBand logo"href="/home">
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
-        <img class="shadow rounded-circle logo" src="/images/user_profile/image-1.png" alt="churchBand logo" href="/home">
+        <% if (user) { %>
+        <img class="shadow rounded-circle user-img" src="<%= user.profilePicture %>" alt="churchBand logo" href="/home">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, <span>User</span></a>
           <div class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" href="#">Log Out</a>
+            <a class="dropdown-item" href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Profile</a>
+            <a class="dropdown-item" href="/auth/logout">Log Out</a>
           </div>
         </li>
       </ul>
     </div>
   </nav>
-
+  <div class="alert alert-primary fixed-bottom">Error Message</div>
   <div class="nav-scroller bg-white box-shadow">
     <nav class="nav nav-underline">
       <a class="nav-link" href="#">Song Recommendations</a>
@@ -46,7 +46,9 @@
       <small class="text-right mt-3">
           <a href="#" data-toggle="modal" data-target="#newSongInput">Add a song</a>
       </small>
-      <div class="song-recomm-main"><!-- Songs --></div>
+      <div class="loader"></div>
+      <!-- insert songs from database -->
+      <div class="song-recomm-main"></div>
     </div>
     <small class="d-block text-right mt-3">
       <a href="#">See more</a>
@@ -109,15 +111,161 @@
                         </select>
                       </div>
                     </div>
-                    <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link">
-                    <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit">Submit</button>
+                    <div class="form-row">
+                      <div class="col">
+                        <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link">
+                      </div>
+                    </div>
+                        <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit">Submit</button>
                   </form>
             </div>
         </div>
       </div>
-    </div> 
-  </main>
+    </div>
+<!-- profile modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col">
+              <img src="<%= user.profilePicture %>" class="profile-user-img">
+            </div>
+            <div class="col">
+                <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Username:</td>
+                        <td><%= user.username %></td>
+                      </tr>
+                      <tr>
+                        <td>First Name</td>
+                        <td><%= user.firstName %></td>
+                      </tr>
+                      <tr>
+                        <td>Last Name</td>
+                        <td><%= user.lastName %></td>
+                      </tr>
+                      <tr>
+                        <td>Email: </td>
+                        <td><%= user.email %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <p>More Info</p>
+                <table class="table table-user-information">
+                  <tbody>
+                      <tr>
+                        <td>Experience</td>
+                        <td><%= user.username %></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <form id="update-user">
+          <label for="profile-firstname">First Name</label>
+          <input class="form-control form-control-sm" id="profile-firstname" name="firstName" type="text">
+          <label for="profile-lastname">Last Name</label>
+          <input class="form-control form-control-sm" id="profile-lastName" name="lastName" type="text">
+          <label for="profile-email">Email</label>
+          <input class="form-control form-control-sm" id="profile-email" name="email" type="text">
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="pro-instrument-1">Instrument</label>
+                <select name="pro-instrument-1" id="pro-instrument-1" class="form-control">
+                  <option value="Piano">Piano</option>
+                  <option value="Keyboard">Keyboard</option>
+                  <option value="Drums">Drums</option>
+                  <option value="Bass">Bass</option>
+                  <option value="Electric Guitar">Electric Guitar</option>
+                  <option value="Vocals">Vocals</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="pro-skill-level-1">Skill Level</label>
+                <select id="pro-skill-level-1" class="form-control">
+                  <option selected value="Still Learning">Still Learning</option>
+                  <option value="Useable, Need Training">Useable, Need Training</option>
+                  <option value="Stage Ready">Stage Ready</option>
+                  <option value="Creative, Explorative">Creative Artist</option>
+                  <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
+                </select>
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="pro-instrument-1">Instrument</label>
+                <select name="pro-instrument-1" id="pro-instrument-1" class="form-control">
+                  <option value="Piano">Piano</option>
+                  <option value="Keyboard">Keyboard</option>
+                  <option value="Drums">Drums</option>
+                  <option value="Bass">Bass</option>
+                  <option value="Electric Guitar">Electric Guitar</option>
+                  <option value="Vocals">Vocals</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="pro-skill-level-1">Skill Level</label>
+                <select id="pro-skill-level-1" class="form-control">
+                  <option selected value="Still Learning">Still Learning</option>
+                  <option value="Useable, Need Training">Useable, Need Training</option>
+                  <option value="Stage Ready">Stage Ready</option>
+                  <option value="Creative, Explorative">Creative Artist</option>
+                  <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
+                </select>
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="pro-instrument-1">Instrument</label>
+                <select name="pro-instrument-1" id="pro-instrument-1" class="form-control">
+                  <option value="Piano">Piano</option>
+                  <option value="Keyboard">Keyboard</option>
+                  <option value="Drums">Drums</option>
+                  <option value="Bass">Bass</option>
+                  <option value="Electric Guitar">Electric Guitar</option>
+                  <option value="Vocals">Vocals</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="pro-skill-level-1">Skill Level</label>
+                <select id="pro-skill-level-1" class="form-control">
+                  <option selected value="Still Learning">Still Learning</option>
+                  <option value="Useable, Need Training">Useable, Need Training</option>
+                  <option value="Stage Ready">Stage Ready</option>
+                  <option value="Creative, Explorative">Creative Artist</option>
+                  <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
+                </select>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="upload-user-img">Upload Profile Picture</label>
+            <input type="file" class="form-control-file" name="user-img" id="upload-user-img">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info">edit profile</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %>
+</main>
         <script src="scripts/plyr.js"></script>
         <script src="scripts/home.js"></script>
         <script src="scripts/home-dom.js"></script>
-  </body>
+</body>

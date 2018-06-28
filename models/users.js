@@ -5,41 +5,11 @@ const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const skillSchema = new Schema({
-    instrument: String,
-    skill: String,
-    yearsOfExp: Number,
-});
-
-const likesSchema = new Schema({
-    songs: String,
-    sets: String,
-})
 
 const profileSchema = new Schema({
-    experience: {type: Array},
-    yearsOnBand: Number,
-    favorite: {
-        artist: String,
-        album: {
-            title: String,
-            artist: String,
-            releaseYear: {type: String, default: ''}
-        },
-        song: {
-            title: {type: String, default: ''},
-            artist: {type: String, default: ''},
-            album: {type: String, default: ''},
-            releaseYear: {type: String, default: ''}
-        }
-    },
-    songOfTheMonth: {
-        artist: {type: String, default: ''},
-        album: {type: String, default: ''},
-        title: {type: String, default: ''},
-        releaseYear: Number,
-        youtubelink: String,
-    },
+    experience: Array,
+    songLikes: Array,
+    setLikes: Array,
 })
 
 const userSchema = new Schema({
@@ -48,7 +18,7 @@ const userSchema = new Schema({
     lastName: {type: String, required: true},
     password: {type: String, require: true},
     email: {type: String, required: true, unique: true},
-    profilePicture: {type: String, default: ''},
+    profilePicture: {type: String, default: '/images/user_profile/default-user-image.png'},
     profile: profileSchema
 });
 

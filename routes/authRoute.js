@@ -34,6 +34,12 @@ router.post('/login', localAuth, (req, res) => {
     res.status(201).json({ code: 201, message: 'Successful login', authToken: authToken });
 });
 
+router.get('/logout', jwtAuth, (req, res) => {
+    res.clearCookie('authToken');
+    res.redirect('/');
+})
+
+
 /*
 /// --- get a new token with current token ---
 router.get('/refresh', jwtAuth, (req, res) => {

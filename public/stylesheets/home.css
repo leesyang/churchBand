@@ -7,6 +7,15 @@ body {
   padding-top: 56px;
 }
 
+/* ----- Alert ----- */
+.alert {
+  margin: 0;
+  text-align: center;
+  display: none;
+  opacity: 1;
+  border-radius: 0;
+  z-index: 1051;
+}
 /* ----- Navigation and Logo ----- */
 .logo {
   height: 3em;
@@ -25,18 +34,12 @@ body {
 .nav {
   justify-content: center;
 }
-
 /* banner */
 .top-spacer {
   width: 30px;
   height: 100px;
 }
 
-@media (min-width: 992px) {
-.navbar-expand-lg {
-  justify-content: space-between;
-}
-}
 .nav-spacer {
   width: 2rem;
 }
@@ -45,35 +48,6 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
-}
-
-@media (max-width: 991.98px) {
-  .offcanvas-collapse {
-    position: fixed;
-    top: 56px; /* Height of navbar */
-    bottom: 0;
-    left: 100%;
-    width: 100%;
-    padding-right: 1rem;
-    padding-left: 1rem;
-    overflow-y: auto;
-    visibility: hidden;
-    background-color: #343a40;
-    transition-timing-function: ease-in-out;
-    transition-duration: .3s;
-    transition-property: left, visibility;
-  }
-  .offcanvas-collapse.open {
-    left: 0;
-    visibility: visible;
-  }
-  .navbar {
-    display: flex;
-    justify-content: center;
-  }
-  .bg-img {
-    background-image: url(../images/home-banner-edit.jpg);
-  }
 }
 
 .nav-scroller {
@@ -124,6 +98,27 @@ body {
 .lh-100 { line-height: 1; }
 .lh-125 { line-height: 1.25; }
 .lh-150 { line-height: 1.5; }
+/* loader */
+.loader {
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 /* ----- Song recommendations ----- */
 /* user profile picture */
@@ -136,12 +131,16 @@ body {
   width: 15em;
 }
 /* icon links*/
-.icon-link {
+.icon-link img {
   width: 2em;
   height: 2em;
 }
 .no-wrap {
   white-space: nowrap;
+}
+.col-md-auto {
+  margin-bottom: 0.8em;
+  text-align: center;
 }
 
 /* song recommendation list*/
@@ -159,15 +158,17 @@ body {
   display: block;
 }
 /* new song forms */
-.form-control {
-  margin-bottom: 1rem;
-}
 .newSongForm {
   text-align: right;
 }
 .col {
   margin: 0.5em;
+  text-align: center;
 }
+.user-name {
+  display:none;
+}
+
 /* song comment */
 .song-comment {
   display:inherit;
@@ -181,4 +182,56 @@ body {
 }
 .plyr {
   width:50vw;
+}
+
+/**/
+.profile-user-img {
+  width: 10em;
+  height: 10em;
+}
+
+@media (max-width: 991.98px) {
+  .offcanvas-collapse {
+    position: fixed;
+    top: 56px; /* Height of navbar */
+    bottom: 0;
+    left: 100%;
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    overflow-y: auto;
+    visibility: hidden;
+    background-color: #343a40;
+    transition-timing-function: ease-in-out;
+    transition-duration: .3s;
+    transition-property: left, visibility;
+  }
+  .offcanvas-collapse.open {
+    left: 0;
+    visibility: visible;
+  }
+  .navbar {
+    display: flex;
+    justify-content: center;
+  }
+  .bg-img {
+    background-image: url(../images/home-banner-edit.jpg);
+  }
+}
+@media (min-width: 780px){
+  .col-md-auto {
+      margin-bottom: 0.8em;
+      text-align: left;
+  }
+  .user-name {
+    display: inline;
+  }
+}
+@media (min-width: 992px) {
+  .navbar-expand-lg {
+    justify-content: space-between;
+  }
+  .col {
+    text-align: left;
+  }
 }
