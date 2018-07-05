@@ -10,7 +10,7 @@ function generateSongNav (song) {
     <div class="container">
         <div class="row">
           <div class="col-md-auto">
-              <img class="shadow rounded user-img" src="${song.addedBy.profilePicture}">
+              <img class="shadow rounded user-img" src="/images/user_profile/${song.addedBy.profilePicture}">
               <span class="text-gray-dark user-name">@${song.addedBy.username}</span>
               <div class="user-img-spacer"></div>
           </div>
@@ -99,8 +99,12 @@ function generateSongCommentsContainer (song) {
 
 function generateSongComment (comment) {
     let date = simplifyDate(comment.dateAdded);
+    if (comment.addedBy == null ){
+        comment.addedBy = {};
+        comment.addedBy.profilePicture = 'default-user-image.png'
+    }
     return `<div class="media song-comment" id="${comment._id}">
-    <img class="align-self-start mr-3 ml-2 user-img border-gray rounded" src="${comment.addedBy.profilePicture}" alt="user profile thumbnail">
+    <img class="align-self-start mr-3 ml-2 user-img border-gray rounded" src="/images/user_profile/${comment.addedBy.profilePicture}" alt="user profile thumbnail">
     <div class="media-body">
       <h6>${date}</h6>
       <p class="small ml-3 comment-content">${comment.comment}</p>
@@ -109,8 +113,55 @@ function generateSongComment (comment) {
   </div>`
 }
 
+
+function generateProfile (user) {
+    return `
+              <tbody>
+                <tr>
+                  <td>Username:</td>
+                  <td>${user.username}</td>
+                </tr>
+                <tr>
+                  <td>First Name</td>
+                  <td>${user.firstName}</td>
+                </tr>
+                <tr>
+                  <td>Last Name</td>
+                  <td>${user.lastName}</td>
+                </tr>
+                <tr>
+                  <td>Email: </td>
+                  <td>${user.email}</td>
+                </tr>
+              </tbody>`
+};
+
+function generateProfileExp (user) {
+    return `
+     <tbody>
+        <tr>
+          <td>${user.experience.instr1}</td>
+          <td>${user.experience.skill1}</td>
+        </tr>
+        <tr>
+          <td>${user.experience.instr2}</td>
+          <td>${user.experience.skill2}</td>
+        </tr>
+        <tr>
+          <td>${user.experience.instr3}</td>
+          <td>${user.experience.skill3}</td>
+        </tr>
+     </tbody>`
+};
+
 // ----- generate song unit block -----
 function generateMainSongUnit (song) {
+    if ( song.addedBy != Object ) {
+        song.addedBy = {};
+        song.addedBy.username = '';
+        song.addedBy.profilePicture = 'default-user-image.png';
+    }
+
     let mainSongUnit = `<div class="song-recomm-unit" id="${song._id}">` + 
         generateSongNav(song) + 
         generateSongInfo(song) + 
@@ -125,7 +176,6 @@ function generateListOfSongs (songs) {
 }
 
 function populatePage (data) {
-    console.log(data);
     let string = generateListOfSongs(data);
     $('.song-recomm-main').html(`${string}`);
     $('.loader').hide();

@@ -27,7 +27,7 @@ function hideForm () {
 function showLogin () {
     hideForm();
     showRedirectMsg()
-}
+};
 
 // ----- ajax -----
 function submitNewUser (formValues) {
@@ -40,7 +40,7 @@ function submitNewUser (formValues) {
         success: showLogin,
     })
     .fail(evaluateServerResponse)
-}
+};
 
 // ----- handling form data -----
 function objectifyForm(formInputs) {

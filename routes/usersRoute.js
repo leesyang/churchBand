@@ -1,21 +1,22 @@
 'use strict';
 const router = require('express').Router();
-const mongoose = require('mongoose');
 const jsonParser = require('body-parser').json();
-mongoose.Promise = global.Promise;
+
+// ----- auth -----
+const { jwtAuth } = require('../middlewares/auth');
 
 // ----- controllers -----
 const { usersCtrl } = require('../controllers');
 
-// ----- imports -----
-const { User } = require('../models');
-
 // ----- middleware -----
 router.use(jsonParser);
 const { newUserInputCheck } = require('../middlewares/fieldReqCheck');
+const { uploader } = require('../middlewares/multer');
 
 // ----- routes -----
 // -- create new user --
 router.post('/', newUserInputCheck, usersCtrl.addNewUser );
+
+router.put('/', jwtAuth, uploader.ProfilePic, usersCtrl.updateUser);
 
 module.exports = { router };

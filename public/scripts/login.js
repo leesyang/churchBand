@@ -12,8 +12,6 @@ function evaluateServerResponse (res) {
     }
 };
 
-
-
 // ----- DOM manipulation -----
 function showMsg (message) {
     $('.alert').html(`${message}`).fadeTo(1000, 1, function(){
@@ -54,7 +52,7 @@ function watchSubmit () {
         event.preventDefault();
         let formArray = $(this).serializeArray();
         let formValues = objectifyForm(formArray);
-        submitLogin(formValues);
+        submitLogin(formValues)
     })
 };
 

@@ -139,8 +139,8 @@ songsCtrl.deleteComment = function(req, res) {
             res.status(204).end();
         }
         else {
-            res.json({
-                code: 422,
+            res.status(401).json({
+                code: 401,
                 reason: 'Denied',
                 message: 'Unable to delete. Not Authorized.',
             })

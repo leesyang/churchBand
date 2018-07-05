@@ -37,19 +37,43 @@ function evalError (err) {
 // ----- update profile -----
 function submitUpdateProfile (endpoint, data) {
     return $.ajax ({
-        method: 'POST',
+        method: 'PUT',
         url: endpoint,
         data: data,
         cache: false,
-        contentType: 'multipart/form-data',
+        contentType: false,
         processData: false
     })
 }
 
 function watchProfileSubmit () {
-
+    $('#update-user').submit(function(event) {
+        console.log('watch profile running');
+        event.preventDefault();
+        let formData = new FormData(this);
+         const updateProfileEp = '/users';
+         submitUpdateProfile(updateProfileEp, formData)
+         .done(renderNewProfile)
+    })
 };
 
+function renderNewProfile (user) {
+    console.log(user);
+    let profileString = generateProfile(user);
+    let profileExpString = generateProfileExp(user);
+    console.log(profileExpString);
+    $('.table-user-info').html(profileString);
+    $('.user-exp').html(profileExpString);
+    $('.update-user-container').toggle('slow');
+    $('.user-img-loggedin').attr('src', `/images/user_profile/${user.profilePicture}`);
+
+}
+
+function watchProfileEdit () {
+    $('.btn-edit-profile').click(() => {
+        $('.update-user-container').toggle('slow');
+    })
+}
 
 // ----- add a new song -----
 function displayNewSong (res) {
@@ -131,7 +155,7 @@ function deleteComment (endpoint, data) {
 
 function watchCommentDelete (id) {
     let target = (id) ? `.comment-delete-${id}` :  '.comment-delete';
-    $(`${target}`).one('click', function() {
+    $(`${target}`).on('click', function() {
         let songId = getSongId(this);
         let commentId = getCommentId(this);
         let commentsDelEp = SONGS_EP+`/${songId}`+'/comments';
@@ -161,6 +185,8 @@ function showErrorMessage(errMsg) {
 
 function onLoadHome () {
     watchNewSongSubmit();
+    watchProfileSubmit();
+    watchProfileEdit();
 }
 
 $(onLoadHome)
