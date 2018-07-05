@@ -24,9 +24,8 @@ passport.serializeUser(function(user, cb) {
   });
 
 // ----- local strategy -----
-const localStrategy = new LocalStrategy({ passReqToCallback: true },
-    function (req, username, password, callback) {
-      console.log('passing through local strategy');
+const localStrategy = new LocalStrategy(
+    function (username, password, callback) {
     let user;
     User.findOne({ username: username })
       .then(_user => {

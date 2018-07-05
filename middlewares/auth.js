@@ -1,9 +1,7 @@
 'use strict';
 const passport = require('passport');
 
-//const localAuth = passport.authenticate('local', { session: false, failureRedirect: '/' });
-
-const localAuth = function (req, res, next ) {
+const localAuth = function (req, res, next) {
     passport.authenticate('local', { session: false }, function(err, user, info) {
         if (err) { return next(err) };
         if (info) { return res.status(422).json(info) };

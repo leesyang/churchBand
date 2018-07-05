@@ -6,11 +6,11 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
-const profileSchema = new Schema({
+/* const profileSchema = new Schema({
     experience: Array,
     songLikes: Array,
     setLikes: Array,
-})
+}) */
 
 const userSchema = new Schema({
     username: {type: String, required: true, unique: true},
@@ -18,8 +18,8 @@ const userSchema = new Schema({
     lastName: {type: String, required: true},
     password: {type: String, require: true},
     email: {type: String, required: true, unique: true},
-    profilePicture: {type: String, default: '/images/user_profile/default-user-image.png'},
-    profile: profileSchema
+    profilePicture: {type: String, default: 'default-user-image.png'},
+    experience: Object
 });
 
 userSchema.methods.serialize = function() {
@@ -29,7 +29,8 @@ userSchema.methods.serialize = function() {
         lastName: this.lastName,
         email: this.email,
         profilePicture: this.profilePicture,
-        id: this._id
+        id: this._id,
+        experience: this.experience
     };
 };
 

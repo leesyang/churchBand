@@ -122,7 +122,7 @@ body {
 
 /* ----- Song recommendations ----- */
 /* user profile picture */
-.user-img {
+.user-img, .user-img-loggedin{
   width: 3em;
   height: 3em;
   display: inline-block;
@@ -184,7 +184,11 @@ body {
   width:50vw;
 }
 
-/**/
+/* user profile */
+.update-user-container {
+  display:none;
+}
+
 .profile-user-img {
   width: 10em;
   height: 10em;
