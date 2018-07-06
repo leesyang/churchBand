@@ -5,6 +5,8 @@
       <!-- specific css -->
       <link rel="stylesheet" href="https://cdn.plyr.io/3.3.17/plyr.css">
       <link href="stylesheets/home.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+      <link rel="stylesheet" href="stylesheets/waveform-playlist.css">
       <!-- end css -->
       <title>Home</title>
   </head>
@@ -16,7 +18,7 @@
         <% if (user) { %>
         <img class="shadow rounded-circle user-img-loggedin" src="/images/user_profile/<%= user.profilePicture %>" alt="user image" href="/home">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, <%= user.username %></a>
+          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, <%= user.firstName %></a>
           <div class="dropdown-menu" aria-labelledby="dropdown01">
             <a class="dropdown-item" href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Profile</a>
             <a class="dropdown-item" href="/auth/logout">Log Out</a>
@@ -41,6 +43,8 @@
         <small>Latest News, Recommendations, Review. All things worship band.</small>
       </div>
     </div>
+<!-- song recommendations -->
+  <div id="song-recomm-container">
     <div class="my-3 p-3 bg-white rounded box-shadow content-news">
       <h6 class="border-bottom border-gray pb-2 mb-0">Latest Recommendations</h6>
       <small class="text-right mt-3">
@@ -53,232 +57,274 @@
     <small class="d-block text-right mt-3">
       <a href="#">See more</a>
     </small>
-<!-- Add a new song modal -->
-    <div class="modal fade" id="newSongInput" tabindex="-1" role="dialog" aria-labelledby="newSongInput" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="newSongInput">Song Info</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form class="newSongForm">
-                    <div class="form-row">
-                      <div class="col">
-                        <input type="text" id="inputArtist" name="artist" class="form-control" placeholder="Artist" required>
-                      </div>
-                      <div class="col">
-                        <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Title" required>
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="col">
-                        <input type="text" id="inputAlbum" name="album" class="form-control" placeholder="Album">
-                      </div>
-                      <div class="col">
-                        <input type="text" id="inputReleaseYear" name="releaseYear" class="form-control" placeholder="Release Year">
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="col">
-                        <select id="inputTheme" name="theme" class="form-control" required>
-                          <option value="">Theme</option>
-                          <option value="Adoration & Praise">Adoration & Praise</option>
-                          <option value="Call to Worship">Call to Worship</option>
-                          <option value="Christmas">Christmas</option>
-                          <option value="Church & Unity">Church & Unity</option>
-                          <option value="Commitment & Dedication">Commitment & Dedication</option>
-                          <option value="Communion & Reflection">Communion & Reflection</option>
-                          <option value="Easter">Easter</option>
-                          <option value="Faith & Trust">Faith & Trust</option>
-                          <option value="God's Attributes">God's Attributes</option>
-                          <option value="Grace & Mercy">Grace & Mercy</option>
-                          <option value="Missions">Missions</option>
-                          <option value="Peace & Hope">Peace & Hope</option>
-                          <option value="Prayer & Renewal">Prayer & Renewal</option>
-                          <option value="Resurrection & Sacrifice">Resurrection & Sacrifice</option>
-                          <option value="Other">Other</option>
-                        </select>
-                      </div>
-                      <div class="col">
-                        <select name="tempo" id="inputTempo" class="form-control" required>
-                          <option value="">Tempo</option>
-                          <option value="Slow">Slow</option>
-                          <option value="Medium">Medium</option>
-                          <option value="Fast">Fast</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="col">
-                        <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link">
-                      </div>
-                    </div>
-                        <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit">Submit</button>
-                  </form>
-            </div>
-        </div>
-      </div>
-    </div>
-<!-- profile modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Profile</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body profile-info">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col">
-              <img src="images/user_profile/<%= user.profilePicture %>" class="profile-user-img">
-            </div>
-            <div class="col">
-                <table class="table table-user-info">
-                    <tbody><% if (user) { %>
-                      <tr>
-                        <td>Username:</td>
-                        <td><%= user.username %></td>
-                      </tr>
-                      <tr>
-                        <td>First Name</td>
-                        <td><%= user.firstName %></td>
-                      </tr>
-                      <tr>
-                        <td>Last Name</td>
-                        <td><%= user.lastName %></td>
-                      </tr>
-                      <tr>
-                        <td>Email: </td>
-                        <td><%= user.email %></td><% } %>
-                      </tr>
-                    </tbody>
-                  </table>
-                <p>Experience</p>
-                <table class="table table-user-information user-exp">
-                  <tbody><% if (user.experience) { %>
-                      <tr>
-                        <td><%= user.experience.instr1 %></td>
-                        <td><%= user.experience.skill1 %></td>
-                      </tr>
-                      <tr>
-                        <td><%= user.experience.instr2 %></td>
-                        <td><%= user.experience.skill2 %></td>
-                      </tr>
-                      <tr>
-                        <td><%= user.experience.instr3 %></td>
-                        <td><%= user.experience.skill3 %></td>
-                      </tr>
-                    <% } %></tbody>
-                </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container update-user-container"><% if (user) { %>
-        <form id="update-user">
-          <label for="profile-firstname">First Name</label>
-          <input class="form-control form-control-sm" id="profile-firstname" name="firstName" type="text" value="<%= user.firstName %>" placeholder="<%= user.firstName %>">
-          <label for="profile-lastname">Last Name</label>
-          <input class="form-control form-control-sm" id="profile-lastName" name="lastName" type="text" value="<%= user.lastName %>" placeholder="<%= user.lastName %>">
-          <label for="profile-email">Email</label>
-          <input class="form-control form-control-sm" id="profile-email" name="email" type="text" value="<%= user.email %>" placeholder="<%= user.email %>">
-          <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="pro-instrument-1">Instrument</label>
-                <select name="instr1" id="pro-instrument-1" class="form-control">
-                  <option value=""></option>
-                  <option value="Piano">Piano</option>
-                  <option value="Keyboard">Keyboard</option>
-                  <option value="Drums">Drums</option>
-                  <option value="Bass">Bass</option>
-                  <option value="Electric Guitar">Electric Guitar</option>
-                  <option value="Vocals">Vocals</option>
-                </select>
-              </div>
-              <div class="form-group col-md-4">
-                <label for="pro-skill-level-1">Skill Level</label>
-                <select id="pro-skill-level-1" name="skill1" class="form-control">
-                  <option selected value=""></option>
-                  <option value="Still Learning">Still Learning</option>
-                  <option value="Useable, Need Training">Useable, Need Training</option>
-                  <option value="Stage Ready">Stage Ready</option>
-                  <option value="Creative, Explorative">Creative Artist</option>
-                  <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
-                </select>
-              </div>
-          </div>
-          <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="pro-instrument-2">Instrument</label>
-                <select name="instr2" id="pro-instrument-2" class="form-control">
-                  <option value=""></option>
-                  <option value="Piano">Piano</option>
-                  <option value="Keyboard">Keyboard</option>
-                  <option value="Drums">Drums</option>
-                  <option value="Bass">Bass</option>
-                  <option value="Electric Guitar">Electric Guitar</option>
-                  <option value="Vocals">Vocals</option>
-                </select>
-              </div>
-              <div class="form-group col-md-4">
-                <label for="pro-skill-level-2">Skill Level</label>
-                <select id="pro-skill-level-2" name="skill2" class="form-control">
-                  <option selected value=""></option>
-                  <option value="Still Learning">Still Learning</option>
-                  <option value="Useable, Need Training">Useable, Need Training</option>
-                  <option value="Stage Ready">Stage Ready</option>
-                  <option value="Creative, Explorative">Creative Artist</option>
-                  <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
-                </select>
-              </div>
-          </div>
-          <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="pro-instrument-3">Instrument</label>
-                <select name="instr3" id="pro-instrument-3" class="form-control">
-                  <option value=""></option>
-                  <option value="Piano">Piano</option>
-                  <option value="Keyboard">Keyboard</option>
-                  <option value="Drums">Drums</option>
-                  <option value="Bass">Bass</option>
-                  <option value="Electric Guitar">Electric Guitar</option>
-                  <option value="Vocals">Vocals</option>
-                </select>
-              </div>
-              <div class="form-group col-md-4">
-                <label for="pro-skill-level-3">Skill Level</label>
-                <select id="pro-skill-level-3" name="skill3" class="form-control">
-                  <option selected value=""></option>
-                  <option value="Still Learning">Still Learning</option>
-                  <option value="Useable, Need Training">Useable, Need Training</option>
-                  <option value="Stage Ready">Stage Ready</option>
-                  <option value="Creative, Explorative">Creative Artist</option>
-                  <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
-                </select>
-              </div>
-          </div>
+  </div>
+<!-- set reviews -->
+  <div id="set-review-container">
+    <div class="my-3 p-3 bg-white rounded box-shadow content-news">
+      <h6 class="border-bottom border-gray pb-2 mb-0">Set Reviews</h6>
+      <small class="text-right mt-3">
+          <a href="#" data-toggle="modal" data-target="#">Add a set</a>
+      </small>
+      <div class="loader"></div>
+      <!-- insert sets from database -->
+      <div class="set-reviews">
+        <div class="playlist-toolbar">
+          <div class="btn-group">
+            <span class="btn-pause btn btn-sm btn-warning"><i class="fa fa-pause"></i></span>
+            <span class="btn-play btn btn-sm btn-success"><i class="fa fa-play"></i></span>
+            <span class="btn-stop btn btn-sm btn-danger"><i class="fa fa-stop"></i></span>
+            <span class="btn-rewind btn btn-sm btn-success"><i class="fa fa-fast-backward"></i></span>
+            <span class="btn-fast-forward btn btn-sm btn-success"><i class="fa fa-fast-forward"></i></span>
+            
+         </div>
+         <span class="audio-pos">00:00:00.0</span>
+         <form class="form-inline">
           <div class="form-group">
-            <label for="upload-user-img">Upload Profile Picture</label>
-            <input type="file" class="form-control-file" name="userImg" id="upload-user-img">
+            <label for="master-gain">Master Volume</label>
+            <input type="range" min="0" max="100" value="100" class="master-gain form-control" id="master-gain">
           </div>
-          <button type="submit" class="btn btn-primary" id="update-user-submit">Submit</button>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" class="automatic-scroll"> Automatic Scroll
+            </label>
+          </div>
         </form>
-      </div><% } %>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-info btn-edit-profile">edit profile</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        <div id="playlist"></div>
+        <div class="sound-status"></div>
+        <div class="loading-data"></div>
+    </div>
+  </div>
+<!-- Add a new song modal -->
+  <div class="modal fade" id="newSongInput" tabindex="-1" role="dialog" aria-labelledby="newSongInput" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="newSongInput">Song Info</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form class="newSongForm">
+                  <div class="form-row">
+                    <div class="col">
+                      <input type="text" id="inputArtist" name="artist" class="form-control" placeholder="Artist" required>
+                    </div>
+                    <div class="col">
+                      <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Title" required>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <input type="text" id="inputAlbum" name="album" class="form-control" placeholder="Album">
+                    </div>
+                    <div class="col">
+                      <input type="text" id="inputReleaseYear" name="releaseYear" class="form-control" placeholder="Release Year">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <select id="inputTheme" name="theme" class="form-control" required>
+                        <option value="">Theme</option>
+                        <option value="Adoration & Praise">Adoration & Praise</option>
+                        <option value="Call to Worship">Call to Worship</option>
+                        <option value="Christmas">Christmas</option>
+                        <option value="Church & Unity">Church & Unity</option>
+                        <option value="Commitment & Dedication">Commitment & Dedication</option>
+                        <option value="Communion & Reflection">Communion & Reflection</option>
+                        <option value="Easter">Easter</option>
+                        <option value="Faith & Trust">Faith & Trust</option>
+                        <option value="God's Attributes">God's Attributes</option>
+                        <option value="Grace & Mercy">Grace & Mercy</option>
+                        <option value="Missions">Missions</option>
+                        <option value="Peace & Hope">Peace & Hope</option>
+                        <option value="Prayer & Renewal">Prayer & Renewal</option>
+                        <option value="Resurrection & Sacrifice">Resurrection & Sacrifice</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <select name="tempo" id="inputTempo" class="form-control" required>
+                        <option value="">Tempo</option>
+                        <option value="Slow">Slow</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Fast">Fast</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link">
+                    </div>
+                  </div>
+                      <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit">Submit</button>
+                </form>
+          </div>
       </div>
     </div>
   </div>
-</div>
+<!-- profile modal -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Profile</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body profile-info">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col">
+                <img src="images/user_profile/<%= user.profilePicture %>" class="profile-user-img">
+              </div>
+              <div class="col">
+                  <table class="table table-user-info">
+                      <tbody><% if (user) { %>
+                        <tr>
+                          <td>Username:</td>
+                          <td><%= user.username %></td>
+                        </tr>
+                        <tr>
+                          <td>First Name</td>
+                          <td><%= user.firstName %></td>
+                        </tr>
+                        <tr>
+                          <td>Last Name</td>
+                          <td><%= user.lastName %></td>
+                        </tr>
+                        <tr>
+                          <td>Email: </td>
+                          <td><%= user.email %></td><% } %>
+                        </tr>
+                      </tbody>
+                    </table>
+                  <p>Experience</p>
+                  <table class="table table-user-information user-exp">
+                    <tbody><% if (user.experience) { %>
+                        <tr>
+                          <td><%= user.experience.instr1 %></td>
+                          <td><%= user.experience.skill1 %></td>
+                        </tr>
+                        <tr>
+                          <td><%= user.experience.instr2 %></td>
+                          <td><%= user.experience.skill2 %></td>
+                        </tr>
+                        <tr>
+                          <td><%= user.experience.instr3 %></td>
+                          <td><%= user.experience.skill3 %></td>
+                        </tr>
+                      <% } %></tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container update-user-container"><% if (user) { %>
+          <form id="update-user">
+            <label for="profile-firstname">First Name</label>
+            <input class="form-control form-control-sm" id="profile-firstname" name="firstName" type="text" value="<%= user.firstName %>" placeholder="<%= user.firstName %>">
+            <label for="profile-lastname">Last Name</label>
+            <input class="form-control form-control-sm" id="profile-lastName" name="lastName" type="text" value="<%= user.lastName %>" placeholder="<%= user.lastName %>">
+            <label for="profile-email">Email</label>
+            <input class="form-control form-control-sm" id="profile-email" name="email" type="text" value="<%= user.email %>" placeholder="<%= user.email %>">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="pro-instrument-1">Instrument</label>
+                  <select name="instr1" id="pro-instrument-1" class="form-control">
+                    <option value=""></option>
+                    <option value="Piano">Piano</option>
+                    <option value="Keyboard">Keyboard</option>
+                    <option value="Drums">Drums</option>
+                    <option value="Bass">Bass</option>
+                    <option value="Electric Guitar">Electric Guitar</option>
+                    <option value="Vocals">Vocals</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="pro-skill-level-1">Skill Level</label>
+                  <select id="pro-skill-level-1" name="skill1" class="form-control">
+                    <option selected value=""></option>
+                    <option value="Still Learning">Still Learning</option>
+                    <option value="Useable, Need Training">Useable, Need Training</option>
+                    <option value="Stage Ready">Stage Ready</option>
+                    <option value="Creative, Explorative">Creative Artist</option>
+                    <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
+                  </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="pro-instrument-2">Instrument</label>
+                  <select name="instr2" id="pro-instrument-2" class="form-control">
+                    <option value=""></option>
+                    <option value="Piano">Piano</option>
+                    <option value="Keyboard">Keyboard</option>
+                    <option value="Drums">Drums</option>
+                    <option value="Bass">Bass</option>
+                    <option value="Electric Guitar">Electric Guitar</option>
+                    <option value="Vocals">Vocals</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="pro-skill-level-2">Skill Level</label>
+                  <select id="pro-skill-level-2" name="skill2" class="form-control">
+                    <option selected value=""></option>
+                    <option value="Still Learning">Still Learning</option>
+                    <option value="Useable, Need Training">Useable, Need Training</option>
+                    <option value="Stage Ready">Stage Ready</option>
+                    <option value="Creative, Explorative">Creative Artist</option>
+                    <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
+                  </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="pro-instrument-3">Instrument</label>
+                  <select name="instr3" id="pro-instrument-3" class="form-control">
+                    <option value=""></option>
+                    <option value="Piano">Piano</option>
+                    <option value="Keyboard">Keyboard</option>
+                    <option value="Drums">Drums</option>
+                    <option value="Bass">Bass</option>
+                    <option value="Electric Guitar">Electric Guitar</option>
+                    <option value="Vocals">Vocals</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="pro-skill-level-3">Skill Level</label>
+                  <select id="pro-skill-level-3" name="skill3" class="form-control">
+                    <option selected value=""></option>
+                    <option value="Still Learning">Still Learning</option>
+                    <option value="Useable, Need Training">Useable, Need Training</option>
+                    <option value="Stage Ready">Stage Ready</option>
+                    <option value="Creative, Explorative">Creative Artist</option>
+                    <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
+                  </select>
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="upload-user-img">Upload Profile Picture</label>
+              <input type="file" class="form-control-file" name="userImg" id="upload-user-img">
+            </div>
+            <button type="submit" class="btn btn-primary" id="update-user-submit">Submit</button>
+          </form>
+        </div><% } %>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-info btn-edit-profile">edit profile</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
         <script src="scripts/plyr.js"></script>
         <script src="scripts/home.js"></script>
         <script src="scripts/home-dom.js"></script>
+        <script src="scripts/home-set.js"></script>
+        <script src="scripts/waveform-playlist.var.js"></script>
+        <script src="scripts/stem-tracks.js"></script>
+        <script src="scripts/emitter.js"></script>
 </body>

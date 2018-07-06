@@ -239,3 +239,9 @@ body {
     text-align: left;
   }
 }
+
+/* Set Reviews */
+.btn-sm {
+  padding: .25rem .5rem;
+  font-size: .6rem;
+}

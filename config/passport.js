@@ -11,18 +11,6 @@ const { JWT_SECRET, JWT_EXPIRY } = require('./constants');
 // ----- imports -----
 const { User } = require('../models');
 
-// ----- serializing/deserializing user login -----
-passport.serializeUser(function(user, cb) {
-    cb(null, user.id);
-  });
-  
-  passport.deserializeUser(function(id, cb) {
-    User.findById(id, function (err, user) {
-      if (err) { return cb(err); }
-      cb(null, user);
-    });
-  });
-
 // ----- local strategy -----
 const localStrategy = new LocalStrategy(
     function (username, password, callback) {
@@ -81,7 +69,7 @@ const jwtStrategy = new JwtStrategy(
       }
 );
 
-passport.use(localStrategy);
-passport.use(jwtStrategy);
+/* passport.use('local-login', localStrategy);
+passport.use('jwt-protected', jwtStrategy); */
 
 module.exports = { localStrategy, jwtStrategy };

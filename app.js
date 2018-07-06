@@ -2,13 +2,12 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const passport = require('passport');
-const flash = require('connect-flash');
-//const session = require('express-session');
 mongoose.Promise = global.Promise;
+const passport = require('passport');
 
 // ----- constants -----
 const { DATABASE_URL, PORT } = require('./config/constants');
+const { localStrategy, jwtStrategy } = require('./config/passport');
 
 // ----- imports -----
 const { router } = require('./routes');
@@ -18,25 +17,17 @@ const app = express();
 // ----- http logging -----
 app.use(morgan('common'));
 
-// ---- sessions -----
-/* const sessConfig = {
-  secret: 'thinkful',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: null }
-};
-app.use(session(sessConfig)); */
-
-// ----- activate passport -----
+// ----- passport -----
 app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
+passport.use('local-login', localStrategy);
+passport.use('jwt-protected', jwtStrategy);
 
 // ----- routes -----
 app.use('/', router);
 
 // ---- static files -----
 app.use(express.static(__dirname + '/public'));
+app.use('/media', express.static(__dirname + '/media'));
 
 // ----- views -----
 app.set('view engine', 'ejs');
