@@ -284,16 +284,16 @@ $container.on("change", ".automatic-scroll", function(e){
   ee.emit("automaticscroll", $(e.target).is(':checked'));
 });
 
-function displaySoundStatus(status) {
+/* function displaySoundStatus(status) {
   $(".sound-status").html(status);
 }
-
-function displayLoadingData(data) {
+ */
+/* function displayLoadingData(data) {
   var info = $("<div/>").append(data);
   $(".loading-data").append(info);
 }
-
-function displayDownloadLink(link) {
+ */
+/* function displayDownloadLink(link) {
   var dateString = (new Date()).toISOString();
   var $link = $("<a/>", {
     'href': link,
@@ -304,7 +304,7 @@ function displayDownloadLink(link) {
 
   $('.btn-download-link').remove();
   $('.btn-download').after($link);
-}
+} */
 
 
 /*
@@ -314,7 +314,7 @@ ee.on("select", updateSelect);
 
 ee.on("timeupdate", updateTime);
 
-ee.on("mute", function(track) {
+/* ee.on("mute", function(track) {
   displaySoundStatus("Mute button pressed for " + track.name);
 });
 
@@ -329,11 +329,11 @@ ee.on("volumechange", function(volume, track) {
 ee.on("mastervolumechange", function(volume) {
   displaySoundStatus("Master volume now has volume " + volume + ".");
 });
-
+ */
 
 var audioStates = ["uninitialized", "loading", "decoding", "finished"];
 
-ee.on("audiorequeststatechange", function(state, src) {
+/* ee.on("audiorequeststatechange", function(state, src) {
   var name = src;
 
   if (src instanceof File) {
@@ -359,9 +359,9 @@ ee.on("audiosourcesloaded", function() {
 
 ee.on("audiosourcesrendered", function() {
   displayLoadingData("Tracks have been rendered");
-});
+}); */
 
-ee.on('audiorenderingfinished', function (type, data) {
+/* ee.on('audiorenderingfinished', function (type, data) {
   if (type == 'wav'){
     if (downloadUrl) {
       window.URL.revokeObjectURL(downloadUrl);
@@ -370,7 +370,7 @@ ee.on('audiorenderingfinished', function (type, data) {
     downloadUrl = window.URL.createObjectURL(data);
     displayDownloadLink(downloadUrl);
   }
-});
+}); */
 
 ee.on('finished', function () {
   console.log("The cursor has reached the end of the selection !");

@@ -1,6 +1,7 @@
 'use strict';
 // ----- constants: endpoints -----
 const SONGS_EP = '/api/songs';
+const SETS_EP = '/api/sets';
 
 // ----- utility functions -----
 // -- converts form data into object --
@@ -19,7 +20,7 @@ function getSongId (child) {
 }
 
 function getCommentId (child) {
-    return $(child).parent('.song-comment').attr('id')
+    return $(child).parent('.comment-unit').attr('id')
 }
 
 // ------- error handling for ajax -------
@@ -54,6 +55,7 @@ function watchProfileSubmit () {
          const updateProfileEp = '/users';
          submitUpdateProfile(updateProfileEp, formData)
          .done(renderNewProfile)
+         .fail(evalError);
     })
 };
 
@@ -103,7 +105,7 @@ function watchNewSongSubmit () {
         if (formValues) {
             submitNewSong(SONGS_EP, formValues, displayNewSong)
         }
-        $(this).reset();
+        $(this).trigger('reset');
     })
 }
 
@@ -112,7 +114,7 @@ function displayNewComment (res) {
     let commentsArray = res.comments;
     let newComment = commentsArray[commentsArray.length - 1];
     let commentString = generateSongComment(newComment);
-    $(commentString).appendTo($(`#songComments-${res._id}`).children('.comments-container'))
+    $(commentString).appendTo($(`#comments-${res._id}`).children('.comments-container'))
     .addClass(`.comment-delete-${newComment._id}`).css('display', 'none').show('normal', () => {
         watchCommentDelete(newComment._id);
     });
@@ -153,15 +155,20 @@ function deleteComment (endpoint, data) {
     .fail(evalError)
 }
 
+function getSetId (child) {
+    return $(child).closest('.set-comments ').find('#comments-setId').attr('value')
+}
+
 function watchCommentDelete (id) {
     let target = (id) ? `.comment-delete-${id}` :  '.comment-delete';
     $(`${target}`).on('click', function() {
         let songId = getSongId(this);
         let commentId = getCommentId(this);
-        let commentsDelEp = SONGS_EP+`/${songId}`+'/comments';
+        let setId = getSetId(this);
+        let commentsDelEp = (songId)? SONGS_EP+`/${songId}`+'/comments' : SETS_EP+`/${setId}`+'/comments';
         deleteComment(commentsDelEp, commentId)
         .then(() => {
-            $(this).closest('.song-comment').hide('normal', function() {$(this).remove()});
+            $(this).closest('.comment-unit').hide('normal', function() {$(this).remove()});
         })
     })
 }

@@ -1,9 +1,5 @@
 'use strict';
-const express = require('express');
-const router = express.Router();
-const passport = require('passport');
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
+const router = require('express').Router();
 
 // ----- authentication -----
 const { jwtAuth } = require('../middlewares/auth');
@@ -12,15 +8,15 @@ const { jwtAuth } = require('../middlewares/auth');
 const { setsCtrl } = require('../controllers');
 
 // ---- middlewares -----
-router.use(jsonParser);
 const { newSetFieldsCheck } = require('../middlewares/fieldReqCheck');
+const { uploader } = require('../middlewares/multer');
 
 // ----- routes -----
 // -- get list of sets --
 router.get('/', setsCtrl.getListOfSets);
 
 // -- add a new set --
-router.post('/', jwtAuth, newSetFieldsCheck, setsCtrl.addNewSet);
+router.post('/', jwtAuth, uploader.Set, newSetFieldsCheck, setsCtrl.addNewSet);
 
 // -- get list of comments ---
 router.get('/:setId/comments', setsCtrl.getComments);

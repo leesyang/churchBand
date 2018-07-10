@@ -8,19 +8,20 @@ router.use(cookieParser());
 router.use(jsonParser);
 
 // ---- import routes -----
-const { router: authRoute } = require('./authRoute');
-const { router: songsRoute } = require('./songsRoute');
-const { router: usersRoute } = require('./usersRoute');
-const { router: setsRoute } = require('./setsRoute');
-const { router: viewsRoute } = require('./viewsRoute');
+const 
+    { router: authRoute } = require('./authRoute'),
+    { router: songsRoute } = require('./songsRoute'),
+    { router: usersRoute } = require('./usersRoute'),
+    { router: setsRoute } = require('./setsRoute'),
+    { router: viewsRoute } = require('./viewsRoute');
 
 // ----- user and auth routes -----
-router.use('/auth', authRoute); // serves a JWT, requires login info, uses localauth
-router.use('/users', usersRoute); // signup a new user
+router.use('/auth', authRoute);
+router.use('/users', usersRoute);
 
 // ----- api routes -----
-router.use('/api/songs', songsRoute); // access songs database, need jwt
-router.use('/api/review/sets', setsRoute); // access sets database, need jwt
+router.use('/api/songs', songsRoute);
+router.use('/api/sets', setsRoute);
 
 // ---- views routes -----
 router.use('/', viewsRoute);

@@ -31,7 +31,7 @@
   <div class="nav-scroller bg-white box-shadow">
     <nav class="nav nav-underline">
       <a class="nav-link" href="#">Song Recommendations</a>
-      <a class="nav-link" href="#">Set Reviews</a>
+      <a class="nav-link" id="sets-link" href="#">Set Reviews</a>
     </nav>
   </div>
     
@@ -62,10 +62,22 @@
   <div id="set-review-container">
     <div class="my-3 p-3 bg-white rounded box-shadow content-news">
       <h6 class="border-bottom border-gray pb-2 mb-0">Set Reviews</h6>
-      <small class="text-right mt-3">
-          <a href="#" data-toggle="modal" data-target="#">Add a set</a>
-      </small>
       <div class="loader"></div>
+      <div class="container">
+          <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#newSetInput">Add a set</button>
+            </div>
+            <div class="col">
+                <div class="dropdown show">
+                    <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Choose a set
+                    </a>
+                    <div class="dropdown-menu dropdown-sets" aria-labelledby="dropdownMenuLink"></div>
+                  </div>
+            </div>
+          </div>
+        </div>
       <!-- insert sets from database -->
       <div class="set-reviews">
         <div class="playlist-toolbar">
@@ -91,8 +103,23 @@
         </form>
         </div>
         <div id="playlist"></div>
-        <div class="sound-status"></div>
-        <div class="loading-data"></div>
+        <div class="set-comments text-muted pt-1">
+            <div class="card card-body set-comments-container"></div>
+            <form class="form-horizontal set-commentForm" role="form">
+                <div class="form-group">
+                    <label for="comment" class="col-sm-offset-2 control-label small"><strong>Comment</strong></label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="comment" id="comment">
+                      <input type="hidden" id="comments-setId" name="setId" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">                    
+                        <button class="btn btn-secondary btn-circle btn-sm" type="submit"><span class="glyphicon glyphicon-send"></span> Submit</button>
+                    </div>
+                </div>            
+            </form>
+          </div>
     </div>
   </div>
 <!-- Add a new song modal -->
@@ -100,7 +127,7 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="newSongInput">Song Info</h5>
+            <h5 class="modal-title">Song Info</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -319,12 +346,159 @@
       </div>
     </div>
   </div>
+  <!--- add new set modal -->
+  <div class="modal fade" id="newSetInput" tabindex="-1" role="dialog" aria-labelledby="newSetInput" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Upload New Set</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form id="newSetForm">
+                <div class="form-row">
+                  <div class="col">
+                    <label for="eventDate">Event Date</label>
+                    <input type="date" id="eventDate" name="eventDate" class="form-control" placeholder="Date of Event" required>
+                  </div>
+                  <div class="col">
+                      <label for="eventType">Event Type</label>
+                      <select type="text" id="eventType" name="eventType" class="form-control">
+                          <option value="SWS">SWS</option>
+                          <option value="Post-Grad">Post-Grad</option>
+                          <option value="Baptism">Baptism</option>
+                          <option value="TFN">TFN</option>
+                          <option value="Easter">Easter</option>
+                          <option value="Good Friday">Good Friday</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <input type="text" id="mainLead" name="mainLead" class="form-control" class="form-control form-control-sm" placeholder="Praise Lead">
+                  </div>
+                  <div class="col">
+                    <input type="text" id="mainSpeaker" name="mainSpeaker" class="form-control" class="form-control form-control-sm" placeholder="Main Speaker">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-vocals1" class="col-form-label-sm">Vocals 1</label>
+                    <input type="text" id="mem-vocals1" name="memVocals1" class="form-control form-control-sm" placeholder="Member">
+                    <input type="file" id="vocals1" name="vocals1" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-vocals2" class="col-form-label-sm">Vocals 2</label>
+                    <input type="text" id="mem-vocals2" name="memVocals2" class="form-control form-control-sm" placeholder="Member">
+                    <input type="file" id="vocals2" name="vocals2" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-vocals3" class="col-form-label-sm">Vocals 3</label>
+                    <input type="text" id="mem-vocals3" name="memVocals3" class="form-control form-control-sm" placeholder="Member">
+                    <input type="file" id="vocals3" name="vocals3" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-acGuitar" class="col-form-label-sm">Acoustic Guitar </label>
+                    <input type="text" id="mem-acGuitar" name="memAcGuitar" class="form-control form-control-sm" placeholder="Member">
+                    <input type="file" id="acGuitar" name="acGuitar" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-bass" class="col-form-label-sm">Bass Guitar </label>
+                    <input type="text" id="mem-bass" name="memBass" class="form-control form-control-sm" placeholder="Member">
+                    <input type="file" id="bass" name="bass" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-eg1" class="col-form-label-sm">EG 1</label>
+                    <input type="text" id="mem-eg1" name="memEg1" class="form-control form-control-sm" placeholder="Member">
+                    <input type="file" id="eg1" name="eg1" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-eg2" class="col-form-label-sm">EG 2</label>
+                    <input type="text" id="mem-eg2" name="memEg2" class="form-control form-control-sm" placeholder="Member">
+                    <input type="file" id="eg2" name="eg2" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-keys" class="col-form-label-sm">Keyboard</label>
+                    <input type="text" id="mem-keys" name="memKeys" class="form-control form-control-sm" placeholder="Member">
+                    <input type="file" id="keys" name="keys" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-pad" class="col-form-label-sm">Pad</label>
+                    <input type="text" id="mem-pad" name="memPad" class="form-control form-control-sm" placeholder="Member">
+                    <input type="file" id="pad" name="pad" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                      <label for="mem-drumer" class="col-form-label-sm">Drums - Overhead</label>
+                      <input type="text" id="mem-drummer" name="memDrum" class="form-control form-control-sm" placeholder="Member">
+                    </div>
+                  </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-drum-overhead" class="col-form-label-sm">Drums - Overhead</label>
+                    <input type="file" id="drumsOverhead" name="drumsOverhead" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-drum-snare" class="col-form-label-sm">Drums - Snare</label>
+                    <input type="file" id="drumSnare" name="drumSnare" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-drum-kick" class="col-form-label-sm">Drums - Kick</label>
+                    <input type="file" id="drumKick" name="drumKick" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-drum-tom1" class="col-form-label-sm">Drums - High Tom</label>
+                    <input type="file" id="drumTom1" name="drumTom1" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-drum-tom2" class="col-form-label-sm">Drums - Mid Tom</label>
+                    <input type="file" id="drumTom2" name="drumTom2" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="mem-drum-tom3" class="col-form-label-sm">Drums - Floor Tom</label>
+                    <input type="file" id="drumTom3" name="drumTom3" class="form-control-sm">
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-sm" id="newSetForm-submit" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
 </main>
         <script src="scripts/plyr.js"></script>
         <script src="scripts/home.js"></script>
         <script src="scripts/home-dom.js"></script>
-        <script src="scripts/home-set.js"></script>
         <script src="scripts/waveform-playlist.var.js"></script>
-        <script src="scripts/stem-tracks.js"></script>
+        <script src="scripts/home-set.js"></script>
         <script src="scripts/emitter.js"></script>
 </body>

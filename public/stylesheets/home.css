@@ -132,8 +132,8 @@ body {
 }
 /* icon links*/
 .icon-link img {
-  width: 2em;
-  height: 2em;
+  width: 2.5em;
+  height: 2.5em;
 }
 .no-wrap {
   white-space: nowrap;
@@ -192,7 +192,16 @@ body {
 .profile-user-img {
   width: 10em;
   height: 10em;
+  border-radius: 1em;
 }
+
+/* SETS */
+.dropdown-sets
+{
+   height: 100px;
+   overflow-y: auto;
+}
+
 
 @media (max-width: 991.98px) {
   .offcanvas-collapse {
@@ -238,10 +247,4 @@ body {
   .col {
     text-align: left;
   }
-}
-
-/* Set Reviews */
-.btn-sm {
-  padding: .25rem .5rem;
-  font-size: .6rem;
 }

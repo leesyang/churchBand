@@ -6,21 +6,12 @@ const { User } = require('../models');
 const usersCtrl = {};
 
 // ---- user utility functions -----
-/* const usersUtil = {};
-usersUtil.uniqueEmail = function (email) {
-  User.find({ email: email }).count()
-  .then(count => {
-    if (count > 1) {
-      return false;
-    }
-    else {
-      return true;
-    }
-  });
-} */
 
-usersCtrl.console = function (req, res) {
-    console.log('users controller is working');
+usersCtrl.getListOfUsers = function (req, res) {
+  return User.find({})
+  .then(users => {
+    res.status(200).json(users.serialize());
+  })
 };
 
 usersCtrl.addNewUser = function (req, res) {
