@@ -1,28 +1,56 @@
 'use strict';
+// ---- imports ----
 const { Set } = require('../models');
+
+// ----- exports -----
 const setsCtrl = {};
+
+// ----- common functions -----
+const filterUserInfo = '-password -firstName -lastName -email -__v';
 
 // -- get list of all sets --
 setsCtrl.getListOfSets = function(req, res) {
     Set.find({})
+    .populate('comments.addedBy', filterUserInfo)
     .then(results => res.status(200).json(results))
     .catch(err => console.log(err));
 };
 
 // -- add a new set --
 setsCtrl.addNewSet = function(req, res) {
-    let newSetPost = req.body;
+    let setFileNames = [];
+
+    Object.keys(req.files).map(key => {
+        setFileNames.push({
+            src: req.files[key][0].filename,
+            name: req.files[key][0].fieldname
+        })
+    });
+
+    let setBandMembers = [];
+
+    let { eventDate, eventType, mainLead, mainSpeaker } = req.body;
+
+    Object.keys(req.body).map(key => {
+        
+        if (key.slice(0,3) === 'mem') {
+            setBandMembers.push({
+                instrument: key.substr(3),
+                name: req.body[key]
+            })
+        }
+    })
     
     let set = new Set({
-        eventDate: newSetPost.eventDate,
-        eventType: newSetPost.eventType,
-        mainLead: newSetPost.mainLead,
-        mainSpeaker: newSetPost.mainSpeaker,
-        bandMembers: newSetPost.bandMembers,
-        file: newSetPost.file
+        eventDate: eventDate,
+        eventType: eventType,
+        mainLead: mainLead,
+        mainSpeaker: mainSpeaker,
+        bandMembers: setBandMembers,
+        files: setFileNames
     });
     set.save()
-    .then(results => res.status(201).end())
+    .then(results => res.status(201).json(results))
     .catch(err => console.log(err));
 };
 
@@ -32,10 +60,10 @@ setsCtrl.addNewComment = function(req, res) {
         addedBy: req.user.id,
         comment: req.body.comment,
     };
-    console.log(comment);
-    
-    Set.findOneAndUpdate({_id: req.params.setId},{$push:{comments: comment}})
-    .then(post => res.status(201).end())
+
+    Set.findOneAndUpdate({_id: req.params.setId},{$push:{comments: comment}}, { new: true })
+    .populate('comments.addedBy', filterUserInfo)
+    .then(post => res.status(201).json(post))
     .catch(err => console.log(err));
 };
 

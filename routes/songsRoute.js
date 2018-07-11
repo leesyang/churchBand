@@ -1,11 +1,5 @@
 'use strict';
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
-
-mongoose.Promise = global.Promise;
+const router = require('express').Router();
 
 // ----- authentication -----
 const { jwtAuth } = require('../middlewares/auth');
@@ -14,7 +8,6 @@ const { jwtAuth } = require('../middlewares/auth');
 const { songsCtrl } = require('../controllers');
 
 // ----- middleware -----
-router.use(jsonParser);
 const { 
     newSongFieldsCheck, 
     updateComFieldCheck,

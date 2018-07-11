@@ -73,8 +73,10 @@ const deleteComFieldCheck = function(req, res, next) {
 };
 
 const newSetFieldsCheck = function(req, res, next) {
+  console.log(req.body)
+  
   const fieldIs = {
-    required: ['eventDate', 'mainLead', 'file', 'bandMembers']
+    required: ['eventDate', 'eventType', 'mainLead']
   };
 
   const isMissing = checkReq.missingFields(fieldIs.required, req.body);
