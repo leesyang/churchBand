@@ -26,7 +26,7 @@ function watchNewSetSubmit () {
 };
 
 // ----- get sets ----- 
-let currentSets; // save current sets to memory
+let currentSets = []; // save current sets to memory
 
 function addFilesPath (setFiles) {
     let path = 'media/';
@@ -37,7 +37,6 @@ function addFilesPath (setFiles) {
 }
 
 function generateSetsString (sets) {
-    console.log(sets);
     let setsArray = sets.map(set => {
         let date = simplifyDate(set.eventDate)
         return `<a class="dropdown-item dropdown-set" data-setId="${set._id}">${date} - ${set.eventType}</a>`
@@ -46,10 +45,12 @@ function generateSetsString (sets) {
 }
 
 function generateNewSetsList (sets) {
+    console.log(sets)
     sets.map(set => {
         set.files = addFilesPath(set.files);
     })
     currentSets = sets;
+    console.log(currentSets);
     let setsString = generateSetsString(sets)
     $('.dropdown-sets').html(setsString);
     watchSetClick();
@@ -129,13 +130,12 @@ function updateSetComment (res) {
     let newComment = commentsArray[commentsArray.length - 1];
     let commentString = generateSongComment(newComment);
     $(commentString).appendTo($(`.set-comments-container`));
+    watchCommentDelete(newComment._id);
 }
 
 // ----- load a set on click -----
 function findSetObject (setId) {
-    let set = currentSets.find(function(set) {
-        return set._id = setId;
-    })
+    let set = currentSets.find(set => set._id == setId);
     return set;
 }
 
@@ -143,9 +143,9 @@ function watchSetClick () {
     $('.dropdown-set').click(function() {
         let setId = $(this).attr('data-setId');
         let set = findSetObject(setId);
-        console.log(set);
         ee.emit('clear');
         loadNewSet(set.files);
+        $('.set-comments-container').empty();
         populateSetComments(set);
         $('.set-commentForm').find('#comments-setId').attr('value', `${setId}`)
     })

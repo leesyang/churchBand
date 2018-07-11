@@ -109,7 +109,7 @@ function watchNewSongSubmit () {
     })
 }
 
-// ---- add a new comment to a song -----
+// ---- add a new comment to a song/set -----
 function displayNewComment (res) {
     let commentsArray = res.comments;
     let newComment = commentsArray[commentsArray.length - 1];
@@ -190,10 +190,33 @@ function showErrorMessage(errMsg) {
     })
 }
 
+// ----- link and navigation -----
+function watchSongsLink () {
+    $('#songs-link').click(function(){
+        $('.home-banner').html('<div class="top-spacer"></div><p class="lead">Lastest Song Recommendations</p>')
+        $('.home-banner').css({'background-image': 'url(../images/home-banner.jpg)'})
+        $('#set-review-container').fadeOut('slow', function(){
+            $('#song-recomm-container').fadeIn('slow');
+        });
+    })
+}
+
+function watchSetsLink () {
+    $('#sets-link').click(function(){
+        $('.home-banner').html('<div class="top-spacer"></div><p class="lead">Set Reviews</p>')
+        $('.home-banner').css({'background-image': 'url(../images/sets-banner.jpg)'})
+        $('#song-recomm-container').fadeOut('slow', function(){
+                    $('#set-review-container').fadeIn('slow');
+        });
+    })
+}
+
 function onLoadHome () {
     watchNewSongSubmit();
     watchProfileSubmit();
     watchProfileEdit();
+    watchSongsLink();
+    watchSetsLink();
 }
 
 $(onLoadHome)

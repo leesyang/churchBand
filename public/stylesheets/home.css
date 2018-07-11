@@ -7,6 +7,10 @@ body {
   padding-top: 56px;
 }
 
+.hidden {
+  display: none;
+}
+
 /* ----- Alert ----- */
 .alert {
   margin: 0;
@@ -36,8 +40,7 @@ body {
 }
 /* banner */
 .top-spacer {
-  width: 30px;
-  height: 100px;
+  height: 60px;
 }
 
 .nav-spacer {
@@ -48,6 +51,27 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
+}
+
+.home-welcome {
+  background-image: url(../images/home-welcome-bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+  padding: 1em;
+  color: white;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.home-banner {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+  padding: 1em;
+  color: white;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .nav-scroller {
@@ -98,6 +122,7 @@ body {
 .lh-100 { line-height: 1; }
 .lh-125 { line-height: 1.25; }
 .lh-150 { line-height: 1.5; }
+
 /* loader */
 .loader {
   border: 5px solid #f3f3f3;
@@ -128,7 +153,7 @@ body {
   display: inline-block;
 }
 .user-img-spacer {
-  width: 15em;
+  width: 3em;
 }
 /* icon links*/
 .icon-link img {
@@ -157,6 +182,12 @@ body {
 .sr-nav {
   display: block;
 }
+.mr-auto, .mx-auto {
+  margin-top: 0px;
+  margin-right: auto;
+  margin-bottom: 0px;
+  margin-left: auto;
+}
 /* new song forms */
 .newSongForm {
   text-align: right;
@@ -172,9 +203,6 @@ body {
 /* song comment */
 .song-comment {
   display:inherit;
-}
-.h6, h6 {
-  font-size: 0.7rem;
 }
 /* youtube */
 .container-youtube {
@@ -244,7 +272,12 @@ body {
   .navbar-expand-lg {
     justify-content: space-between;
   }
-  .col {
-    text-align: left;
-  }
+}
+@media (min-width: 450px) {
+  .mr-auto, .mx-auto {
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: 0px;
+}
 }

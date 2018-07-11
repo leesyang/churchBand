@@ -30,38 +30,98 @@
   <div class="alert alert-primary fixed-bottom">Error Message</div>
   <div class="nav-scroller bg-white box-shadow">
     <nav class="nav nav-underline">
-      <a class="nav-link" href="#">Song Recommendations</a>
+      <a class="nav-link" id="songs-link" href="#">Song Recommendations</a>
       <a class="nav-link" id="sets-link" href="#">Set Reviews</a>
     </nav>
   </div>
     
   <main role="main" class="container">
-    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-img rounded box-shadow">
-      <div class="top-spacer"></div>
-      <div class="lh-100">
-        <h6 class="mb-0 text-white lh-100">churchBand</h6>
-        <small>Latest News, Recommendations, Review. All things worship band.</small>
-      </div>
+    <div class="jumbotron jumbotron-fluid rounded home-welcome rounded box-shadow">
+        <h1 class="display-4">Welcome</h1>
+        <p class="lead">Find the latest song recommendations from current members and review past prasie sets.</p>
     </div>
+    <div class="jumbotron jumbotron-fluid rounded home-banner rounded box-shadow"></div>
 <!-- song recommendations -->
-  <div id="song-recomm-container">
-    <div class="my-3 p-3 bg-white rounded box-shadow content-news">
-      <h6 class="border-bottom border-gray pb-2 mb-0">Latest Recommendations</h6>
-      <small class="text-right mt-3">
-          <a href="#" data-toggle="modal" data-target="#newSongInput">Add a song</a>
-      </small>
+  <div id="song-recomm-container" class="hidden">
+    <div class="content-news my-3 p-3 bg-white rounded box-shadow">
+      <button type="button" class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#newSongInput">Add a set</button>
       <div class="loader"></div>
-      <!-- insert songs from database -->
+<!-- new song modal-->
+      <div class="modal fade" id="newSongInput" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Song Info</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form class="newSongForm">
+                    <div class="form-row">
+                      <div class="col">
+                        <input type="text" id="inputArtist" name="artist" class="form-control" placeholder="Artist" required>
+                      </div>
+                      <div class="col">
+                        <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Title" required>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col">
+                        <input type="text" id="inputAlbum" name="album" class="form-control" placeholder="Album">
+                      </div>
+                      <div class="col">
+                        <input type="text" id="inputReleaseYear" name="releaseYear" class="form-control" placeholder="Release Year">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col">
+                        <select id="inputTheme" name="theme" class="form-control" required>
+                          <option value="">Theme</option>
+                          <option value="Adoration & Praise">Adoration & Praise</option>
+                          <option value="Call to Worship">Call to Worship</option>
+                          <option value="Christmas">Christmas</option>
+                          <option value="Church & Unity">Church & Unity</option>
+                          <option value="Commitment & Dedication">Commitment & Dedication</option>
+                          <option value="Communion & Reflection">Communion & Reflection</option>
+                          <option value="Easter">Easter</option>
+                          <option value="Faith & Trust">Faith & Trust</option>
+                          <option value="God's Attributes">God's Attributes</option>
+                          <option value="Grace & Mercy">Grace & Mercy</option>
+                          <option value="Missions">Missions</option>
+                          <option value="Peace & Hope">Peace & Hope</option>
+                          <option value="Prayer & Renewal">Prayer & Renewal</option>
+                          <option value="Resurrection & Sacrifice">Resurrection & Sacrifice</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                      <div class="col">
+                        <select name="tempo" id="inputTempo" class="form-control" required>
+                          <option value="">Tempo</option>
+                          <option value="Slow">Slow</option>
+                          <option value="Medium">Medium</option>
+                          <option value="Fast">Fast</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col">
+                        <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link">
+                      </div>
+                    </div>
+                        <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit">Submit</button>
+                  </form>
+              </div>
+          </div>
+        </div>
+      </div>
+<!-- insert songs from database -->
       <div class="song-recomm-main"></div>
     </div>
-    <small class="d-block text-right mt-3">
-      <a href="#">See more</a>
-    </small>
   </div>
 <!-- set reviews -->
-  <div id="set-review-container">
+  <div id="set-review-container" class="hidden">
     <div class="my-3 p-3 bg-white rounded box-shadow content-news">
-      <h6 class="border-bottom border-gray pb-2 mb-0">Set Reviews</h6>
       <div class="loader"></div>
       <div class="container">
           <div class="row">
@@ -78,16 +138,20 @@
             </div>
           </div>
         </div>
-      <!-- insert sets from database -->
+<!-- insert sets from database -->
       <div class="set-reviews">
         <div class="playlist-toolbar">
           <div class="btn-group">
-            <span class="btn-pause btn btn-sm btn-warning"><i class="fa fa-pause"></i></span>
-            <span class="btn-play btn btn-sm btn-success"><i class="fa fa-play"></i></span>
-            <span class="btn-stop btn btn-sm btn-danger"><i class="fa fa-stop"></i></span>
-            <span class="btn-rewind btn btn-sm btn-success"><i class="fa fa-fast-backward"></i></span>
-            <span class="btn-fast-forward btn btn-sm btn-success"><i class="fa fa-fast-forward"></i></span>
-            
+            <form>
+              <fieldset>
+                <legend class="sr-only">Media Playback Control</legend>
+                <button class="btn-pause btn btn-sm btn-warning" aria-label="pause"><i class="fa fa-pause"></i></button>
+                <button class="btn-play btn btn-sm btn-success" aria-label="play"><i class="fa fa-play"></i></button>
+                <button class="btn-stop btn btn-sm btn-danger" aria-label="stop"><i class="fa fa-stop"></i></button>
+                <button class="btn-rewind btn btn-sm btn-success" aria-label="backward"><i class="fa fa-fast-backward"></i></button>
+                <button class="btn-fast-forward btn btn-sm btn-success" aria-label="forward"><i class="fa fa-fast-forward"></i></button>
+              </fieldset>
+            </form>
          </div>
          <span class="audio-pos">00:00:00.0</span>
          <form class="form-inline">
@@ -120,75 +184,6 @@
                 </div>            
             </form>
           </div>
-    </div>
-  </div>
-<!-- Add a new song modal -->
-  <div class="modal fade" id="newSongInput" tabindex="-1" role="dialog" aria-labelledby="newSongInput" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Song Info</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-              <form class="newSongForm">
-                  <div class="form-row">
-                    <div class="col">
-                      <input type="text" id="inputArtist" name="artist" class="form-control" placeholder="Artist" required>
-                    </div>
-                    <div class="col">
-                      <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Title" required>
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <input type="text" id="inputAlbum" name="album" class="form-control" placeholder="Album">
-                    </div>
-                    <div class="col">
-                      <input type="text" id="inputReleaseYear" name="releaseYear" class="form-control" placeholder="Release Year">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <select id="inputTheme" name="theme" class="form-control" required>
-                        <option value="">Theme</option>
-                        <option value="Adoration & Praise">Adoration & Praise</option>
-                        <option value="Call to Worship">Call to Worship</option>
-                        <option value="Christmas">Christmas</option>
-                        <option value="Church & Unity">Church & Unity</option>
-                        <option value="Commitment & Dedication">Commitment & Dedication</option>
-                        <option value="Communion & Reflection">Communion & Reflection</option>
-                        <option value="Easter">Easter</option>
-                        <option value="Faith & Trust">Faith & Trust</option>
-                        <option value="God's Attributes">God's Attributes</option>
-                        <option value="Grace & Mercy">Grace & Mercy</option>
-                        <option value="Missions">Missions</option>
-                        <option value="Peace & Hope">Peace & Hope</option>
-                        <option value="Prayer & Renewal">Prayer & Renewal</option>
-                        <option value="Resurrection & Sacrifice">Resurrection & Sacrifice</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                    <div class="col">
-                      <select name="tempo" id="inputTempo" class="form-control" required>
-                        <option value="">Tempo</option>
-                        <option value="Slow">Slow</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Fast">Fast</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link">
-                    </div>
-                  </div>
-                      <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit">Submit</button>
-                </form>
-          </div>
-      </div>
     </div>
   </div>
 <!-- profile modal -->

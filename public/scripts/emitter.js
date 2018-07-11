@@ -124,30 +124,35 @@ $container.on("click", ".btn-loop", function() {
   playoutPromises = playlist.play(startTime, endTime);
 });
 
-$container.on("click", ".btn-play", function() {
+$container.on("click", ".btn-play", function(event) {
+  event.preventDefault();
   ee.emit("play");
 });
 
-$container.on("click", ".btn-pause", function() {
+$container.on("click", ".btn-pause", function(event) {
+  event.preventDefault();
   isLooping = false;
   ee.emit("pause");
 });
 
-$container.on("click", ".btn-stop", function() {
+$container.on("click", ".btn-stop", function(event) {
+  event.preventDefault();
   isLooping = false;
   ee.emit("stop");
 });
 
-$container.on("click", ".btn-rewind", function() {
+$container.on("click", ".btn-rewind", function(event) {
+  event.preventDefault();
   isLooping = false;
   ee.emit("rewind");
 });
 
-$container.on("click", ".btn-fast-forward", function() {
+$container.on("click", ".btn-fast-forward", function(event) {
+  event.preventDefault();
   isLooping = false;
   ee.emit("fastforward");
 });
-
+/* 
 $container.on("click", ".btn-clear", function() {
   isLooping = false;
   ee.emit("clear");
@@ -155,7 +160,7 @@ $container.on("click", ".btn-clear", function() {
 
 $container.on("click", ".btn-record", function() {
   ee.emit("record");
-});
+}); */
 
 //track interaction states
 $container.on("click", ".btn-cursor", function() {

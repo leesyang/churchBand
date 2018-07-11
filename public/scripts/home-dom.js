@@ -12,16 +12,13 @@ function generateSongNav (song) {
     }
     return `<div class="media text-muted pt-3 border-bottom border-gray song-recomm-nav">
     <div class="container">
-        <div class="row">
-          <div class="col-md-auto">
-              <img class="shadow rounded user-img" src="/images/user_profile/${song.addedBy.profilePicture}">
-              <span class="text-gray-dark user-name">${username}</span>
-              <div class="user-img-spacer"></div>
+        <div class="row justify-content-around">
+          <div class="col-auto mr-auto">
+          <img class="shadow rounded user-img" src="/images/user_profile/${song.addedBy.profilePicture}">
+          <span class="text-gray-dark user-name">${username}</span>
+          <span class="no-wrap">${song.artist} - ${song.title}</span>
           </div>
-          <div class="col">
-              ${song.artist} - <span class="no-wrap">${song.title}</span>
-          </div>
-          <div class="col col-md-auto no-wrap">
+          <div class="col-auto">
               <a class="icon-link margin" data-toggle="collapse" href="#youtube-plyer-${song._id}" role="button" aria-expanded="false" aria-controls="youtube-plyer"><img class="youtube-button" src="/images/icons/youtube.png"></a>
               <a class="btn btn-primary btn-sm margin" data-toggle="collapse" href="#comments-${song._id}" role="button" aria-expanded="false" aria-controls="songComments">Comments</a>
               <a class="btn btn-secondary btn-sm margin" data-toggle="collapse" href="#songInfo-${song._id}" role="button" aria-expanded="false" aria-controls="songInfo">Song Info</a>
@@ -110,7 +107,7 @@ function generateSongComment (comment) {
     return `<div class="media comment-unit" id="${comment._id}">
     <img class="align-self-start mr-3 ml-2 user-img border-gray rounded" src="/images/user_profile/${comment.addedBy.profilePicture}" alt="user profile thumbnail">
     <div class="media-body">
-      <h6>${date}</h6>
+      <p class="small">${date}</p>
       <p class="small ml-3 comment-content">${comment.comment}</p>
     </div>
     <button type="button" class="btn btn-light btn-sm comment-delete comment-delete-${comment._id}">Delete</button>
@@ -159,12 +156,11 @@ function generateProfileExp (user) {
 
 // ----- generate song unit block -----
 function generateMainSongUnit (song) {
-    if ( song.addedBy != Object ) {
+    if ( !song.addedBy ) {
         song.addedBy = {};
         song.addedBy.username = '';
         song.addedBy.profilePicture = 'default-user-image.png';
     }
-
     let mainSongUnit = `<div class="song-recomm-unit" id="${song._id}">` + 
         generateSongNav(song) + 
         generateSongInfo(song) + 

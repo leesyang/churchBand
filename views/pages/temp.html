@@ -18,22 +18,71 @@
 </body>
 </html>
 
-<!--                   <tbody>
-                      <tr>
-                        <td><%= user['pro-instrument-1'] %></td>
-                        <td><%= user[pro-skill-level-1] %></td>
-                      </tr>
-                      <tr>
-                        <td><%= user[pro-instrument-2] %></td>
-                        <td><%= user[pro-skill-level-2] %></td>
-                      </tr>
-                      <tr>
-                        <td><%= user[pro-instrument-3] %></td>
-                        <td><%= user[pro-skill-level-3] %></td>
-                      </tr>
-                    </tbody> -->
-
-
-
-                    <% if (user) { %>
-                    <% } %>
+<div class="modal fade" id="newSongInput" tabindex="-1" role="dialog" aria-labelledby="newSongInput" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Song Info</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form class="newSongForm">
+              <div class="form-row">
+                <div class="col">
+                  <input type="text" id="inputArtist" name="artist" class="form-control" placeholder="Artist" required>
+                </div>
+                <div class="col">
+                  <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Title" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col">
+                  <input type="text" id="inputAlbum" name="album" class="form-control" placeholder="Album">
+                </div>
+                <div class="col">
+                  <input type="text" id="inputReleaseYear" name="releaseYear" class="form-control" placeholder="Release Year">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col">
+                  <select id="inputTheme" name="theme" class="form-control" required>
+                    <option value="">Theme</option>
+                    <option value="Adoration & Praise">Adoration & Praise</option>
+                    <option value="Call to Worship">Call to Worship</option>
+                    <option value="Christmas">Christmas</option>
+                    <option value="Church & Unity">Church & Unity</option>
+                    <option value="Commitment & Dedication">Commitment & Dedication</option>
+                    <option value="Communion & Reflection">Communion & Reflection</option>
+                    <option value="Easter">Easter</option>
+                    <option value="Faith & Trust">Faith & Trust</option>
+                    <option value="God's Attributes">God's Attributes</option>
+                    <option value="Grace & Mercy">Grace & Mercy</option>
+                    <option value="Missions">Missions</option>
+                    <option value="Peace & Hope">Peace & Hope</option>
+                    <option value="Prayer & Renewal">Prayer & Renewal</option>
+                    <option value="Resurrection & Sacrifice">Resurrection & Sacrifice</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <select name="tempo" id="inputTempo" class="form-control" required>
+                    <option value="">Tempo</option>
+                    <option value="Slow">Slow</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Fast">Fast</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col">
+                  <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link">
+                </div>
+              </div>
+                  <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit">Submit</button>
+            </form>
+      </div>
+  </div>
+</div>
+</div>
