@@ -10,8 +10,14 @@ body {
 .hidden {
   display: none;
 }
+.invisible {
+  visibility: hidden;
+}
+.row {
+  margin-bottom: 0.5em;
+}
 
-/* ----- Alert ----- */
+/* ----- display error message ----- */
 .alert {
   margin: 0;
   text-align: center;
@@ -20,37 +26,27 @@ body {
   border-radius: 0;
   z-index: 1051;
 }
-/* ----- Navigation and Logo ----- */
+
+/* ----- navigation and logo ----- */
 .logo {
   height: 3em;
   width: 3em;
 }
 .navbar {
   padding: .5rem .5rem;
-}
-.navbar-collapse {
-  flex-grow: 0;
-}
-.temp-photo {
-  width: 3em;
-  height: 3em;
+  justify-content: center;
+  display: flex;
 }
 .nav {
   justify-content: center;
 }
-/* banner */
-.top-spacer {
-  height: 60px;
+.page-link {
+  font-size: 0.8em;
 }
 
-.nav-spacer {
-  width: 2rem;
-}
-.bg-img {
-  background-image: url(../images/home-banner.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50%;
+/* ----- banner ----- */
+.top-spacer {
+  height: 60px;
 }
 
 .home-welcome {
@@ -74,14 +70,7 @@ body {
   margin-bottom: 1em;
 }
 
-.nav-scroller {
-  position: relative;
-  z-index: 2;
-  height: 2.75rem;
-  overflow-y: hidden;
-}
-
-.nav-scroller .nav {
+.nav {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: nowrap;
@@ -95,83 +84,14 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-.nav-underline .nav-link {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-  font-size: .875rem;
-  color: #6c757d;
+.box-shadow { 
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
-
-.nav-underline .nav-link:hover {
-  color: #007bff;
-}
-
-.nav-underline .active {
-  font-weight: 500;
-  color: #343a40;
-}
-
-.text-white-50 { color: rgba(255, 255, 255, .5); }
-
-.bg-purple { background-color: #6f42c1; }
-
-.border-bottom { border-bottom: 1px solid #e5e5e5; }
-
-.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
-
-.lh-100 { line-height: 1; }
-.lh-125 { line-height: 1.25; }
-.lh-150 { line-height: 1.5; }
-
-/* loader */
-.loader {
-  border: 5px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 5px solid #3498db;
-  width: 20px;
-  height: 20px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* ----- Song recommendations ----- */
-/* user profile picture */
-.user-img, .user-img-loggedin{
-  width: 3em;
-  height: 3em;
-  display: inline-block;
-}
-.user-img-spacer {
-  width: 3em;
-}
-/* icon links*/
-.icon-link img {
-  width: 2.5em;
-  height: 2.5em;
+.lnk-black {
+  color: black;
 }
 .no-wrap {
   white-space: nowrap;
-}
-.col-md-auto {
-  margin-bottom: 0.8em;
-  text-align: center;
-}
-
-/* song recommendation list*/
-.song-info {
-  margin-top: 0rem;
-  margin-bottom: 1px;
 }
 .centered {
   justify-content: center;
@@ -179,16 +99,41 @@ body {
 .margin {
   margin: 0px 3px 3px 3px;
 }
-.sr-nav {
-  display: block;
+/* ----- comments ------ */
+.edit-comment-input {
+  margin-bottom: 0.5rem;
 }
-.mr-auto, .mx-auto {
+
+/* ----- SONGS REC ----- */
+
+/* -- user profile picture -- */
+.user-img, .user-img-loggedin{
+  width: 2.5em;
+  height: 2.5em;
+  margin-right: 0.5em;
+  display: inline-block;
+}
+
+/* -- icon links -- */
+.icon-link img {
+  width: 2.5em;
+  height: 2.5em;
+}
+
+/* -- song recommendation list -- */
+.song-info {
+  margin-top: 0rem;
+  margin-bottom: 1px;
+}
+
+.mr-auto {
   margin-top: 0px;
   margin-right: auto;
   margin-bottom: 0px;
   margin-left: auto;
 }
-/* new song forms */
+
+/* ----- new song forms ----- */
 .newSongForm {
   text-align: right;
 }
@@ -197,14 +142,15 @@ body {
   text-align: center;
 }
 .user-name {
-  display:none;
+  margin-right: 1em;
 }
 
-/* song comment */
+/* ----- song ----- */
 .song-comment {
   display:inherit;
 }
-/* youtube */
+
+/* ----- youtube plyr ----- */
 .container-youtube {
   align-items: center;
 }
@@ -212,7 +158,7 @@ body {
   width:50vw;
 }
 
-/* user profile */
+/* ----- user profile ----- */
 .update-user-container {
   display:none;
 }
@@ -223,18 +169,59 @@ body {
   border-radius: 1em;
 }
 
-/* SETS */
+/* ----- SETS REVIEW ----- */
 .dropdown-sets
 {
-   height: 100px;
-   overflow-y: auto;
+  height: 80px;
+  overflow-y: auto;
 }
 
+/* ----- */
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 50px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  text-align:center;
+}
 
-@media (max-width: 991.98px) {
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+
+}
+
+.sidenav a:hover{
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
+
+@media (max-width: 600px) {
   .offcanvas-collapse {
     position: fixed;
-    top: 56px; /* Height of navbar */
+    top: 56px;
     bottom: 0;
     left: 100%;
     width: 100%;
@@ -251,14 +238,52 @@ body {
     left: 0;
     visibility: visible;
   }
-  .navbar {
-    display: flex;
-    justify-content: center;
+}
+
+@media (max-width: 1000px){
+  .nav {
+    justify-content: space-between;
+  }
+  .navbar-collapse {
+    flex-grow: 0;
   }
   .bg-img {
     background-image: url(../images/home-banner-edit.jpg);
   }
+  .navbar-nav {
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    margin-bottom: 0;
+  }
 }
+
+@media (min-width: 400px) {
+  .comment-heading {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 450px) {
+  .mr-auto, .mx-auto {
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: 0px;
+  }
+  .navbar {
+    padding: .5rem .5rem;
+    justify-content: space-between;
+    display: flex;
+  }
+  .navbar-nav .dropdown-menu {
+    position: absolute;
+  }
+  .page-link {
+    font-size: 1em;
+  }
+}
+
 @media (min-width: 780px){
   .col-md-auto {
       margin-bottom: 0.8em;
@@ -267,17 +292,4 @@ body {
   .user-name {
     display: inline;
   }
-}
-@media (min-width: 992px) {
-  .navbar-expand-lg {
-    justify-content: space-between;
-  }
-}
-@media (min-width: 450px) {
-  .mr-auto, .mx-auto {
-    margin-top: 0px;
-    margin-right: auto;
-    margin-bottom: 0px;
-    margin-left: 0px;
-}
 }

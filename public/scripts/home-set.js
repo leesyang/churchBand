@@ -94,7 +94,6 @@ function loadNewSet (files) {
 }
 
 // ----- set comments -----
-
 function submitNewSetComment (endpoint, data) {
     return $.ajax({
         method: 'POST',
@@ -118,7 +117,7 @@ function watchSetCommentSubmit () {
 
 function populateSetComments (set) {
     let commentsString = set.comments.map(comment => {
-        return generateSongComment(comment)
+        return generateComment(comment)
     }).join('');
     $('.set-comments-container').html(commentsString);
     watchCommentDelete();
@@ -128,7 +127,7 @@ function updateSetComment (res) {
     console.log(res);
     let commentsArray = res.comments;
     let newComment = commentsArray[commentsArray.length - 1];
-    let commentString = generateSongComment(newComment);
+    let commentString = generateComment(newComment);
     $(commentString).appendTo($(`.set-comments-container`));
     watchCommentDelete(newComment._id);
 }
