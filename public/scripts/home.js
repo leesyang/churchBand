@@ -2,6 +2,8 @@
 // ----- constants: endpoints -----
 const SONGS_EP = '/api/songs';
 const SETS_EP = '/api/sets';
+const profileImgPath = 'https://churchband.s3.amazonaws.com/user-profile-images';
+const setAudioPath = 'https://churchband.s3.amazonaws.com/set-audio';
 
 // ----- utility functions -----
 // -- converts form data into object --
@@ -35,6 +37,13 @@ function evalError (err) {
     }
 }
 
+// ----- event listeners ------
+function newCommentEventLis () {
+    watchCommentDelete('.generated');
+    watchCommentUpdateClick('.generated')
+    watchCommentUpdateSubmit('.generated');
+}
+
 // ----- update profile ----- //
 function submitUpdateProfile (endpoint, data) {
     return $.ajax ({
@@ -63,13 +72,14 @@ function renderNewProfile (user) {
     console.log(user);
     let profileString = generateProfile(user);
     let profileExpString = generateProfileExp(user);
+    let newProfilePic = `https://churchband.s3.amazonaws.com/user-profile-images/${user.profilePicture}`;
+    $('.profile-user-img').attr('src', newProfilePic);
+    $('.user-img-loggedin').attr('src', newProfilePic);
     $('.table-user-info').html(profileString);
     $('.user-exp').html(profileExpString);
     $('.update-user-container').toggle('fast', function() {
         $('.profile-info').toggle();
     });
-    $('.user-img-loggedin').attr('src', `/images/user_profile/${user.profilePicture}`);
-
 }
 
 function watchProfileEdit () {
@@ -111,16 +121,16 @@ function watchNewSongSubmit () {
     })
 }
 
+watchNewSongUploadSelect();
+
 // ---- add a new comment to a song/set ----- //
 function displayNewComment (res) {
     let commentsArray = res.comments;
     let newComment = commentsArray[commentsArray.length - 1];
     let commentString = generateComment(newComment);
     $(commentString).appendTo($(`#comments-${res._id}`).children('.comments-container'))
-    .addClass(`.comment-delete-${newComment._id}`).css('display', 'none').show('normal', () => {
-        watchCommentDelete(newComment._id);
-        watchCommentUpdateClick(newComment._id)
-        watchCommentUpdateSubmit(newComment._id);
+    .css('display', 'none').show('normal', () => {
+        newCommentEventLis();
     });
 }
 
@@ -163,9 +173,9 @@ function getSetId (child) {
     return $(child).closest('.set-comments ').find('#comments-setId').attr('value')
 }
 
-function watchCommentDelete (id) {
-    let target = (id) ? `.comment-delete-${id}` :  '.comment-delete';
-    $(`${target}`).on('click', function() {
+function watchCommentDelete (type) {
+    let namespace = (type) ? type :  '';
+    $('.comment-delete').on(`click${namespace}`, function() {
         let songId = getSongId(this);
         let commentId = getCommentId(this);
         let setId = getSetId(this);
@@ -197,9 +207,9 @@ function getNewestComment (array) {
     return sortedArray[sortedArray.length - 1].comment;
   }
 
-function watchCommentUpdateSubmit (id) {
-    let target = (id) ? `#edit-comment-${id}` :  '.edit-comment';
-    $(target).submit(function(event) {
+function watchCommentUpdateSubmit (type) {
+    let namespace = (type) ? type : '';
+    $(`.edit-comment`).on(`submit${namespace}`, function(event) {
         event.preventDefault();
         let commentText = $(this).closest('.comment-unit').find('.comment-text');
         let songId = getSongId(this);
@@ -219,22 +229,20 @@ function watchCommentUpdateSubmit (id) {
     })
 }
 
-function watchComEditClose (text, input) {
-    $('.exit-comment-edit').click(function() {
-        text.removeClass('hidden');
-        input.addClass('hidden');
-    })
-}
-
-function watchCommentUpdateClick (id) {
-    let target = (id)? `.comment-update-${id}` :  '.comment-update';
-    $(target).on('click', function() {
+function watchCommentUpdateClick (type) {
+        let namespace = (type)? type : '';
+        $('.comment-update').on(`click${namespace}`, function() {
         let comment = $(this).closest('.comment-unit').find('.comment-text');
         let updatedCommentInput = $(this).closest('.comment-unit').find('.edit-comment');
         comment.addClass('hidden');
         updatedCommentInput.removeClass('hidden');
-        watchComEditClose(comment, updatedCommentInput)
-    })
+        // listen for click 'close'
+        updatedCommentInput.children('.exit-comment-edit')
+        .on(`click`, function() {
+            comment.removeClass('hidden');
+            updatedCommentInput.addClass('hidden')
+        })
+})
 }
 
 // ---- generate initial page -----
@@ -291,7 +299,6 @@ function onLoadHome () {
     watchProfileEdit();
     watchSongsLink();
     watchSetsLink();
-
 }
 
 $(onLoadHome)

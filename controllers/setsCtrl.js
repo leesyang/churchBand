@@ -18,37 +18,40 @@ setsCtrl.getListOfSets = function(req, res) {
 
 // -- add a new set --
 setsCtrl.addNewSet = function(req, res) {
-    let setFileNames = [];
+    let files = [];
 
     Object.keys(req.files).map(key => {
-        setFileNames.push({
-            src: req.files[key][0].filename,
+        files.push({
+            src: req.files[key][0].key.substring(10),
             name: req.files[key][0].fieldname
         })
     });
 
-    let setBandMembers = [];
+    let bandMembers = [];
 
     let { eventDate, eventType, mainLead, mainSpeaker } = req.body;
 
     Object.keys(req.body).map(key => {
         
         if (key.slice(0,3) === 'mem') {
-            setBandMembers.push({
+            bandMembers.push({
                 instrument: key.substr(3),
                 name: req.body[key]
             })
         }
     })
+
+    console.log(files);
     
     let set = new Set({
-        eventDate: eventDate,
-        eventType: eventType,
-        mainLead: mainLead,
-        mainSpeaker: mainSpeaker,
-        bandMembers: setBandMembers,
-        files: setFileNames
+        eventDate,
+        eventType,
+        mainLead,
+        mainSpeaker,
+        bandMembers,
+        files
     });
+
     set.save()
     .then(results => res.status(201).json(results))
     .catch(err => console.log(err));

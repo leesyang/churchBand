@@ -14,7 +14,7 @@ function generateSongNav (song) {
     <div class="container">
         <div class="row justify-content-around">
           <div class="col-auto mr-auto">
-          <img class="shadow rounded user-img" alt="user image ${username}" src="/images/user_profile/${song.addedBy.profilePicture}">
+          <img class="shadow rounded user-img" alt="user image ${username}" src="${profileImgPath}/${song.addedBy.profilePicture}">
           <span class="no-wrap">${song.artist} - ${song.title}</span>
           </div>
           <div class="col-auto">
@@ -105,20 +105,21 @@ function generateComment (comment) {
         comment.addedBy.profilePicture = 'default-user-image.png'
     }
     return `<div class="media comment-unit" data-id="${comment._id}">
-    <img class="align-self-start mr-3 user-img border-gray rounded" src="/images/user_profile/${comment.addedBy.profilePicture}" alt="user profile thumbnail">
+    <img class="align-self-start mr-3 user-img border-gray rounded" src="${profileImgPath}/${comment.addedBy.profilePicture}" alt="user profile thumbnail">
     <div class="media-body">
       <div class="comment-heading">
         <p class="small">${date}</p>
-        <div class="comment-controls">
-            <button type="button" class="btn btn-light btn-sm comment-update comment-update-${comment._id}">Update</button>
-            <button type="button" class="btn btn-light btn-sm comment-delete comment-delete-${comment._id}">Delete</button>
+        <div class="comment-controls" aria-label="comment controls">
+            <button type="button" class="btn btn-light btn-sm comment-update" aria-label="show update comment form">Update</button>
+            <button type="button" class="btn btn-light btn-sm comment-delete" aria-label="delete comment">Delete</button>
         </div>
       </div>
       <p class="small ml-3 comment-text">${comment.comment}</p>
-      <form class="edit-comment hidden input-group-sm" id="edit-comment-${comment._id}">
-        <input type="text" class="edit-comment-input form-control" value="${comment.comment}">
-        <button type="submit" class="btn btn-light btn-sm">Submit</button>
-        <button type="button" class="btn btn-light btn-sm exit-comment-edit">X</button>
+      <form class="edit-comment hidden input-group-sm" aria-label="update comment form" >
+        <label for="editedComment" class="sr-only">Edited Comment</label>
+        <input type="text" class="edit-comment-input form-control" id="editedComment" value="${comment.comment}" aria-label="updated comment">
+        <button type="submit" class="btn btn-light btn-sm" aria-label="submit">Submit</button>
+        <button type="button" class="btn btn-light btn-sm exit-comment-edit" aria-label="close">X</button>
       </form>
     </div>
   </div>`
@@ -147,6 +148,7 @@ function generateProfile (user) {
 };
 
 function generateProfileExp (user) {
+    
     return `
      <tbody>
         <tr>

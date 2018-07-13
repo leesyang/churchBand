@@ -17,12 +17,12 @@
   <div class="no-wrap">
     <ul class="navbar-nav offcanvas-collapse">
       <% if (user) { %>
-      <img class="shadow rounded-circle user-img-loggedin" src="/images/user_profile/<%= user.profilePicture %>" alt="user image" href="/home">
+      <img class="shadow rounded-circle user-img-loggedin" src="https://churchband.s3.amazonaws.com/user-profile-images/<%= user.profilePicture %>" alt="user image" href="/home">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, <%= user.firstName %></a>
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, <%= user.firstName %></a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="#" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">Profile</a>
-          <a class="dropdown-item" href="/auth/logout">Log Out</a>
+          <a class="dropdown-item" href="#" class="btn btn-primary" data-toggle="modal" data-target="#profileModal" aria-labelledby="view my profile">Profile</a>
+          <a class="dropdown-item" href="/auth/logout" aria-label="logout">Log Out</a>
         </div>
       </li><% } %>
     </ul>
@@ -30,10 +30,10 @@
 </nav>
 <!-- side nav bar -->
 <div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <img class="shadow rounded-circle" src="/images/user_profile/<%= user.profilePicture %>" alt="user image" href="/home">
-  <a href="#" data-toggle="modal" data-target="#profileModal">Profile</a>
-  <a href="#">Log Out</a>
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" aria-label="close sidenav">&times;</a>
+  <img class="shadow rounded-circle" src="https://churchband.s3.amazonaws.com/user-profile-images/<%= user.profilePicture %>" alt="user profile thumb" href="/home">
+  <a href="#" data-toggle="modal" data-target="#profileModal" aria-labelledby="view my profile">Profile</a>
+  <a href="/auth/logout" aria-label="logout">Log Out</a>
 </div>
 <!-- main content -->
   <main role="main" class="container">
@@ -41,13 +41,13 @@
         <h1 class="display-4">Welcome</h1>
         <p class="lead">Find the latest song recommendations from current members and review past prasie sets.</p>
     </div>
-    <nav aria-label="Page navigation example">
+    <nav role="navigation">
       <ul class="pagination justify-content-center">
         <li class="page-item box-shadow"><a class="page-link lnk-black" id="songs-link" href="#">Song Recommendations</a></li>
         <li class="page-item box-shadow"><a class="page-link lnk-black" id="sets-link" href="#">Set Reviews</a></li>
       </ul>
     </nav>
-    <div class="jumbotron jumbotron-fluid rounded home-banner rounded box-shadow invisible">
+    <div class="jumbotron jumbotron-fluid rounded home-banner rounded box-shadow invisible" role="banner">
         <div class="top-spacer"></div><p class="lead">Page Title</p>
     </div>
   <!-- song recommendations -->
@@ -105,7 +105,7 @@
             </form>
             </div>
             <div id="playlist"></div>
-            <div class="set-comments text-muted pt-1">
+            <div class="set-comments text-muted pt-1 hidden">
                 <div class="card card-body set-comments-container"></div>
                 <form class="form-horizontal set-commentForm" role="form">
                     <div class="form-group">
@@ -125,7 +125,7 @@
         </div>
       </div>
     </div>
-  <!-- new song modal-->
+<!-- new song modal-->
     <div class="modal fade" id="newSongInput" tabindex="-1" role="dialog" aria-labelledby="song input modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -139,23 +139,28 @@
               <form class="newSongForm">
                   <div class="form-row">
                     <div class="col">
-                      <input type="text" id="inputArtist" name="artist" class="form-control" placeholder="Artist" required>
+                      <label for="inputArtist" class="sr-only">Artist</label>
+                      <input type="text" id="inputArtist" name="artist" class="form-control" placeholder="Artist" aria-labelledby="artist name" required>
                     </div>
                     <div class="col">
-                      <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Title" required>
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <input type="text" id="inputAlbum" name="album" class="form-control" placeholder="Album">
-                    </div>
-                    <div class="col">
-                      <input type="text" id="inputReleaseYear" name="releaseYear" class="form-control" placeholder="Release Year">
+                      <label for="inputTitle" class="sr-only">Title</label>
+                      <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Title" aria-labelledby="song title name" required>
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="col">
-                      <select id="inputTheme" name="theme" class="form-control" required>
+                      <label for="inputAlbum" class="sr-only">Album</label>
+                      <input type="text" id="inputAlbum" name="album" class="form-control" placeholder="Album" aria-labelledby="album name">
+                    </div>
+                    <div class="col">
+                      <label for="inputReleaseYear" class="sr-only">Release Year</label>
+                      <input type="text" id="inputReleaseYear" name="releaseYear" class="form-control" placeholder="Release Year" aria-labelledby="release year">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="inputTheme" class="sr-only">Track Theme</label>
+                      <select id="inputTheme" name="theme" class="form-control" aria-labelledby="track theme" required>
                         <option value="">Theme</option>
                         <option value="Adoration & Praise">Adoration & Praise</option>
                         <option value="Call to Worship">Call to Worship</option>
@@ -175,7 +180,8 @@
                       </select>
                     </div>
                     <div class="col">
-                      <select name="tempo" id="inputTempo" class="form-control" required>
+                      <label for="inputTempo" class="sr-only">Tempo</label>
+                      <select name="tempo" id="inputTempo" class="form-control" aria-labelledby="track tempo" required>
                         <option value="">Tempo</option>
                         <option value="Slow">Slow</option>
                         <option value="Medium">Medium</option>
@@ -185,16 +191,17 @@
                   </div>
                   <div class="form-row">
                     <div class="col">
-                      <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link">
+                      <label for="inputYoutubeLink" class="sr-only">Youtube Link</label>
+                      <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link" aria-labelledby="youtube link">
                     </div>
                   </div>
-                      <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit">Submit</button>
+                      <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit" aria-label="submit">Submit</button>
                 </form>
             </div>
         </div>
       </div>
     </div>
-  <!-- profile modal -->
+<!-- profile modal -->
     <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profile modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -208,7 +215,7 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col">
-                  <img src="images/user_profile/<%= user.profilePicture %>" class="profile-user-img">
+                  <img src="https://churchband.s3.amazonaws.com/user-profile-images/<%= user.profilePicture %>" class="profile-user-img">
                 </div>
                 <div class="col">
                     <table class="table table-user-info">
@@ -254,16 +261,21 @@
           </div>
           <div class="container update-user-container"><% if (user) { %>
             <form id="update-user">
-              <label for="profile-firstname">First Name</label>
-              <input class="form-control form-control-sm" id="profile-firstname" name="firstName" type="text" value="<%= user.firstName %>" placeholder="<%= user.firstName %>">
-              <label for="profile-lastname">Last Name</label>
-              <input class="form-control form-control-sm" id="profile-lastName" name="lastName" type="text" value="<%= user.lastName %>" placeholder="<%= user.lastName %>">
-              <label for="profile-email">Email</label>
-              <input class="form-control form-control-sm" id="profile-email" name="email" type="text" value="<%= user.email %>" placeholder="<%= user.email %>">
+              <fieldset>
+                <legend class="sr-only">User info</legend>
+                <label for="profile-firstname">First Name</label>
+                <input class="form-control form-control-sm" id="profile-firstname" name="firstName" type="text" value="<%= user.firstName %>" placeholder="<%= user.firstName %>" aria-labelledby="first name">
+                <label for="profile-lastname">Last Name</label>
+                <input class="form-control form-control-sm" id="profile-lastName" name="lastName" type="text" value="<%= user.lastName %>" placeholder="<%= user.lastName %>" aria-labelledby="last name">
+                <label for="profile-email">Email</label>
+                <input class="form-control form-control-sm" id="profile-email" name="email" type="text" value="<%= user.email %>" placeholder="<%= user.email %>" aria-labelledby="email">
+              </fieldset>
+              <fieldset>
+              <legend class="sr-only">User Experience</legend>
               <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="pro-instrument-1">Instrument</label>
-                    <select name="instr1" id="pro-instrument-1" class="form-control">
+                    <select name="instr1" id="pro-instrument-1" class="form-control" aria-labelledby="instrument 1">
                       <option value=""></option>
                       <option value="Piano">Piano</option>
                       <option value="Keyboard">Keyboard</option>
@@ -275,7 +287,7 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label for="pro-skill-level-1">Skill Level</label>
-                    <select id="pro-skill-level-1" name="skill1" class="form-control">
+                    <select id="pro-skill-level-1" name="skill1" class="form-control" aria-labelledby="skill level for instrument 1">
                       <option selected value=""></option>
                       <option value="Still Learning">Still Learning</option>
                       <option value="Useable, Need Training">Useable, Need Training</option>
@@ -288,7 +300,7 @@
               <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="pro-instrument-2">Instrument</label>
-                    <select name="instr2" id="pro-instrument-2" class="form-control">
+                    <select name="instr2" id="pro-instrument-2" class="form-control" aria-labelledby="instrument 2">
                       <option value=""></option>
                       <option value="Piano">Piano</option>
                       <option value="Keyboard">Keyboard</option>
@@ -300,7 +312,7 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label for="pro-skill-level-2">Skill Level</label>
-                    <select id="pro-skill-level-2" name="skill2" class="form-control">
+                    <select id="pro-skill-level-2" name="skill2" class="form-control" aria-labelledby="skill level for instrument 2">
                       <option selected value=""></option>
                       <option value="Still Learning">Still Learning</option>
                       <option value="Useable, Need Training">Useable, Need Training</option>
@@ -313,7 +325,7 @@
               <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="pro-instrument-3">Instrument</label>
-                    <select name="instr3" id="pro-instrument-3" class="form-control">
+                    <select name="instr3" id="pro-instrument-3" class="form-control" aria-label="insturment 3">
                       <option value=""></option>
                       <option value="Piano">Piano</option>
                       <option value="Keyboard">Keyboard</option>
@@ -325,7 +337,7 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label for="pro-skill-level-3">Skill Level</label>
-                    <select id="pro-skill-level-3" name="skill3" class="form-control">
+                    <select id="pro-skill-level-3" name="skill3" class="form-control" aria-labelledby="skill level for instrument 3">
                       <option selected value=""></option>
                       <option value="Still Learning">Still Learning</option>
                       <option value="Useable, Need Training">Useable, Need Training</option>
@@ -335,11 +347,15 @@
                     </select>
                   </div>
               </div>
+              </fieldset>
               <div class="form-group">
-                <label for="upload-user-img">Upload Profile Picture</label>
-                <input type="file" class="form-control-file" name="userImg" id="upload-user-img">
+                <fieldset>
+                  <legend class="sr-only">Upload User Image</legend>
+                  <label for="upload-user-img">Upload Profile Picture</label>
+                  <input type="file" class="form-control-file" name="userImg" id="upload-user-img" aria-label="profile picture file">  
+                </fieldset>
               </div>
-              <button type="submit" class="btn btn-primary" id="update-user-submit">Submit</button>
+              <button type="submit" class="btn btn-primary" id="update-user-submit" aria-label="submit">Submit</button>
             </form>
           </div><% } %>
           <div class="modal-footer">
@@ -498,7 +514,7 @@
       </div>
     </div>
   <!-- display error -->
-    <div class="alert alert-primary fixed-bottom">Error Message</div>
+    <div class="alert alert-primary fixed-bottom" aria-live="assertive">Error Message</div>
   <!-- scripts -->
   <script src="scripts/plyr.js"></script>
   <script src="scripts/home.js"></script>

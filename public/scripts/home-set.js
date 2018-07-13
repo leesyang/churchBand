@@ -29,9 +29,8 @@ function watchNewSetSubmit () {
 let currentSets = []; // save current sets to memory
 
 function addFilesPath (setFiles) {
-    let path = 'media/';
     setFiles.map(function(file) {
-        file.src = path + file.src;
+        file.src = setAudioPath + '/' + file.src;
     })
     return setFiles;
 }
@@ -65,7 +64,6 @@ function getListOfSets (endpoint) {
 
 function watchSetsGet () {
     $('#sets-link').click(function() {
-        console.log('watch set get')
         getListOfSets(SETS_EP)
         .done(generateNewSetsList)
         .fail(evalError)
@@ -93,7 +91,7 @@ function loadNewSet (files) {
     return playlist.load(files)
 }
 
-// ----- set comments -----
+// ----- set comments ----- //
 function submitNewSetComment (endpoint, data) {
     return $.ajax({
         method: 'POST',
@@ -102,6 +100,16 @@ function submitNewSetComment (endpoint, data) {
         data: JSON.stringify(data),
     })
     .fail(evalError)
+}
+
+
+function updateSetComment (res) {
+    console.log(res);
+    let commentsArray = res.comments;
+    let newComment = commentsArray[commentsArray.length - 1];
+    let commentString = generateComment(newComment);
+    $(commentString).appendTo($(`.set-comments-container`));
+    newCommentEventLis();
 }
 
 function watchSetCommentSubmit () {
@@ -115,24 +123,18 @@ function watchSetCommentSubmit () {
     })
 }
 
+// ----- generate set comments ------ //
 function populateSetComments (set) {
     let commentsString = set.comments.map(comment => {
         return generateComment(comment)
     }).join('');
     $('.set-comments-container').html(commentsString);
     watchCommentDelete();
+    watchCommentUpdateClick();
+    watchCommentUpdateSubmit();
 }
 
-function updateSetComment (res) {
-    console.log(res);
-    let commentsArray = res.comments;
-    let newComment = commentsArray[commentsArray.length - 1];
-    let commentString = generateComment(newComment);
-    $(commentString).appendTo($(`.set-comments-container`));
-    watchCommentDelete(newComment._id);
-}
-
-// ----- load a set on click -----
+// ----- load a set on click ----- //
 function findSetObject (setId) {
     let set = currentSets.find(set => set._id == setId);
     return set;
@@ -143,10 +145,16 @@ function watchSetClick () {
         let setId = $(this).attr('data-setId');
         let set = findSetObject(setId);
         ee.emit('clear');
-        loadNewSet(set.files);
-        $('.set-comments-container').empty();
-        populateSetComments(set);
-        $('.set-commentForm').find('#comments-setId').attr('value', `${setId}`)
+        loadNewSet(set.files)
+        .then(() => {
+            $('.set-comments-container').empty();
+            $('.set-comments').removeClass('hidden');
+            populateSetComments(set);
+            $('.set-commentForm').find('#comments-setId').attr('value', `${setId}`)
+        })
+        .catch(err => {
+            console.log(err.statusText);
+        })
     })
 }
 

@@ -16,6 +16,11 @@ body {
 .row {
   margin-bottom: 0.5em;
 }
+.sr-only {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
 
 /* ----- display error message ----- */
 .alert {
@@ -50,7 +55,7 @@ body {
 }
 
 .home-welcome {
-  background-image: url(../images/home-welcome-bg.jpg);
+  background-image: url(https://s3-us-west-1.amazonaws.com/churchband/site-images/home-welcome-bg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
@@ -102,6 +107,7 @@ body {
 /* ----- comments ------ */
 .edit-comment-input {
   margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 /* ----- SONGS REC ----- */
@@ -138,7 +144,6 @@ body {
   text-align: right;
 }
 .col {
-  margin: 0.5em;
   text-align: center;
 }
 .user-name {
@@ -248,12 +253,15 @@ body {
     flex-grow: 0;
   }
   .bg-img {
-    background-image: url(../images/home-banner-edit.jpg);
+    background-image: url(https://s3-us-west-1.amazonaws.com/churchband/site-images/home-banner-edit.jpg);
   }
   .navbar-nav {
     display: -webkit-box;
     -webkit-box-orient: horizontal;
     margin-bottom: 0;
+  }
+  .col {
+    margin: 0.1em;
   }
 }
 
@@ -261,6 +269,9 @@ body {
   .comment-heading {
     display: flex;
     justify-content: space-between;
+  }
+  .col {
+    margin: 0.5em;
   }
 }
 
