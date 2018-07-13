@@ -55,7 +55,7 @@ usersCtrl.addNewUser = function (req, res) {
 };
 
 usersCtrl.updateUser = function (req, res) {
-
+  console.log(req.file);
   let updateInfo = { 
     experience: {}
   };
@@ -70,7 +70,7 @@ usersCtrl.updateUser = function (req, res) {
   });
 
   if (req.file) {
-    updateInfo.profilePicture = req.file.filename;
+    updateInfo.profilePicture = req.file.key.substring(20);
   }
 
   console.log(updateInfo);

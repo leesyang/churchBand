@@ -6,7 +6,7 @@ function simplifyDate (date) {
 
 // ----- generate one song unit html functions -----
 function generateSongNav (song) {
-    let username = '@' + song.addedBy.username;
+    let username = 'user ' + song.addedBy.username;
     if (!username) {
         username = '';
     }
@@ -14,8 +14,7 @@ function generateSongNav (song) {
     <div class="container">
         <div class="row justify-content-around">
           <div class="col-auto mr-auto">
-          <img class="shadow rounded user-img" src="/images/user_profile/${song.addedBy.profilePicture}">
-          <span class="text-gray-dark user-name">${username}</span>
+          <img class="shadow rounded user-img" alt="user image ${username}" src="${profileImgPath}/${song.addedBy.profilePicture}">
           <span class="no-wrap">${song.artist} - ${song.title}</span>
           </div>
           <div class="col-auto">
@@ -67,25 +66,26 @@ function generateSongYoutube (song) {
 </div>`
 }
 
-function generateSongCommentsContainer (song) {
-    let tempSongComments = [];
-    for (let i = 0; i < song.comments.length; i++) {
-        if( song.comments[i]) {
-            tempSongComments.push(generateSongComment(song.comments[i] ));
+// shared function between song and set
+function generateCommentsContainer (unit) {
+    let tempUnitComments = [];
+    for (let i = 0; i < unit.comments.length; i++) {
+        if( unit.comments[i]) {
+            tempUnitComments.push(generateComment(unit.comments[i] ));
         }
     }
-    let songComments = tempSongComments.join('')
+    let unitComments = tempUnitComments.join('')
     return `<div class="text-muted pt-1">
-    <div class="collapse" id="comments-${song._id}">
+    <div class="collapse" id="comments-${unit._id}">
       <div class="card card-body comments-container">
-        ${songComments}
+        ${unitComments}
       </div>
       <form class="form-horizontal commentForm" role="form"> 
           <div class="form-group">
               <label for="comment" class="col-sm-offset-2 control-label small"><strong>Comment</strong></label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" name="comment" id="comment">
-                <input type="hidden" name="songId" value="${song._id}">
+                <input type="hidden" name="songId" value="${unit._id}">
               </div>
           </div>
           <div class="form-group">
@@ -98,19 +98,30 @@ function generateSongCommentsContainer (song) {
   </div>`
 }
 
-function generateSongComment (comment) {
+function generateComment (comment) {
     let date = simplifyDate(comment.dateAdded);
-    if (comment.addedBy == null ){
+    if (!comment.addedBy ){
         comment.addedBy = {};
         comment.addedBy.profilePicture = 'default-user-image.png'
     }
-    return `<div class="media comment-unit" id="${comment._id}">
-    <img class="align-self-start mr-3 ml-2 user-img border-gray rounded" src="/images/user_profile/${comment.addedBy.profilePicture}" alt="user profile thumbnail">
+    return `<div class="media comment-unit" data-id="${comment._id}">
+    <img class="align-self-start mr-3 user-img border-gray rounded" src="${profileImgPath}/${comment.addedBy.profilePicture}" alt="user profile thumbnail">
     <div class="media-body">
-      <p class="small">${date}</p>
-      <p class="small ml-3 comment-content">${comment.comment}</p>
+      <div class="comment-heading">
+        <p class="small">${date}</p>
+        <div class="comment-controls" aria-label="comment controls">
+            <button type="button" class="btn btn-light btn-sm comment-update" aria-label="show update comment form">Update</button>
+            <button type="button" class="btn btn-light btn-sm comment-delete" aria-label="delete comment">Delete</button>
+        </div>
+      </div>
+      <p class="small ml-3 comment-text">${comment.comment}</p>
+      <form class="edit-comment hidden input-group-sm" aria-label="update comment form" >
+        <label for="editedComment" class="sr-only">Edited Comment</label>
+        <input type="text" class="edit-comment-input form-control" id="editedComment" value="${comment.comment}" aria-label="updated comment">
+        <button type="submit" class="btn btn-light btn-sm" aria-label="submit">Submit</button>
+        <button type="button" class="btn btn-light btn-sm exit-comment-edit" aria-label="close">X</button>
+      </form>
     </div>
-    <button type="button" class="btn btn-light btn-sm comment-delete comment-delete-${comment._id}">Delete</button>
   </div>`
 }
 
@@ -137,6 +148,7 @@ function generateProfile (user) {
 };
 
 function generateProfileExp (user) {
+    
     return `
      <tbody>
         <tr>
@@ -161,11 +173,11 @@ function generateMainSongUnit (song) {
         song.addedBy.username = '';
         song.addedBy.profilePicture = 'default-user-image.png';
     }
-    let mainSongUnit = `<div class="song-recomm-unit" id="${song._id}">` + 
+    let mainSongUnit = `<div class="song-recomm-unit" data-id="${song._id}">` + 
         generateSongNav(song) + 
         generateSongInfo(song) + 
         generateSongYoutube(song) + 
-        generateSongCommentsContainer(song)+'</div>';
+        generateCommentsContainer(song)+'</div>';
     return mainSongUnit;
 }
 
@@ -177,7 +189,6 @@ function generateListOfSongs (songs) {
 function populatePage (data) {
     let string = generateListOfSongs(data);
     $('.song-recomm-main').html(`${string}`);
-    $('.loader').hide();
 }
 
 // ---- event listeners -----
@@ -195,6 +206,8 @@ function onLoadHomeDom () {
         watchNewCommentSubmit();
         watchYoutubeClick();
         watchCommentDelete();
+        watchCommentUpdateClick();
+        watchCommentUpdateSubmit();
     })
 }
 

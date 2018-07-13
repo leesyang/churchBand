@@ -2,6 +2,8 @@
 // ----- constants: endpoints -----
 const SONGS_EP = '/api/songs';
 const SETS_EP = '/api/sets';
+const profileImgPath = 'https://churchband.s3.amazonaws.com/user-profile-images';
+const setAudioPath = 'https://churchband.s3.amazonaws.com/set-audio';
 
 // ----- utility functions -----
 // -- converts form data into object --
@@ -16,14 +18,14 @@ function objectifyForm(formInputs) {
 
 // -- get songId / commentId from html --
 function getSongId (child) {
-    return $(child).closest('.song-recomm-unit').attr('id');
+    return $(child).closest('.song-recomm-unit').attr('data-id');
 }
 
 function getCommentId (child) {
-    return $(child).parent('.comment-unit').attr('id')
+    return $(child).closest('.comment-unit').attr('data-id')
 }
 
-// ------- error handling for ajax -------
+// ----- error handling for ajax ----- //
 function evalError (err) {
     console.log(err);
     const responseJSON = err.responseJSON;
@@ -35,7 +37,14 @@ function evalError (err) {
     }
 }
 
-// ----- update profile -----
+// ----- event listeners ------
+function newCommentEventLis () {
+    watchCommentDelete('.generated');
+    watchCommentUpdateClick('.generated')
+    watchCommentUpdateSubmit('.generated');
+}
+
+// ----- update profile ----- //
 function submitUpdateProfile (endpoint, data) {
     return $.ajax ({
         method: 'PUT',
@@ -63,21 +72,24 @@ function renderNewProfile (user) {
     console.log(user);
     let profileString = generateProfile(user);
     let profileExpString = generateProfileExp(user);
-    console.log(profileExpString);
+    let newProfilePic = `https://churchband.s3.amazonaws.com/user-profile-images/${user.profilePicture}`;
+    $('.profile-user-img').attr('src', newProfilePic);
+    $('.user-img-loggedin').attr('src', newProfilePic);
     $('.table-user-info').html(profileString);
     $('.user-exp').html(profileExpString);
-    $('.update-user-container').toggle('slow');
-    $('.user-img-loggedin').attr('src', `/images/user_profile/${user.profilePicture}`);
-
+    $('.update-user-container').toggle('fast', function() {
+        $('.profile-info').toggle();
+    });
 }
 
 function watchProfileEdit () {
     $('.btn-edit-profile').click(() => {
-        $('.update-user-container').toggle('slow');
+        $('.profile-info').toggle();
+        $('.update-user-container').toggle();
     })
 }
 
-// ----- add a new song -----
+// ----- add a new song ----- //
 function displayNewSong (res) {
     let song = res;
     let songUnit = generateMainSongUnit(song, song._id);
@@ -109,14 +121,16 @@ function watchNewSongSubmit () {
     })
 }
 
-// ---- add a new comment to a song/set -----
+watchNewSongUploadSelect();
+
+// ---- add a new comment to a song/set ----- //
 function displayNewComment (res) {
     let commentsArray = res.comments;
     let newComment = commentsArray[commentsArray.length - 1];
-    let commentString = generateSongComment(newComment);
+    let commentString = generateComment(newComment);
     $(commentString).appendTo($(`#comments-${res._id}`).children('.comments-container'))
-    .addClass(`.comment-delete-${newComment._id}`).css('display', 'none').show('normal', () => {
-        watchCommentDelete(newComment._id);
+    .css('display', 'none').show('normal', () => {
+        newCommentEventLis();
     });
 }
 
@@ -143,7 +157,7 @@ function watchNewCommentSubmit () {
     })
 }
 
-// ---- delete a comment from a song ---
+// ---- delete a comment from a song --- //
 function deleteComment (endpoint, data) {
     let commentObject = { "commentId": `${data}` };
     return $.ajax({
@@ -159,9 +173,9 @@ function getSetId (child) {
     return $(child).closest('.set-comments ').find('#comments-setId').attr('value')
 }
 
-function watchCommentDelete (id) {
-    let target = (id) ? `.comment-delete-${id}` :  '.comment-delete';
-    $(`${target}`).on('click', function() {
+function watchCommentDelete (type) {
+    let namespace = (type) ? type :  '';
+    $('.comment-delete').on(`click${namespace}`, function() {
         let songId = getSongId(this);
         let commentId = getCommentId(this);
         let setId = getSetId(this);
@@ -171,6 +185,64 @@ function watchCommentDelete (id) {
             $(this).closest('.comment-unit').hide('normal', function() {$(this).remove()});
         })
     })
+}
+
+// ----- update a comment ----- //
+function updateComment (endpoint, data) {
+    return $.ajax({
+        method: 'PUT',
+        url: endpoint,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+    })
+    .fail(evalError)
+}
+
+function getNewestComment (array) {
+    let sortedArray = array.sort(function(a,b) {
+      let aDate = new Date (a.dateAdded);
+      let bDate = new Date (b.dateAdded);
+      return aDate - bDate;
+    })
+    return sortedArray[sortedArray.length - 1].comment;
+  }
+
+function watchCommentUpdateSubmit (type) {
+    let namespace = (type) ? type : '';
+    $(`.edit-comment`).on(`submit${namespace}`, function(event) {
+        event.preventDefault();
+        let commentText = $(this).closest('.comment-unit').find('.comment-text');
+        let songId = getSongId(this);
+        let setId = getSetId(this);
+        let commentEp = (songId)? SONGS_EP+`/${songId}`+'/comments' : SETS_EP+`/${setId}`+'/comments';
+        let commentObject = {
+            comment: $(this).children('input').val(),
+            commentId: getCommentId(this)
+        }
+        updateComment(commentEp, commentObject)
+        .then((comments) => {
+            let updatedText = getNewestComment(comments);
+            commentText.html(updatedText);
+            $(this).addClass('hidden');
+            commentText.removeClass('hidden');
+        })
+    })
+}
+
+function watchCommentUpdateClick (type) {
+        let namespace = (type)? type : '';
+        $('.comment-update').on(`click${namespace}`, function() {
+        let comment = $(this).closest('.comment-unit').find('.comment-text');
+        let updatedCommentInput = $(this).closest('.comment-unit').find('.edit-comment');
+        comment.addClass('hidden');
+        updatedCommentInput.removeClass('hidden');
+        // listen for click 'close'
+        updatedCommentInput.children('.exit-comment-edit')
+        .on(`click`, function() {
+            comment.removeClass('hidden');
+            updatedCommentInput.addClass('hidden')
+        })
+})
 }
 
 // ---- generate initial page -----
@@ -194,21 +266,31 @@ function showErrorMessage(errMsg) {
 function watchSongsLink () {
     $('#songs-link').click(function(){
         $('.home-banner').html('<div class="top-spacer"></div><p class="lead">Lastest Song Recommendations</p>')
-        $('.home-banner').css({'background-image': 'url(../images/home-banner.jpg)'})
-        $('#set-review-container').fadeOut('slow', function(){
-            $('#song-recomm-container').fadeIn('slow');
-        });
+        .css({'background-image': 'url(../images/home-banner.jpg)'})
+        .removeClass('invisible');
+        $('.home-welcome').slideUp('slow');
+        $('#set-review-container').css('display', 'none');
+        $('#song-recomm-container').fadeIn('slow');
     })
 }
 
 function watchSetsLink () {
     $('#sets-link').click(function(){
         $('.home-banner').html('<div class="top-spacer"></div><p class="lead">Set Reviews</p>')
-        $('.home-banner').css({'background-image': 'url(../images/sets-banner.jpg)'})
-        $('#song-recomm-container').fadeOut('slow', function(){
-                    $('#set-review-container').fadeIn('slow');
-        });
+        .css({'background-image': 'url(../images/sets-banner.jpg)'})
+        .removeClass('invisible');
+        $('.home-welcome').slideUp('slow');
+        $('#song-recomm-container').css('display', 'none');
+        $('#set-review-container').fadeIn('slow');
     })
+}
+
+// -- side bar nav --
+function openNav() {
+    document.getElementById("mySidenav").style.width = "100%";
+}
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
 }
 
 function onLoadHome () {

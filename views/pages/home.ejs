@@ -11,489 +11,516 @@
       <title>Home</title>
   </head>
 <body class="bg-light">
-  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-    <img class="shadow rounded-left logo" src="/images/favicon-256.png" alt="churchBand logo"href="/home">
-    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav mr-auto">
-        <% if (user) { %>
-        <img class="shadow rounded-circle user-img-loggedin" src="/images/user_profile/<%= user.profilePicture %>" alt="user image" href="/home">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, <%= user.firstName %></a>
-          <div class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Profile</a>
-            <a class="dropdown-item" href="/auth/logout">Log Out</a>
-          </div>
-        </li><% } %>
-      </ul>
-    </div>
-  </nav>
-  <div class="alert alert-primary fixed-bottom">Error Message</div>
-  <div class="nav-scroller bg-white box-shadow">
-    <nav class="nav nav-underline">
-      <a class="nav-link" id="songs-link" href="#">Song Recommendations</a>
-      <a class="nav-link" id="sets-link" href="#">Set Reviews</a>
-    </nav>
+<!-- nav bar-->
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+  <img class="shadow rounded-left logo" src="/images/favicon-256.png" alt="churchBand logo" href="#" onclick="openNav()">
+  <div class="no-wrap">
+    <ul class="navbar-nav offcanvas-collapse">
+      <% if (user) { %>
+      <img class="shadow rounded-circle user-img-loggedin" src="https://churchband.s3.amazonaws.com/user-profile-images/<%= user.profilePicture %>" alt="user image" href="/home">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, <%= user.firstName %></a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" href="#" class="btn btn-primary" data-toggle="modal" data-target="#profileModal" aria-labelledby="view my profile">Profile</a>
+          <a class="dropdown-item" href="/auth/logout" aria-label="logout">Log Out</a>
+        </div>
+      </li><% } %>
+    </ul>
   </div>
-    
+</nav>
+<!-- side nav bar -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" aria-label="close sidenav">&times;</a>
+  <img class="shadow rounded-circle" src="https://churchband.s3.amazonaws.com/user-profile-images/<%= user.profilePicture %>" alt="user profile thumb" href="/home">
+  <a href="#" data-toggle="modal" data-target="#profileModal" aria-labelledby="view my profile">Profile</a>
+  <a href="/auth/logout" aria-label="logout">Log Out</a>
+</div>
+<!-- main content -->
   <main role="main" class="container">
     <div class="jumbotron jumbotron-fluid rounded home-welcome rounded box-shadow">
         <h1 class="display-4">Welcome</h1>
         <p class="lead">Find the latest song recommendations from current members and review past prasie sets.</p>
     </div>
-    <div class="jumbotron jumbotron-fluid rounded home-banner rounded box-shadow"></div>
-<!-- song recommendations -->
-  <div id="song-recomm-container" class="hidden">
-    <div class="content-news my-3 p-3 bg-white rounded box-shadow">
-      <button type="button" class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#newSongInput">Add a set</button>
-      <div class="loader"></div>
-<!-- new song modal-->
-      <div class="modal fade" id="newSongInput" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Song Info</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form class="newSongForm">
-                    <div class="form-row">
-                      <div class="col">
-                        <input type="text" id="inputArtist" name="artist" class="form-control" placeholder="Artist" required>
-                      </div>
-                      <div class="col">
-                        <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Title" required>
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="col">
-                        <input type="text" id="inputAlbum" name="album" class="form-control" placeholder="Album">
-                      </div>
-                      <div class="col">
-                        <input type="text" id="inputReleaseYear" name="releaseYear" class="form-control" placeholder="Release Year">
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="col">
-                        <select id="inputTheme" name="theme" class="form-control" required>
-                          <option value="">Theme</option>
-                          <option value="Adoration & Praise">Adoration & Praise</option>
-                          <option value="Call to Worship">Call to Worship</option>
-                          <option value="Christmas">Christmas</option>
-                          <option value="Church & Unity">Church & Unity</option>
-                          <option value="Commitment & Dedication">Commitment & Dedication</option>
-                          <option value="Communion & Reflection">Communion & Reflection</option>
-                          <option value="Easter">Easter</option>
-                          <option value="Faith & Trust">Faith & Trust</option>
-                          <option value="God's Attributes">God's Attributes</option>
-                          <option value="Grace & Mercy">Grace & Mercy</option>
-                          <option value="Missions">Missions</option>
-                          <option value="Peace & Hope">Peace & Hope</option>
-                          <option value="Prayer & Renewal">Prayer & Renewal</option>
-                          <option value="Resurrection & Sacrifice">Resurrection & Sacrifice</option>
-                          <option value="Other">Other</option>
-                        </select>
-                      </div>
-                      <div class="col">
-                        <select name="tempo" id="inputTempo" class="form-control" required>
-                          <option value="">Tempo</option>
-                          <option value="Slow">Slow</option>
-                          <option value="Medium">Medium</option>
-                          <option value="Fast">Fast</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="col">
-                        <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link">
-                      </div>
-                    </div>
-                        <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit">Submit</button>
-                  </form>
-              </div>
-          </div>
-        </div>
+    <nav role="navigation">
+      <ul class="pagination justify-content-center">
+        <li class="page-item box-shadow"><a class="page-link lnk-black" id="songs-link" href="#">Song Recommendations</a></li>
+        <li class="page-item box-shadow"><a class="page-link lnk-black" id="sets-link" href="#">Set Reviews</a></li>
+      </ul>
+    </nav>
+    <div class="jumbotron jumbotron-fluid rounded home-banner rounded box-shadow invisible" role="banner">
+        <div class="top-spacer"></div><p class="lead">Page Title</p>
+    </div>
+  <!-- song recommendations -->
+    <div id="song-recomm-container" class="hidden">
+      <div class="content-news my-3 p-3 bg-white rounded box-shadow">
+        <button type="button" class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#newSongInput">Add a set</button>
+  <!-- insert songs from database -->
+        <div class="song-recomm-main"></div>
       </div>
-<!-- insert songs from database -->
-      <div class="song-recomm-main"></div>
     </div>
-  </div>
-<!-- set reviews -->
-  <div id="set-review-container" class="hidden">
-    <div class="my-3 p-3 bg-white rounded box-shadow content-news">
-      <div class="loader"></div>
-      <div class="container">
-          <div class="row">
-            <div class="col">
-                <button type="button" class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#newSetInput">Add a set</button>
-            </div>
-            <div class="col">
-                <div class="dropdown show">
-                    <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Choose a set
-                    </a>
-                    <div class="dropdown-menu dropdown-sets" aria-labelledby="dropdownMenuLink"></div>
-                  </div>
-            </div>
-          </div>
-        </div>
-<!-- insert sets from database -->
-      <div class="set-reviews">
-        <div class="playlist-toolbar">
-          <div class="btn-group">
-            <form>
-              <fieldset>
-                <legend class="sr-only">Media Playback Control</legend>
-                <button class="btn-pause btn btn-sm btn-warning" aria-label="pause"><i class="fa fa-pause"></i></button>
-                <button class="btn-play btn btn-sm btn-success" aria-label="play"><i class="fa fa-play"></i></button>
-                <button class="btn-stop btn btn-sm btn-danger" aria-label="stop"><i class="fa fa-stop"></i></button>
-                <button class="btn-rewind btn btn-sm btn-success" aria-label="backward"><i class="fa fa-fast-backward"></i></button>
-                <button class="btn-fast-forward btn btn-sm btn-success" aria-label="forward"><i class="fa fa-fast-forward"></i></button>
-              </fieldset>
-            </form>
-         </div>
-         <span class="audio-pos">00:00:00.0</span>
-         <form class="form-inline">
-          <div class="form-group">
-            <label for="master-gain">Master Volume</label>
-            <input type="range" min="0" max="100" value="100" class="master-gain form-control" id="master-gain">
-          </div>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" class="automatic-scroll"> Automatic Scroll
-            </label>
-          </div>
-        </form>
-        </div>
-        <div id="playlist"></div>
-        <div class="set-comments text-muted pt-1">
-            <div class="card card-body set-comments-container"></div>
-            <form class="form-horizontal set-commentForm" role="form">
-                <div class="form-group">
-                    <label for="comment" class="col-sm-offset-2 control-label small"><strong>Comment</strong></label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" name="comment" id="comment">
-                      <input type="hidden" id="comments-setId" name="setId" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">                    
-                        <button class="btn btn-secondary btn-circle btn-sm" type="submit"><span class="glyphicon glyphicon-send"></span> Submit</button>
-                    </div>
-                </div>            
-            </form>
-          </div>
-    </div>
-  </div>
-<!-- profile modal -->
-  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Profile</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body profile-info">
-          <div class="container-fluid">
+  <!-- set reviews -->
+    <div id="set-review-container" class="hidden">
+      <div class="my-3 p-3 bg-white rounded box-shadow content-news">
+        <div class="container">
             <div class="row">
               <div class="col">
-                <img src="images/user_profile/<%= user.profilePicture %>" class="profile-user-img">
+                <button type="button" class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#newSetInput">Add a set</button>
               </div>
               <div class="col">
-                  <table class="table table-user-info">
-                      <tbody><% if (user) { %>
-                        <tr>
-                          <td>Username:</td>
-                          <td><%= user.username %></td>
-                        </tr>
-                        <tr>
-                          <td>First Name</td>
-                          <td><%= user.firstName %></td>
-                        </tr>
-                        <tr>
-                          <td>Last Name</td>
-                          <td><%= user.lastName %></td>
-                        </tr>
-                        <tr>
-                          <td>Email: </td>
-                          <td><%= user.email %></td><% } %>
-                        </tr>
-                      </tbody>
-                    </table>
-                  <p>Experience</p>
-                  <table class="table table-user-information user-exp">
-                    <tbody><% if (user.experience) { %>
-                        <tr>
-                          <td><%= user.experience.instr1 %></td>
-                          <td><%= user.experience.skill1 %></td>
-                        </tr>
-                        <tr>
-                          <td><%= user.experience.instr2 %></td>
-                          <td><%= user.experience.skill2 %></td>
-                        </tr>
-                        <tr>
-                          <td><%= user.experience.instr3 %></td>
-                          <td><%= user.experience.skill3 %></td>
-                        </tr>
-                      <% } %></tbody>
-                  </table>
+                <div class="dropdown show">
+                  <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownSets" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Choose a set
+                  </a>
+                  <div class="dropdown-menu dropdown-sets" aria-labelledby="dropdownSets"></div>
+                </div>
               </div>
             </div>
-          </div>
         </div>
-        <div class="container update-user-container"><% if (user) { %>
-          <form id="update-user">
-            <label for="profile-firstname">First Name</label>
-            <input class="form-control form-control-sm" id="profile-firstname" name="firstName" type="text" value="<%= user.firstName %>" placeholder="<%= user.firstName %>">
-            <label for="profile-lastname">Last Name</label>
-            <input class="form-control form-control-sm" id="profile-lastName" name="lastName" type="text" value="<%= user.lastName %>" placeholder="<%= user.lastName %>">
-            <label for="profile-email">Email</label>
-            <input class="form-control form-control-sm" id="profile-email" name="email" type="text" value="<%= user.email %>" placeholder="<%= user.email %>">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="pro-instrument-1">Instrument</label>
-                  <select name="instr1" id="pro-instrument-1" class="form-control">
-                    <option value=""></option>
-                    <option value="Piano">Piano</option>
-                    <option value="Keyboard">Keyboard</option>
-                    <option value="Drums">Drums</option>
-                    <option value="Bass">Bass</option>
-                    <option value="Electric Guitar">Electric Guitar</option>
-                    <option value="Vocals">Vocals</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="pro-skill-level-1">Skill Level</label>
-                  <select id="pro-skill-level-1" name="skill1" class="form-control">
-                    <option selected value=""></option>
-                    <option value="Still Learning">Still Learning</option>
-                    <option value="Useable, Need Training">Useable, Need Training</option>
-                    <option value="Stage Ready">Stage Ready</option>
-                    <option value="Creative, Explorative">Creative Artist</option>
-                    <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
-                  </select>
-                </div>
+        <!-- insert sets from database -->
+        <div class="set-reviews">
+            <div class="playlist-toolbar" aria-labelledby="set playlist toolbar">
+              <div class="btn-group">
+                <form>
+                  <fieldset>
+                    <legend class="sr-only">Media Playback Control</legend>
+                    <button class="btn-pause btn btn-sm btn-warning" aria-label="pause"><i class="fa fa-pause"></i></button>
+                    <button class="btn-play btn btn-sm btn-success" aria-label="play"><i class="fa fa-play"></i></button>
+                    <button class="btn-stop btn btn-sm btn-danger" aria-label="stop"><i class="fa fa-stop"></i></button>
+                    <button class="btn-rewind btn btn-sm btn-success" aria-label="backward"><i class="fa fa-fast-backward"></i></button>
+                    <button class="btn-fast-forward btn btn-sm btn-success" aria-label="forward"><i class="fa fa-fast-forward"></i></button>
+                  </fieldset>
+                </form>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="pro-instrument-2">Instrument</label>
-                  <select name="instr2" id="pro-instrument-2" class="form-control">
-                    <option value=""></option>
-                    <option value="Piano">Piano</option>
-                    <option value="Keyboard">Keyboard</option>
-                    <option value="Drums">Drums</option>
-                    <option value="Bass">Bass</option>
-                    <option value="Electric Guitar">Electric Guitar</option>
-                    <option value="Vocals">Vocals</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="pro-skill-level-2">Skill Level</label>
-                  <select id="pro-skill-level-2" name="skill2" class="form-control">
-                    <option selected value=""></option>
-                    <option value="Still Learning">Still Learning</option>
-                    <option value="Useable, Need Training">Useable, Need Training</option>
-                    <option value="Stage Ready">Stage Ready</option>
-                    <option value="Creative, Explorative">Creative Artist</option>
-                    <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
-                  </select>
-                </div>
+            <span class="audio-pos">00:00:00.0</span>
+            <form class="form-inline">
+              <div class="form-group">
+                <label for="master-gain">Master Volume</label>
+                <input type="range" min="0" max="100" value="100" class="master-gain form-control" id="master-gain">
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="automatic-scroll"> Automatic Scroll
+                </label>
+              </div>
+            </form>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="pro-instrument-3">Instrument</label>
-                  <select name="instr3" id="pro-instrument-3" class="form-control">
-                    <option value=""></option>
-                    <option value="Piano">Piano</option>
-                    <option value="Keyboard">Keyboard</option>
-                    <option value="Drums">Drums</option>
-                    <option value="Bass">Bass</option>
-                    <option value="Electric Guitar">Electric Guitar</option>
-                    <option value="Vocals">Vocals</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="pro-skill-level-3">Skill Level</label>
-                  <select id="pro-skill-level-3" name="skill3" class="form-control">
-                    <option selected value=""></option>
-                    <option value="Still Learning">Still Learning</option>
-                    <option value="Useable, Need Training">Useable, Need Training</option>
-                    <option value="Stage Ready">Stage Ready</option>
-                    <option value="Creative, Explorative">Creative Artist</option>
-                    <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
-                  </select>
-                </div>
-            </div>
-            <div class="form-group">
-              <label for="upload-user-img">Upload Profile Picture</label>
-              <input type="file" class="form-control-file" name="userImg" id="upload-user-img">
-            </div>
-            <button type="submit" class="btn btn-primary" id="update-user-submit">Submit</button>
-          </form>
-        </div><% } %>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-info btn-edit-profile">edit profile</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <div id="playlist"></div>
+            <div class="set-comments text-muted pt-1 hidden">
+                <div class="card card-body set-comments-container"></div>
+                <form class="form-horizontal set-commentForm" role="form">
+                    <div class="form-group">
+                        <label for="comment" class="col-sm-offset-2 control-label small"><strong>Comment</strong></label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="comment" id="comment">
+                          <input type="hidden" id="comments-setId" name="setId" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">                    
+                            <button class="btn btn-secondary btn-circle btn-sm" type="submit"><span class="glyphicon glyphicon-send"></span> Submit</button>
+                        </div>
+                    </div>            
+                </form>
+              </div>
         </div>
       </div>
     </div>
-  </div>
-  <!--- add new set modal -->
-  <div class="modal fade" id="newSetInput" tabindex="-1" role="dialog" aria-labelledby="newSetInput" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Upload New Set</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form id="newSetForm">
-                <div class="form-row">
-                  <div class="col">
-                    <label for="eventDate">Event Date</label>
-                    <input type="date" id="eventDate" name="eventDate" class="form-control" placeholder="Date of Event" required>
+<!-- new song modal-->
+    <div class="modal fade" id="newSongInput" tabindex="-1" role="dialog" aria-labelledby="song input modal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Song Info</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form class="newSongForm">
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="inputArtist" class="sr-only">Artist</label>
+                      <input type="text" id="inputArtist" name="artist" class="form-control" placeholder="Artist" aria-labelledby="artist name" required>
+                    </div>
+                    <div class="col">
+                      <label for="inputTitle" class="sr-only">Title</label>
+                      <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Title" aria-labelledby="song title name" required>
+                    </div>
                   </div>
-                  <div class="col">
-                      <label for="eventType">Event Type</label>
-                      <select type="text" id="eventType" name="eventType" class="form-control">
-                          <option value="SWS">SWS</option>
-                          <option value="Post-Grad">Post-Grad</option>
-                          <option value="Baptism">Baptism</option>
-                          <option value="TFN">TFN</option>
-                          <option value="Easter">Easter</option>
-                          <option value="Good Friday">Good Friday</option>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="inputAlbum" class="sr-only">Album</label>
+                      <input type="text" id="inputAlbum" name="album" class="form-control" placeholder="Album" aria-labelledby="album name">
+                    </div>
+                    <div class="col">
+                      <label for="inputReleaseYear" class="sr-only">Release Year</label>
+                      <input type="text" id="inputReleaseYear" name="releaseYear" class="form-control" placeholder="Release Year" aria-labelledby="release year">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="inputTheme" class="sr-only">Track Theme</label>
+                      <select id="inputTheme" name="theme" class="form-control" aria-labelledby="track theme" required>
+                        <option value="">Theme</option>
+                        <option value="Adoration & Praise">Adoration & Praise</option>
+                        <option value="Call to Worship">Call to Worship</option>
+                        <option value="Christmas">Christmas</option>
+                        <option value="Church & Unity">Church & Unity</option>
+                        <option value="Commitment & Dedication">Commitment & Dedication</option>
+                        <option value="Communion & Reflection">Communion & Reflection</option>
+                        <option value="Easter">Easter</option>
+                        <option value="Faith & Trust">Faith & Trust</option>
+                        <option value="God's Attributes">God's Attributes</option>
+                        <option value="Grace & Mercy">Grace & Mercy</option>
+                        <option value="Missions">Missions</option>
+                        <option value="Peace & Hope">Peace & Hope</option>
+                        <option value="Prayer & Renewal">Prayer & Renewal</option>
+                        <option value="Resurrection & Sacrifice">Resurrection & Sacrifice</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <input type="text" id="mainLead" name="mainLead" class="form-control" class="form-control form-control-sm" placeholder="Praise Lead">
-                  </div>
-                  <div class="col">
-                    <input type="text" id="mainSpeaker" name="mainSpeaker" class="form-control" class="form-control form-control-sm" placeholder="Main Speaker">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-vocals1" class="col-form-label-sm">Vocals 1</label>
-                    <input type="text" id="mem-vocals1" name="memVocals1" class="form-control form-control-sm" placeholder="Member">
-                    <input type="file" id="vocals1" name="vocals1" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-vocals2" class="col-form-label-sm">Vocals 2</label>
-                    <input type="text" id="mem-vocals2" name="memVocals2" class="form-control form-control-sm" placeholder="Member">
-                    <input type="file" id="vocals2" name="vocals2" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-vocals3" class="col-form-label-sm">Vocals 3</label>
-                    <input type="text" id="mem-vocals3" name="memVocals3" class="form-control form-control-sm" placeholder="Member">
-                    <input type="file" id="vocals3" name="vocals3" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-acGuitar" class="col-form-label-sm">Acoustic Guitar </label>
-                    <input type="text" id="mem-acGuitar" name="memAcGuitar" class="form-control form-control-sm" placeholder="Member">
-                    <input type="file" id="acGuitar" name="acGuitar" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-bass" class="col-form-label-sm">Bass Guitar </label>
-                    <input type="text" id="mem-bass" name="memBass" class="form-control form-control-sm" placeholder="Member">
-                    <input type="file" id="bass" name="bass" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-eg1" class="col-form-label-sm">EG 1</label>
-                    <input type="text" id="mem-eg1" name="memEg1" class="form-control form-control-sm" placeholder="Member">
-                    <input type="file" id="eg1" name="eg1" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-eg2" class="col-form-label-sm">EG 2</label>
-                    <input type="text" id="mem-eg2" name="memEg2" class="form-control form-control-sm" placeholder="Member">
-                    <input type="file" id="eg2" name="eg2" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-keys" class="col-form-label-sm">Keyboard</label>
-                    <input type="text" id="mem-keys" name="memKeys" class="form-control form-control-sm" placeholder="Member">
-                    <input type="file" id="keys" name="keys" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-pad" class="col-form-label-sm">Pad</label>
-                    <input type="text" id="mem-pad" name="memPad" class="form-control form-control-sm" placeholder="Member">
-                    <input type="file" id="pad" name="pad" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
                     <div class="col">
-                      <label for="mem-drumer" class="col-form-label-sm">Drums - Overhead</label>
-                      <input type="text" id="mem-drummer" name="memDrum" class="form-control form-control-sm" placeholder="Member">
+                      <label for="inputTempo" class="sr-only">Tempo</label>
+                      <select name="tempo" id="inputTempo" class="form-control" aria-labelledby="track tempo" required>
+                        <option value="">Tempo</option>
+                        <option value="Slow">Slow</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Fast">Fast</option>
+                      </select>
                     </div>
                   </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-drum-overhead" class="col-form-label-sm">Drums - Overhead</label>
-                    <input type="file" id="drumsOverhead" name="drumsOverhead" class="form-control-sm">
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="inputYoutubeLink" class="sr-only">Youtube Link</label>
+                      <input type="text" id="inputYoutubeLink" name="youtube" class="form-control" placeholder="Youtube Link" aria-labelledby="youtube link">
+                    </div>
                   </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-drum-snare" class="col-form-label-sm">Drums - Snare</label>
-                    <input type="file" id="drumSnare" name="drumSnare" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-drum-kick" class="col-form-label-sm">Drums - Kick</label>
-                    <input type="file" id="drumKick" name="drumKick" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-drum-tom1" class="col-form-label-sm">Drums - High Tom</label>
-                    <input type="file" id="drumTom1" name="drumTom1" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-drum-tom2" class="col-form-label-sm">Drums - Mid Tom</label>
-                    <input type="file" id="drumTom2" name="drumTom2" class="form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col">
-                    <label for="mem-drum-tom3" class="col-form-label-sm">Drums - Floor Tom</label>
-                    <input type="file" id="drumTom3" name="drumTom3" class="form-control-sm">
-                  </div>
-                </div>
-                <button class="btn btn-primary btn-sm" id="newSetForm-submit" type="submit">Submit</button>
-            </form>
+                      <button class="btn btn-primary btn-sm" id="newSongForm-submit" type="submit" aria-label="submit">Submit</button>
+                </form>
+            </div>
         </div>
+      </div>
     </div>
-  </div>
-</div>
-</main>
-        <script src="scripts/plyr.js"></script>
-        <script src="scripts/home.js"></script>
-        <script src="scripts/home-dom.js"></script>
-        <script src="scripts/waveform-playlist.var.js"></script>
-        <script src="scripts/home-set.js"></script>
-        <script src="scripts/emitter.js"></script>
+<!-- profile modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profile modal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Profile</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body profile-info">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col">
+                  <img src="https://churchband.s3.amazonaws.com/user-profile-images/<%= user.profilePicture %>" class="profile-user-img">
+                </div>
+                <div class="col">
+                    <table class="table table-user-info">
+                        <tbody><% if (user) { %>
+                          <tr>
+                            <td>Username:</td>
+                            <td><%= user.username %></td>
+                          </tr>
+                          <tr>
+                            <td>First Name</td>
+                            <td><%= user.firstName %></td>
+                          </tr>
+                          <tr>
+                            <td>Last Name</td>
+                            <td><%= user.lastName %></td>
+                          </tr>
+                          <tr>
+                            <td>Email: </td>
+                            <td><%= user.email %></td><% } %>
+                          </tr>
+                        </tbody>
+                      </table>
+                    <p>Experience</p>
+                    <table class="table table-user-information user-exp">
+                      <tbody><% if (user.experience) { %>
+                          <tr>
+                            <td><%= user.experience.instr1 %></td>
+                            <td><%= user.experience.skill1 %></td>
+                          </tr>
+                          <tr>
+                            <td><%= user.experience.instr2 %></td>
+                            <td><%= user.experience.skill2 %></td>
+                          </tr>
+                          <tr>
+                            <td><%= user.experience.instr3 %></td>
+                            <td><%= user.experience.skill3 %></td>
+                          </tr>
+                        <% } %></tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container update-user-container"><% if (user) { %>
+            <form id="update-user">
+              <fieldset>
+                <legend class="sr-only">User info</legend>
+                <label for="profile-firstname">First Name</label>
+                <input class="form-control form-control-sm" id="profile-firstname" name="firstName" type="text" value="<%= user.firstName %>" placeholder="<%= user.firstName %>" aria-labelledby="first name">
+                <label for="profile-lastname">Last Name</label>
+                <input class="form-control form-control-sm" id="profile-lastName" name="lastName" type="text" value="<%= user.lastName %>" placeholder="<%= user.lastName %>" aria-labelledby="last name">
+                <label for="profile-email">Email</label>
+                <input class="form-control form-control-sm" id="profile-email" name="email" type="text" value="<%= user.email %>" placeholder="<%= user.email %>" aria-labelledby="email">
+              </fieldset>
+              <fieldset>
+              <legend class="sr-only">User Experience</legend>
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="pro-instrument-1">Instrument</label>
+                    <select name="instr1" id="pro-instrument-1" class="form-control" aria-labelledby="instrument 1">
+                      <option value=""></option>
+                      <option value="Piano">Piano</option>
+                      <option value="Keyboard">Keyboard</option>
+                      <option value="Drums">Drums</option>
+                      <option value="Bass">Bass</option>
+                      <option value="Electric Guitar">Electric Guitar</option>
+                      <option value="Vocals">Vocals</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="pro-skill-level-1">Skill Level</label>
+                    <select id="pro-skill-level-1" name="skill1" class="form-control" aria-labelledby="skill level for instrument 1">
+                      <option selected value=""></option>
+                      <option value="Still Learning">Still Learning</option>
+                      <option value="Useable, Need Training">Useable, Need Training</option>
+                      <option value="Stage Ready">Stage Ready</option>
+                      <option value="Creative, Explorative">Creative Artist</option>
+                      <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="pro-instrument-2">Instrument</label>
+                    <select name="instr2" id="pro-instrument-2" class="form-control" aria-labelledby="instrument 2">
+                      <option value=""></option>
+                      <option value="Piano">Piano</option>
+                      <option value="Keyboard">Keyboard</option>
+                      <option value="Drums">Drums</option>
+                      <option value="Bass">Bass</option>
+                      <option value="Electric Guitar">Electric Guitar</option>
+                      <option value="Vocals">Vocals</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="pro-skill-level-2">Skill Level</label>
+                    <select id="pro-skill-level-2" name="skill2" class="form-control" aria-labelledby="skill level for instrument 2">
+                      <option selected value=""></option>
+                      <option value="Still Learning">Still Learning</option>
+                      <option value="Useable, Need Training">Useable, Need Training</option>
+                      <option value="Stage Ready">Stage Ready</option>
+                      <option value="Creative, Explorative">Creative Artist</option>
+                      <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="pro-instrument-3">Instrument</label>
+                    <select name="instr3" id="pro-instrument-3" class="form-control" aria-label="insturment 3">
+                      <option value=""></option>
+                      <option value="Piano">Piano</option>
+                      <option value="Keyboard">Keyboard</option>
+                      <option value="Drums">Drums</option>
+                      <option value="Bass">Bass</option>
+                      <option value="Electric Guitar">Electric Guitar</option>
+                      <option value="Vocals">Vocals</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="pro-skill-level-3">Skill Level</label>
+                    <select id="pro-skill-level-3" name="skill3" class="form-control" aria-labelledby="skill level for instrument 3">
+                      <option selected value=""></option>
+                      <option value="Still Learning">Still Learning</option>
+                      <option value="Useable, Need Training">Useable, Need Training</option>
+                      <option value="Stage Ready">Stage Ready</option>
+                      <option value="Creative, Explorative">Creative Artist</option>
+                      <option value="Can Mentor / Train Others">Can Mentor / Train Others</option>
+                    </select>
+                  </div>
+              </div>
+              </fieldset>
+              <div class="form-group">
+                <fieldset>
+                  <legend class="sr-only">Upload User Image</legend>
+                  <label for="upload-user-img">Upload Profile Picture</label>
+                  <input type="file" class="form-control-file" name="userImg" id="upload-user-img" aria-label="profile picture file">  
+                </fieldset>
+              </div>
+              <button type="submit" class="btn btn-primary" id="update-user-submit" aria-label="submit">Submit</button>
+            </form>
+          </div><% } %>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-info btn-edit-profile">edit profile</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--- add new set modal -->
+    <div class="modal fade" id="newSetInput" tabindex="-1" role="dialog" aria-labelledby="set input modal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Upload New Set</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form id="newSetForm">
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="eventDate">Event Date</label>
+                      <input type="date" id="eventDate" name="eventDate" class="form-control" placeholder="Date of Event" required>
+                    </div>
+                    <div class="col">
+                        <label for="eventType">Event Type</label>
+                        <select type="text" id="eventType" name="eventType" class="form-control">
+                            <option value="SWS">SWS</option>
+                            <option value="Post-Grad">Post-Grad</option>
+                            <option value="Baptism">Baptism</option>
+                            <option value="TFN">TFN</option>
+                            <option value="Easter">Easter</option>
+                            <option value="Good Friday">Good Friday</option>
+                        </select>
+                      </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <input type="text" id="mainLead" name="mainLead" class="form-control" class="form-control form-control-sm" placeholder="Praise Lead">
+                    </div>
+                    <div class="col">
+                      <input type="text" id="mainSpeaker" name="mainSpeaker" class="form-control" class="form-control form-control-sm" placeholder="Main Speaker">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-vocals1" class="col-form-label-sm">Vocals 1</label>
+                      <input type="text" id="mem-vocals1" name="memVocals1" class="form-control form-control-sm" placeholder="Member">
+                      <input type="file" id="vocals1" name="vocals1" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-vocals2" class="col-form-label-sm">Vocals 2</label>
+                      <input type="text" id="mem-vocals2" name="memVocals2" class="form-control form-control-sm" placeholder="Member">
+                      <input type="file" id="vocals2" name="vocals2" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-vocals3" class="col-form-label-sm">Vocals 3</label>
+                      <input type="text" id="mem-vocals3" name="memVocals3" class="form-control form-control-sm" placeholder="Member">
+                      <input type="file" id="vocals3" name="vocals3" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-acGuitar" class="col-form-label-sm">Acoustic Guitar </label>
+                      <input type="text" id="mem-acGuitar" name="memAcGuitar" class="form-control form-control-sm" placeholder="Member">
+                      <input type="file" id="acGuitar" name="acGuitar" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-bass" class="col-form-label-sm">Bass Guitar </label>
+                      <input type="text" id="mem-bass" name="memBass" class="form-control form-control-sm" placeholder="Member">
+                      <input type="file" id="bass" name="bass" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-eg1" class="col-form-label-sm">EG 1</label>
+                      <input type="text" id="mem-eg1" name="memEg1" class="form-control form-control-sm" placeholder="Member">
+                      <input type="file" id="eg1" name="eg1" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-eg2" class="col-form-label-sm">EG 2</label>
+                      <input type="text" id="mem-eg2" name="memEg2" class="form-control form-control-sm" placeholder="Member">
+                      <input type="file" id="eg2" name="eg2" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-keys" class="col-form-label-sm">Keyboard</label>
+                      <input type="text" id="mem-keys" name="memKeys" class="form-control form-control-sm" placeholder="Member">
+                      <input type="file" id="keys" name="keys" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-pad" class="col-form-label-sm">Pad</label>
+                      <input type="text" id="mem-pad" name="memPad" class="form-control form-control-sm" placeholder="Member">
+                      <input type="file" id="pad" name="pad" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                      <div class="col">
+                        <label for="mem-drumer" class="col-form-label-sm">Drums - Overhead</label>
+                        <input type="text" id="mem-drummer" name="memDrum" class="form-control form-control-sm" placeholder="Member">
+                      </div>
+                    </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-drum-overhead" class="col-form-label-sm">Drums - Overhead</label>
+                      <input type="file" id="drumsOverhead" name="drumsOverhead" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-drum-snare" class="col-form-label-sm">Drums - Snare</label>
+                      <input type="file" id="drumSnare" name="drumSnare" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-drum-kick" class="col-form-label-sm">Drums - Kick</label>
+                      <input type="file" id="drumKick" name="drumKick" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-drum-tom1" class="col-form-label-sm">Drums - High Tom</label>
+                      <input type="file" id="drumTom1" name="drumTom1" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-drum-tom2" class="col-form-label-sm">Drums - Mid Tom</label>
+                      <input type="file" id="drumTom2" name="drumTom2" class="form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="mem-drum-tom3" class="col-form-label-sm">Drums - Floor Tom</label>
+                      <input type="file" id="drumTom3" name="drumTom3" class="form-control-sm">
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-sm" id="newSetForm-submit" type="submit">Submit</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- display error -->
+    <div class="alert alert-primary fixed-bottom" aria-live="assertive">Error Message</div>
+  <!-- scripts -->
+  <script src="scripts/plyr.js"></script>
+  <script src="scripts/home.js"></script>
+  <script src="scripts/home-dom.js"></script>
+  <script src="scripts/waveform-playlist.var.js"></script>
+  <script src="scripts/home-set.js"></script>
+  <script src="scripts/emitter.js"></script>
+  </main>
 </body>
