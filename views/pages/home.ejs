@@ -13,7 +13,7 @@
 <body class="bg-light">
 <!-- nav bar-->
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-  <img class="shadow rounded-left logo" src="/images/favicon-256.png" alt="churchBand logo" href="#" onclick="openNav()">
+  <img class="shadow rounded-left logo" src="https://churchband.s3.amazonaws.com/+site-icons/favicon-256.png" alt="churchBand logo" href="#" onclick="openNav()">
   <div class="no-wrap">
     <ul class="navbar-nav offcanvas-collapse">
       <% if (user) { %>
@@ -104,6 +104,7 @@
               </div>
             </form>
             </div>
+            <div class="loader sets-loader hidden"></div>
             <div id="playlist"></div>
             <div class="set-comments text-muted pt-1 hidden">
                 <div class="card card-body set-comments-container"></div>
@@ -365,7 +366,7 @@
         </div>
       </div>
     </div>
-  <!--- add new set modal -->
+<!--- add new set modal -->
     <div class="modal fade" id="newSetInput" tabindex="-1" role="dialog" aria-labelledby="set input modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -376,6 +377,7 @@
             </button>
           </div>
           <div class="modal-body">
+              <div class="loader sets-loader-form hidden"></div><span class="sets-loader-form hidden">Uploading Set ....</span>
               <form id="newSetForm">
                   <div class="form-row">
                     <div class="col">
