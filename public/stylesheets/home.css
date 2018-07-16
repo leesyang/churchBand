@@ -48,6 +48,9 @@ body {
 .page-link {
   font-size: 0.8em;
 }
+.btn-group-sm>.btn, .btn-sm {
+  font-size: 0.7rem;
+}
 
 /* loader */
 .loader {
@@ -144,8 +147,8 @@ body {
 
 /* -- icon links -- */
 .icon-link img {
-  width: 2.5em;
-  height: 2.5em;
+  width: 2em;
+  height: 2em;
 }
 
 /* -- song recommendation list -- */
@@ -297,7 +300,7 @@ body {
   }
 }
 
-@media (min-width: 450px) {
+@media (min-width: 400px) {
   .mr-auto, .mx-auto {
     margin-top: 0px;
     margin-right: auto;
@@ -315,6 +318,13 @@ body {
   }
   .page-link {
     font-size: 1em;
+  }
+  .btn-group-sm>.btn, .btn-sm {
+    font-size: 0.875rem;
+  }
+  .icon-link img {
+    width: 2.5em;
+    height: 2.5em;
   }
 }
 
