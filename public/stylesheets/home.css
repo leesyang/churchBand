@@ -49,6 +49,28 @@ body {
   font-size: 0.8em;
 }
 
+/* loader */
+.loader {
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* ----- banner ----- */
 .top-spacer {
   height: 60px;
@@ -186,7 +208,7 @@ body {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 50;
   top: 50px;
   left: 0;
   background-color: #111;
@@ -289,6 +311,7 @@ body {
   }
   .navbar-nav .dropdown-menu {
     position: absolute;
+    left: -2em;
   }
   .page-link {
     font-size: 1em;

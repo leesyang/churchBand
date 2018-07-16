@@ -95,7 +95,7 @@ setsCtrl.updateComment = function(req, res) {
             .catch(err => console.log(err));
         }
         else {
-            res.json({
+            res.status(422).json({
                 code: 422,
                 reason: 'Denied',
                 message: 'Unable to modify. Not Authorized.',

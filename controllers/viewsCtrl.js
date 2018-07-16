@@ -28,7 +28,6 @@ viewsCtrl.home = function (req, res) {
         return loggedInUser;
     })
     .then(user => {
-        console.log(user);
         res.render('pages/home', { user: user })
     })
 }

@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const favicon = require('serve-favicon');
 mongoose.Promise = global.Promise;
 const passport = require('passport');
 
@@ -14,6 +15,9 @@ const { localStrategy, jwtStrategy } = require('./config/passport');
 const { router } = require('./routes');
 
 const app = express();
+
+// ----- favicon -----
+app.use(favicon(__dirname + '/public/images/icons/' + 'favicon.ico'));
 
 // ----- http logging -----
 app.use(morgan('common'));

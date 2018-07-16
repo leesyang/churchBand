@@ -18,7 +18,7 @@ function generateSongNav (song) {
           <span class="no-wrap">${song.artist} - ${song.title}</span>
           </div>
           <div class="col-auto">
-              <a class="icon-link margin" data-toggle="collapse" href="#youtube-plyer-${song._id}" role="button" aria-expanded="false" aria-controls="youtube-plyer"><img class="youtube-button" src="/images/icons/youtube.png"></a>
+              <a class="icon-link margin" data-toggle="collapse" href="#youtube-plyer-${song._id}" role="button" aria-expanded="false" aria-controls="youtube-plyer"><img class="youtube-button" src="${iconPath}/youtube.png"></a>
               <a class="btn btn-primary btn-sm margin" data-toggle="collapse" href="#comments-${song._id}" role="button" aria-expanded="false" aria-controls="songComments">Comments</a>
               <a class="btn btn-secondary btn-sm margin" data-toggle="collapse" href="#songInfo-${song._id}" role="button" aria-expanded="false" aria-controls="songInfo">Song Info</a>
           </div>

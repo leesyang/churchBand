@@ -4,6 +4,8 @@ const SONGS_EP = '/api/songs';
 const SETS_EP = '/api/sets';
 const profileImgPath = 'https://churchband.s3.amazonaws.com/user-profile-images';
 const setAudioPath = 'https://churchband.s3.amazonaws.com/set-audio';
+const iconPath = 'https://churchband.s3.amazonaws.com/+site-icons';
+const siteImagesPath = 'https://churchband.s3.amazonaws.com/site-images';
 
 // ----- utility functions -----
 // -- converts form data into object --
@@ -121,8 +123,6 @@ function watchNewSongSubmit () {
     })
 }
 
-watchNewSongUploadSelect();
-
 // ---- add a new comment to a song/set ----- //
 function displayNewComment (res) {
     let commentsArray = res.comments;
@@ -220,7 +220,7 @@ function watchCommentUpdateSubmit (type) {
             commentId: getCommentId(this)
         }
         updateComment(commentEp, commentObject)
-        .then((comments) => {
+        .done((comments) => {
             let updatedText = getNewestComment(comments);
             commentText.html(updatedText);
             $(this).addClass('hidden');
@@ -266,7 +266,7 @@ function showErrorMessage(errMsg) {
 function watchSongsLink () {
     $('#songs-link').click(function(){
         $('.home-banner').html('<div class="top-spacer"></div><p class="lead">Lastest Song Recommendations</p>')
-        .css({'background-image': 'url(../images/home-banner.jpg)'})
+        .css({'background-image': `url(${siteImagesPath}/home-banner.jpg)`})
         .removeClass('invisible');
         $('.home-welcome').slideUp('slow');
         $('#set-review-container').css('display', 'none');
@@ -277,7 +277,7 @@ function watchSongsLink () {
 function watchSetsLink () {
     $('#sets-link').click(function(){
         $('.home-banner').html('<div class="top-spacer"></div><p class="lead">Set Reviews</p>')
-        .css({'background-image': 'url(../images/sets-banner.jpg)'})
+        .css({'background-image': `url(${siteImagesPath}/sets-banner.jpg)`})
         .removeClass('invisible');
         $('.home-welcome').slideUp('slow');
         $('#song-recomm-container').css('display', 'none');

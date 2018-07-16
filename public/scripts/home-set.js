@@ -2,6 +2,8 @@
 // ----- add a new set -----
 function updateSetList (res) {
     console.log(res)
+    $('.sets-loader-form').toggleClass('hidden');
+    $('#newSetInput').modal('hide');
 };
 
 function submitNewSet (endpoint, data) {
@@ -18,7 +20,9 @@ function submitNewSet (endpoint, data) {
 function watchNewSetSubmit () {
     $('#newSetForm').submit(function(event) {
         event.preventDefault();
+        $('#newSetForm').addClass('hidden');
         let formData = new FormData(this);
+        $('.sets-loader-form').toggleClass('hidden');
         submitNewSet(SETS_EP, formData)
          .done(updateSetList)
          .fail(evalError)
@@ -38,7 +42,7 @@ function addFilesPath (setFiles) {
 function generateSetsString (sets) {
     let setsArray = sets.map(set => {
         let date = simplifyDate(set.eventDate)
-        return `<a class="dropdown-item dropdown-set" data-setId="${set._id}">${date} - ${set.eventType}</a>`
+        return `<a class="dropdown-item dropdown-set" href="#" data-setId="${set._id}">${date} - ${set.eventType}</a>`
     })
     return setsArray.join('');   
 }
@@ -102,7 +106,6 @@ function submitNewSetComment (endpoint, data) {
     .fail(evalError)
 }
 
-
 function updateSetComment (res) {
     console.log(res);
     let commentsArray = res.comments;
@@ -145,8 +148,10 @@ function watchSetClick () {
         let setId = $(this).attr('data-setId');
         let set = findSetObject(setId);
         ee.emit('clear');
+        $('.sets-loader').toggleClass('hidden');
         loadNewSet(set.files)
         .then(() => {
+            $('.sets-loader').toggleClass('hidden');
             $('.set-comments-container').empty();
             $('.set-comments').removeClass('hidden');
             populateSetComments(set);
