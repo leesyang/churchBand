@@ -21,11 +21,15 @@ function objectifyForm(formInputs) {
 // -- get songId / commentId from html --
 function getSongId (child) {
     return $(child).closest('.song-recomm-unit').attr('data-id');
-}
+};
+
+function getSetId (child) {
+    return $(child).closest('.set-comments ').find('#comments-setId').attr('value')
+};
 
 function getCommentId (child) {
     return $(child).closest('.comment-unit').attr('data-id')
-}
+};
 
 // ----- error handling for ajax ----- //
 function evalError (err) {
@@ -37,13 +41,6 @@ function evalError (err) {
     else {
         showErrorMessage(err.statusText);
     }
-}
-
-// ----- event listeners ------
-function newCommentEventLis () {
-    watchCommentDelete('.generated');
-    watchCommentUpdateClick('.generated')
-    watchCommentUpdateSubmit('.generated');
 }
 
 // ----- update profile ----- //
@@ -124,14 +121,12 @@ function watchNewSongSubmit () {
 }
 
 // ---- add a new comment to a song/set ----- //
-function displayNewComment (res) {
-    let commentsArray = res.comments;
+function displayNewComment (comments, songId, setId) {
+    let commentsArray = comments;
     let newComment = commentsArray[commentsArray.length - 1];
     let commentString = generateComment(newComment);
-    $(commentString).appendTo($(`#comments-${res._id}`).children('.comments-container'))
-    .css('display', 'none').show('normal', () => {
-        newCommentEventLis();
-    });
+    $(commentString).appendTo($(`#comments-${ songId || setId }`).children('.comments-container'))
+    .css('display', 'none').show('normal')
 }
 
 function submitNewComment (endpoint, data) {
@@ -147,11 +142,15 @@ function submitNewComment (endpoint, data) {
 function watchNewCommentSubmit () {
     $('.commentForm').submit(function(event) {
         event.preventDefault();
+        let songId = getSongId(this);
+        let setId = getSetId(this);
         let formValues = objectifyForm(this);
         const commentsEp = SONGS_EP+`/${formValues.songId}`+'/comments';
         if(formValues && formValues.comment) {
-            submitNewComment(commentsEp, formValues, displayNewComment)
-            .done(displayNewComment)
+            submitNewComment(commentsEp, formValues)
+            .done(comments => {
+                displayNewComment(comments, songId, setId)
+            })
         }
         this.reset();
     })
@@ -169,19 +168,15 @@ function deleteComment (endpoint, data) {
     .fail(evalError)
 }
 
-function getSetId (child) {
-    return $(child).closest('.set-comments ').find('#comments-setId').attr('value')
-}
-
-function watchCommentDelete (type) {
-    let namespace = (type) ? type :  '';
-    $('.comment-delete').on(`click${namespace}`, function() {
+function watchCommentDelete () {
+    $('.comments-container').on('click', '.comment-delete', function() {
         let songId = getSongId(this);
         let commentId = getCommentId(this);
         let setId = getSetId(this);
         let commentsDelEp = (songId)? SONGS_EP+`/${songId}`+'/comments' : SETS_EP+`/${setId}`+'/comments';
+        console.log(commentsDelEp);
         deleteComment(commentsDelEp, commentId)
-        .then(() => {
+        .done(() => {
             $(this).closest('.comment-unit').hide('normal', function() {$(this).remove()});
         })
     })
@@ -207,9 +202,8 @@ function getNewestComment (array) {
     return sortedArray[sortedArray.length - 1].comment;
   }
 
-function watchCommentUpdateSubmit (type) {
-    let namespace = (type) ? type : '';
-    $(`.edit-comment`).on(`submit${namespace}`, function(event) {
+function watchCommentUpdateSubmit () {
+    $(`.comments-container`).on(`submit`, '.edit-comment', function(event) {
         event.preventDefault();
         let commentText = $(this).closest('.comment-unit').find('.comment-text');
         let songId = getSongId(this);
@@ -229,9 +223,8 @@ function watchCommentUpdateSubmit (type) {
     })
 }
 
-function watchCommentUpdateClick (type) {
-        let namespace = (type)? type : '';
-        $('.comment-update').on(`click${namespace}`, function() {
+function watchCommentUpdateClick () {
+        $('.comments-container').on(`click`, '.comment-update', function() {
         let comment = $(this).closest('.comment-unit').find('.comment-text');
         let updatedCommentInput = $(this).closest('.comment-unit').find('.edit-comment');
         comment.addClass('hidden');

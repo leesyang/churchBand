@@ -107,12 +107,10 @@ function submitNewSetComment (endpoint, data) {
 }
 
 function updateSetComment (res) {
-    console.log(res);
     let commentsArray = res.comments;
     let newComment = commentsArray[commentsArray.length - 1];
     let commentString = generateComment(newComment);
     $(commentString).appendTo($(`.set-comments-container`));
-    newCommentEventLis();
 }
 
 function watchSetCommentSubmit () {
@@ -132,9 +130,6 @@ function populateSetComments (set) {
         return generateComment(comment)
     }).join('');
     $('.set-comments-container').html(commentsString);
-    watchCommentDelete();
-    watchCommentUpdateClick();
-    watchCommentUpdateSubmit();
 }
 
 // ----- load a set on click ----- //

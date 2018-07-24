@@ -5,14 +5,11 @@ mongoose.Promise = global.Promise;
 // ----- models ----
 const { Song } = require('../models');
 
-// ----- imports -----
-
 // ----- exports -----
 const songsCtrl = {};
 const songsUtil = {};
 
 // ----- common functions -----
-// -- populate user --
 const filterUserInfo = '-password -firstName -lastName -email -__v';
 
 // ----- utility functions -----
@@ -84,17 +81,17 @@ songsCtrl.addNewComment = function(req, res) {
     .populate('addedBy', filterUserInfo)
     .populate('comments.addedBy', filterUserInfo)
     .then(song => {
-        res.status(201).json(song)
+        res.status(201).json(song.commentsOnly())
     })
     .catch(err => {
-        res.status(500).json({ message: 'Database Error'});
+        res.status(500).json(err);
     })
 };
 
 // -- get list of comments --
 songsCtrl.getComments = function(req, res) {
     songsUtil.getSongPromise(req.params.songId)
-    .then(post => res.status(200).json(post))
+    .then(post => res.status(200).json(post.commentsOnly()))
     .catch(err => console.log(err));
 };
 
@@ -111,7 +108,7 @@ songsCtrl.updateComment = function(req, res) {
             subDoc.$set({dateAdded: Date.now()});
             song.save()
             .then(function(updatedComment) {
-                res.send(updatedComment.commentsOnly());
+                res.status(202).json(updatedComment.commentsOnly());
             })
             .catch(err => console.log(err));
         }
@@ -139,7 +136,7 @@ songsCtrl.deleteComment = function(req, res) {
             res.status(204).end();
         }
         else {
-            res.status(401).json({
+            res.status(403).json({
                 code: 401,
                 reason: 'Denied',
                 message: 'Unable to delete. Not Authorized.',
@@ -155,4 +152,4 @@ songsCtrl.deleteComment = function(req, res) {
     })
 }
 
-module.exports = { songsCtrl, songsUtil };
+module.exports = songsCtrl;

@@ -20,15 +20,10 @@ viewsCtrl.register = function(req, res) {
     res.render('pages/register');
 }
 
-
 viewsCtrl.home = function (req, res) {
     User.findById(req.user.id)
     .then(user => {
-        const loggedInUser = Object.assign({}, user.serialize())
-        return loggedInUser;
-    })
-    .then(user => {
-        res.render('pages/home', { user: user })
+        res.render('pages/home', { user: Object.assign({}, user.serialize()) });
     })
 }
 

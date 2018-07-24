@@ -46,6 +46,18 @@ const newSongFieldsCheck = function(req, res, next) {
     next();
 };
 
+const newComFieldCheck = function(req, res, next) {
+  const fieldIs = {
+    required: ['comment']
+  };
+
+  const isMissing = checkReq.missingFields(fieldIs.required, req.body);
+  if (isMissing) {
+    return res.status(isMissing.code).json(isMissing);
+  }
+  next();
+}
+
 const updateComFieldCheck = function(req, res, next) {
   const fieldIs = {
     required: ['commentId', 'comment']
@@ -90,7 +102,8 @@ const newSetFieldsCheck = function(req, res, next) {
 
 module.exports = { 
   newUserInputCheck, 
-  newSongFieldsCheck, 
+  newSongFieldsCheck,
+  newComFieldCheck,
   updateComFieldCheck,
   deleteComFieldCheck,
   newSetFieldsCheck };

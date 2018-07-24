@@ -95,8 +95,8 @@ setsCtrl.updateComment = function(req, res) {
             .catch(err => console.log(err));
         }
         else {
-            res.status(422).json({
-                code: 422,
+            res.status(403).json({
+                code: 403,
                 reason: 'Denied',
                 message: 'Unable to modify. Not Authorized.',
             })
@@ -118,8 +118,8 @@ setsCtrl.deleteComment = function(req, res) {
             res.status(204).end();
         }
         else {
-            res.json({
-                code: 422,
+            res.status(403).json({
+                code: 403,
                 reason: 'Denied',
                 message: 'Unable to delete. Not Authorized.',
             })

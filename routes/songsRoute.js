@@ -11,6 +11,7 @@ const { songsCtrl } = require('../controllers');
 const { 
     newSongFieldsCheck, 
     updateComFieldCheck,
+    newComFieldCheck,
     deleteComFieldCheck } = require('../middlewares/fieldReqCheck');
 
 // ----- routes -----
@@ -21,7 +22,7 @@ router.get('/', songsCtrl.getListOfSongs);
 router.post('/', jwtAuth, newSongFieldsCheck, songsCtrl.addNewSong);
 
 // -- add a new comment to a song --
-router.post('/:songId/comments', jwtAuth, songsCtrl.addNewComment); 
+router.post('/:songId/comments', newComFieldCheck, jwtAuth, songsCtrl.addNewComment); 
 
 // -- get all comments from a song --
 router.get('/:songId/comments', songsCtrl.getComments);

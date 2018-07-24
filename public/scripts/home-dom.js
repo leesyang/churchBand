@@ -104,7 +104,7 @@ function generateComment (comment) {
         comment.addedBy = {};
         comment.addedBy.profilePicture = 'default-user-image.png'
     }
-    return `<div class="media comment-unit" data-id="${comment._id}">
+    return `<li class="media comment-unit" data-id="${comment._id}">
     <img class="align-self-start mr-3 user-img border-gray rounded" src="${profileImgPath}/${comment.addedBy.profilePicture}" alt="user profile thumbnail">
     <div class="media-body">
       <div class="comment-heading">
@@ -122,7 +122,7 @@ function generateComment (comment) {
         <button type="button" class="btn btn-light btn-sm exit-comment-edit" aria-label="close">X</button>
       </form>
     </div>
-  </div>`
+  </li>`
 }
 
 function generateProfile (user) {
@@ -193,7 +193,7 @@ function populatePage (data) {
 
 // ---- event listeners -----
 function watchYoutubeClick () {
-    $('.youtube-button').click(function() {
+    $('.song-recomm-main').on('click', '.youtube-button', function() {
         let plyrId = $(this).closest('.song-recomm-unit').find('.plyer').attr('id');
         let player = new Plyr(`#${plyrId}`);
     })

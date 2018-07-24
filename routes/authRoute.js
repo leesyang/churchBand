@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 // ----- authentication -----
-const { localAuth, jwtAuth } = require('../middlewares/auth');
+const { localAuth, jwtAuthViews } = require('../middlewares/auth');
 
 // ----- controllers -----
 const { authCtrl } = require('../controllers');
@@ -11,6 +11,6 @@ const { authCtrl } = require('../controllers');
 
 router.post('/login', localAuth, authCtrl.login);
 
-router.get('/logout', jwtAuth, authCtrl.logout);
+router.get('/logout', authCtrl.logout);
 
 module.exports = { router };
