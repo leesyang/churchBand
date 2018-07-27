@@ -123,8 +123,9 @@ setsCtrl.deleteComment = function(req, res) {
 
         if( commentOwner == deleteRequestFrom ){
             subDoc.remove();
-            set.save().catch(err => console.log(err));
-            res.status(204).end();
+            set.save()
+            .then(() => res.status(204).end())
+            .catch(err => console.log(err));
         }
         else {
             res.status(403).json({
@@ -135,6 +136,5 @@ setsCtrl.deleteComment = function(req, res) {
         }
     })
 };
-
 
 module.exports = setsCtrl;

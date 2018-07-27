@@ -411,10 +411,10 @@ describe('song endpoints', function () {
           .then(res => {
             expect(res).to.have.status(204);
             return Song.find({ _id: resSong._id}, { comments: { $elemMatch: { _id: resSong.comments[0]._id }}})
-          })
-          .then(songQuery => {
-            let count = songQuery[0].comments.length;
-            expect(count).to.equal(0);
+            .then(songQuery => {
+              let count = songQuery[0].comments.length;
+              expect(count).to.equal(0);
+            })
           })
         });
 

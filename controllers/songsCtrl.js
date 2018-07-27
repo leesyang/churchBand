@@ -132,8 +132,9 @@ songsCtrl.deleteComment = function(req, res) {
         let commentOwner = subDoc.addedBy;
         if( commentOwner == deleteRequestFrom ){
             subDoc.remove();
-            song.save().catch(err => console.log(err));
-            res.status(204).end();
+            song.save()
+            .then(res.status(204).end())
+            .catch(err => console.log(err));
         }
         else {
             res.status(403).json({
