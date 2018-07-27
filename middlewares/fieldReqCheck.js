@@ -85,8 +85,6 @@ const deleteComFieldCheck = function(req, res, next) {
 };
 
 const newSetFieldsCheck = function(req, res, next) {
-  console.log(req.body)
-  
   const fieldIs = {
     required: ['eventDate', 'eventType', 'mainLead']
   };

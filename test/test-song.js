@@ -365,7 +365,6 @@ describe('song endpoints', function () {
             console.log('innerERROR', err);
           })
           .then(songQuery => {
-            console.log(songQuery[0].comments[0]);
             let dbComment = songQuery[0].comments[0].toObject();
             let resComment = resComments[resComments.length - 1];
             expect(dbComment._id.toString()).to.equal(resComment._id);
@@ -395,7 +394,7 @@ describe('song endpoints', function () {
         it('should only allow logged in user to post', function() {
           let comment = { comment: 'this comment should not be added' }
           return chai.request(app)
-          .post('/api/songs')
+          .post(`/api/songs/${resSong._id}/comments`)
           .send(comment)
           .then(res => {
             expect(res).to.have.status(401)

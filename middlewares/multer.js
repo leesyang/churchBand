@@ -1,5 +1,5 @@
 'use strict';
-const aws = require('aws-sdk')
+const aws = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const shortid = require('shortid');
@@ -38,7 +38,9 @@ const profileStorageAws = multerS3({
   acl: 'public-read',
   contentType: multerS3.AUTO_CONTENT_TYPE, 
   key: function (req, file, cb) {
-    console.log('pass through uploadPicAws');
+    console.log('======= START ================== Description: profileStoreageAws || FILE: multer || LINE: 41 ============');
+    console.log('passed through profileStorageAws');
+    console.log('=======  END  ================== Description: profileStoreageAws || FILE: multer || LINE: 41 ============');
     let ext = file.originalname.slice(-4);
     cb(null, 'user-profile-images/' + file.fieldname + '-' + Date.now() + ext);
   }
@@ -62,30 +64,3 @@ uploader.ProfilePic = uploadPicAws.single('userImg');
 uploader.Set = uploadSetAws.fields(newSetfields);
 
 module.exports = { uploader };
-
-// ----- upload settings -----
-/* const profileStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, '../churchband/public/images/user_profile');
-    },
-    filename: function (req, file, cb) {
-      let ext = file.originalname.slice(-4);
-      cb(null, file.fieldname + '-' + Date.now() + ext);
-    }
-  });
-
-const setStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    let eventDate = req.body.eventDate;
-    cb(null, `../churchband/media/`);
-  },
-  filename: function (req, file, cb) {
-    let ext = file.originalname.slice(-4);
-    let eventDate = req.body.eventDate;
-    cb(null, eventDate + '-' + file.fieldname + '-' + uniqueId + ext)
-  }
-}) 
-
-const uploadPic = multer( { storage: profileStorage } );
-const uploadSet = multer( { storage: setStorage });
-*/

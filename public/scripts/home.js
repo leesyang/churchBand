@@ -60,6 +60,14 @@ function watchProfileSubmit () {
         console.log('watch profile running');
         event.preventDefault();
         let formData = new FormData(this);
+        //temp
+        var object = {};
+        formData.forEach(function(value, key){
+            object[key] = value;
+        });
+        var json = JSON.stringify(object);
+        console.log(json)
+        //temp
          const updateProfileEp = '/users';
          submitUpdateProfile(updateProfileEp, formData)
          .done(renderNewProfile)

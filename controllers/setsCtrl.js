@@ -8,6 +8,15 @@ const setsCtrl = {};
 // ----- common functions -----
 const filterUserInfo = '-password -firstName -lastName -email -__v';
 
+// ----- utility function -----
+let setUtil = {};
+
+setUtil.getSetPromise = (setId) => {
+    return Set.findById(setId)
+    .populate('addedBy', filterUserInfo)
+    .populate('comments.addedBy', filterUserInfo)
+}
+
 // -- get list of all sets --
 setsCtrl.getListOfSets = function(req, res) {
     Set.find({})
@@ -20,12 +29,14 @@ setsCtrl.getListOfSets = function(req, res) {
 setsCtrl.addNewSet = function(req, res) {
     let files = [];
 
-    Object.keys(req.files).map(key => {
-        files.push({
-            src: req.files[key][0].key.substring(10),
-            name: req.files[key][0].fieldname
-        })
-    });
+    if (req.files) {
+        Object.keys(req.files).map(key => {
+            files.push({
+                src: req.files[key][0].key.substring(10),
+                name: req.files[key][0].fieldname
+            })
+        });
+    }
 
     let bandMembers = [];
 
@@ -41,8 +52,6 @@ setsCtrl.addNewSet = function(req, res) {
         }
     })
 
-    console.log(files);
-    
     let set = new Set({
         eventDate,
         eventType,
@@ -53,7 +62,7 @@ setsCtrl.addNewSet = function(req, res) {
     });
 
     set.save()
-    .then(results => res.status(201).json(results))
+    .then(set => res.status(201).json(set))
     .catch(err => console.log(err));
 };
 
@@ -72,7 +81,7 @@ setsCtrl.addNewComment = function(req, res) {
 
 // -- get all comments of a set --
 setsCtrl.getComments = function(req, res){
-    Set.findById({_id: req.params.setId})
+    setUtil.getSetPromise(req.params.setId)
     .then(post => res.status(200).json(post.commentsOnly()))
     .catch(err => console.log(err));
 };
@@ -90,7 +99,7 @@ setsCtrl.updateComment = function(req, res) {
             subDoc.$set({dateAdded: Date.now()});
             set.save()
             .then(function(updatedComment) {
-                res.send(updatedComment.commentsOnly());
+                res.status(202).json(updatedComment.commentsOnly());
             })
             .catch(err => console.log(err));
         }
