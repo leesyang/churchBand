@@ -19,8 +19,7 @@ usersCtrl.addNewUser = function (req, res) {
   firstName = firstName.trim();
   lastName = lastName.trim();
 
-  return User.find({username})
-  .count()
+  return User.find({ username }).count()
   .then(count => {
     if (count > 0) {
       return Promise.reject({
@@ -29,6 +28,17 @@ usersCtrl.addNewUser = function (req, res) {
         message: 'Username already taken',
         location: 'username'
       });
+    }
+    return User.find({ email }).count()
+  })
+  .then(count => {
+    if (count > 0) {
+      return Promise.reject({
+        code: 422,
+        reason: 'ValidationError',
+        message: 'Email already taken',
+        location: 'email'
+      })
     }
     return User.hashPassword(password);
   })
@@ -55,7 +65,9 @@ usersCtrl.addNewUser = function (req, res) {
 };
 
 usersCtrl.updateUser = function (req, res) {
-  console.log(req.file);
+  console.log('======= START ================== Description: req.body || FILE: usersCtrl || LINE: 68 ============');
+  console.log(req.body);
+  console.log('=======  END  ================== Description: req.body || FILE: usersCtrl || LINE: 68 ============');
   let updateInfo = { 
     experience: {}
   };
@@ -73,7 +85,9 @@ usersCtrl.updateUser = function (req, res) {
     updateInfo.profilePicture = req.file.key.substring(20);
   }
 
+  console.log('======= START ================== Description: updatedInfo || FILE: usersCtrl || LINE: 89 ============');
   console.log(updateInfo);
+  console.log('=======  END  ================== Description: updatedInfo || FILE: usersCtrl || LINE: 89 ============');
 
   if (updateInfo.email) {
     return User.find({ email: updateInfo.email })

@@ -13,6 +13,7 @@ const localAuth = function (req, res, next) {
       })(req, res, next);
 };
 
-const jwtAuth = passport.authenticate('jwt-protected', { session: false, failureRedirect: '/' });
+const jwtAuth = passport.authenticate('jwt-protected', { session: false });
+const jwtAuthViews = passport.authenticate('jwt-protected', { session: false, failureRedirect: '/' });
 
-module.exports = { localAuth, jwtAuth };
+module.exports = { localAuth, jwtAuth, jwtAuthViews };

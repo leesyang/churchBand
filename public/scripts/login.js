@@ -7,7 +7,7 @@ function evaluateServerResponse (res) {
     console.log(res);
     const responseJSON = res.responseJSON;
     if ( res.status === 422 && responseJSON.location ) {
-        $(`input[name="${responseJSON.location}"]`).addClass('input-error').focus();
+        $(`input[name="${responseJSON.location}"]`).addClass('input-error').focus().val('');
         showMsg(responseJSON.message);
     }
 };

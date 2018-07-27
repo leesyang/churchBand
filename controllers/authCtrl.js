@@ -15,7 +15,7 @@ const createAuthToken = function(user) {
 authCtrl.login = function (req, res) {
     let authToken = createAuthToken(req.user);
     res.cookie('authToken', authToken);
-    res.status(201).json({ code: 201, message: 'Successful login', authToken: authToken });
+    res.status(200).json({ code: 201, message: 'Successful login', authToken: authToken });
 }
 
 authCtrl.logout = function (req, res) {

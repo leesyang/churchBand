@@ -10,10 +10,10 @@ const setCommentSchema = new Schema({
 });
 
 const setsSchema = new Schema({
-    dateAdded: { type: String, default: Date.now() },
+    dateAdded: { type: Date, default: Date.now() },
     eventDate: { type: Date },
     eventType: String,
-    mainLead: /* { type: ObjectId, ref:'User' } */ String,
+    mainLead: String,
     mainSpeaker: String,
     bandMembers: Array,
     files: Array,

@@ -5,13 +5,6 @@ const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-
-/* const profileSchema = new Schema({
-    experience: Array,
-    songLikes: Array,
-    setLikes: Array,
-}) */
-
 const userSchema = new Schema({
     username: {type: String, required: true, unique: true},
     firstName: {type: String, required: true},
