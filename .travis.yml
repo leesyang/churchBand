@@ -1,0 +1,11 @@
+language: node_js
+node_js: node
+services:
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: JGa0qPHQ7J5SP2AIPDyGeuxio5Ykkhg0OVOE/Aqf7MI/vIb89yFqx9b1LnNdnG7tjmr5wdCA54zxovwSc2raLxDGn4e1hNASm1ICY7Oza8HU75vJ075gOvkyxwafSerK0w/1d1CoyCQgMPH5GXiaPxN5yHbAyynVBWZiVadKhiFlTNMelF4glUEt9Gln+3B5tRVXP435LfcAQjNAgxF2Ys/c3XZMaHDy+a73ZODH6YRDzBKHPGt9slsbe3+K90++NIN1A1aJHYPfaEuvVCPuLnlHLjyC3LW6Svq4V85qjo1ysAGsuiZlMITfum4Uu1c4TIXGOj1JBFZDM/I+XqiP+qAGC0IWgEVXGYMtMMci+25b3JPp/tErc0H+5BpuwEMFyayhVrKkEqlPz2TtEq7vjs4wFkd8CwwEAzfymT9y/4p1omZ0DcmYF1+6YGf44ZP5tXrYFS6vOvCxI41YNA3z7BIyqB2ZV4OPysQ4C8hwM3F6nH1B72pWchIwk/AAcHvDWQH46JmJ721jVL7B+wMkuA+uTPN2w2P7lwRffORmJPudohcuwO6lusN9sKKXmIPjn/L+Ex0P7JRPmPM12zhPFrP3p03gW3Zdh57XJlGYSFLsaHHLuJPg2VHaA1uueMOJZnIBk11uhc6XdzJBAZyb0WSxiy0QLRnDQxuwsgqgtpQ=
+  app: boiling-lowlands-87845
+  on:
+    repo: leesyang/churchBand
