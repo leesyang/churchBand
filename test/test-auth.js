@@ -249,7 +249,7 @@ describe('SETS EP', function () {
     });
 
     describe('PUT /users', function() {
-      it.only('should upload profile picture of user', function() {
+      it('should upload profile picture of user', function() {
         this.timeout(15000);
         let newAgent = chai.request.agent(app);
         let { firstName } = newUsers[0];
