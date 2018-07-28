@@ -38,9 +38,6 @@ const profileStorageAws = multerS3({
   acl: 'public-read',
   contentType: multerS3.AUTO_CONTENT_TYPE, 
   key: function (req, file, cb) {
-    console.log('======= START ================== Description: profileStoreageAws || FILE: multer || LINE: 41 ============');
-    console.log('passed through profileStorageAws');
-    console.log('=======  END  ================== Description: profileStoreageAws || FILE: multer || LINE: 41 ============');
     let ext = file.originalname.slice(-4);
     cb(null, 'user-profile-images/' + file.fieldname + '-' + Date.now() + ext);
   }

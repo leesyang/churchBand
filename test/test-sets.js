@@ -15,37 +15,6 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-/* Object.defineProperty(console, 'logger', console.log );
-Object.defineProperty(console, 'log', function () {
-  Object.defineProperty(global, '__stack', {
-    get: function(){
-      var orig = Error.prepareStackTrace;
-      Error.prepareStackTrace = function(_, stack){ return stack; };
-      var err = new Error;
-      Error.captureStackTrace(err, arguments.callee);
-      var stack = err.stack;
-      Error.prepareStackTrace = orig;
-      return stack;
-    }
-  });
-  
-  Object.defineProperty(global, '__line', {
-    get: function(){
-      return __stack[1].getLineNumber();
-    }
-  });
-
-  Object.defineProperty(global, '__file', {
-    get: function(){
-      return __stack[1].getFileName().split('/').slice(-1)[0];
-    }
-  });
-
-  console.logger(`======= START ================== Description: ${arguments[1]} || FILE: ${__file} || LINE: ${__line} ============`);
-  console.logger(arguments[0]);
-  console.logger(`======= END ================== Description: ${arguments[1]} || FILE: ${__file} || LINE: ${__line} ============`);
-}) */
-
 // ---- helper functions -----
 function date (date) {
   return new Date(date).toISOString();
@@ -510,9 +479,6 @@ describe('SETS EP', function () {
             expect(res).to.have.status(204);
             return Set.find({ _id: resSet._id}, { comments: { $elemMatch: { _id: resSet.comments[0]._id }}})
             .then(setQuery => {
-              console.log('======= START ================== Description: setQuery || FILE: test-sets || LINE: 514 ============');
-              console.log(setQuery);
-              console.log('=======  END  ================== Description: setQuery || FILE: test-sets || LINE: 514 ============');
               let count = setQuery[0].comments.length;
               expect(count).to.equal(0);
             }) 

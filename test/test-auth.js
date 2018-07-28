@@ -249,7 +249,7 @@ describe('SETS EP', function () {
     });
 
     describe('PUT /users', function() {
-      it('should upload profile picture of user', function() {
+      it.only('should upload profile picture of user', function() {
         this.timeout(15000);
         let newAgent = chai.request.agent(app);
         let { firstName } = newUsers[0];
@@ -271,7 +271,6 @@ describe('SETS EP', function () {
           return newAgent
           .put('/users')
           .attach('userImg', fs.readFileSync('media/test/aprofileimg.png'), 'aprofileimg.png')
-          .field('firstName', firstName )
           .field('instr1', userExp.instr1)
           .field('skill1', userExp.skill1)
           .then(res => {

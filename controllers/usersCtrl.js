@@ -65,9 +65,6 @@ usersCtrl.addNewUser = function (req, res) {
 };
 
 usersCtrl.updateUser = function (req, res) {
-  console.log('======= START ================== Description: req.body || FILE: usersCtrl || LINE: 68 ============');
-  console.log(req.body);
-  console.log('=======  END  ================== Description: req.body || FILE: usersCtrl || LINE: 68 ============');
   let updateInfo = { 
     experience: {}
   };
@@ -84,10 +81,6 @@ usersCtrl.updateUser = function (req, res) {
   if (req.file) {
     updateInfo.profilePicture = req.file.key.substring(20);
   }
-
-  console.log('======= START ================== Description: updatedInfo || FILE: usersCtrl || LINE: 89 ============');
-  console.log(updateInfo);
-  console.log('=======  END  ================== Description: updatedInfo || FILE: usersCtrl || LINE: 89 ============');
 
   if (updateInfo.email) {
     return User.find({ email: updateInfo.email })
