@@ -1,4 +1,6 @@
 'use strict';
+const aws = require('aws-sdk');
+
 // ----- imports -----
 const { User } = require('../models');
 
@@ -102,16 +104,45 @@ usersCtrl.updateUser = function (req, res) {
     })
   }
 
-  return User.findByIdAndUpdate(req.user.id, updateInfo, { new: true })
+  return User.findById(req.user.id)
   .then(user => {
-    res.status(201).json(user.serialize());
+    let profilePictureLink = user.profilePicture;
+    
+    if (updateInfo.profilePicture) {
+      // ----- Amazon S3 -----
+      aws.config.update({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+      });
+  
+      const s3 = new aws.S3()
+      const myBucket = process.env.S3_BUCKET_NAME;
+  
+      let params = {
+        Bucket: myBucket, 
+        Key: 'user-profile-images/'+profilePictureLink
+      };
+  
+      return s3.deleteObject(params).promise()
+      .then(function(data) {
+        if (data) {
+          return User.findByIdAndUpdate(req.user.id, updateInfo, { new: true })
+          .then(user => {
+            res.status(201).json(user.serialize());
+          })
+          .catch(err => {
+            res.status(500).json({
+              code: 500,
+              message: 'Database Error'
+            })
+          })
+        }
+      })
+    }
   })
-  .catch(err => {
-    res.status(500).json({
-      code: 500,
-      message: 'Database Error'
-    })
-  })
+
+
+
 }
 
 module.exports = usersCtrl;

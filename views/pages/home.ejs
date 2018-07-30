@@ -17,7 +17,7 @@
   <div class="no-wrap">
     <ul class="navbar-nav offcanvas-collapse">
       <% if (user) { %>
-      <img class="shadow rounded-circle user-img-loggedin" src="https://churchband.s3.amazonaws.com/user-profile-images/<%= user.profilePicture %>" alt="user image" href="/home">
+      <li><img class="shadow rounded-circle user-img-loggedin" src="https://churchband.s3.amazonaws.com/user-profile-images/<%= user.profilePicture %>" alt="user image" href="/home"></li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, <%= user.firstName %></a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -31,13 +31,13 @@
 <!-- side nav bar -->
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" aria-label="close sidenav">&times;</a>
-  <img class="shadow rounded-circle" src="https://churchband.s3.amazonaws.com/user-profile-images/<%= user.profilePicture %>" alt="user profile thumb" href="/home">
+  <a><img class="shadow rounded-circle user-img-loggedin" src="https://churchband.s3.amazonaws.com/user-profile-images/<%= user.profilePicture %>" alt="user profile thumb" href="/home"></a>
   <a href="#" data-toggle="modal" data-target="#profileModal" aria-labelledby="view my profile">Profile</a>
   <a href="/auth/logout" aria-label="logout">Log Out</a>
 </div>
 <!-- main content -->
   <main role="main" class="container">
-    <div class="jumbotron jumbotron-fluid rounded home-welcome rounded box-shadow">
+    <div class="jumbotron jumbotron-fluid rounded home-welcome rounded box-shadow" role="banner">
         <h1 class="display-4">Welcome</h1>
         <p class="lead">Find the latest song recommendations from current members and review past prasie sets.</p>
     </div>
@@ -47,10 +47,10 @@
         <li class="page-item box-shadow"><a class="page-link lnk-black" id="sets-link" href="#">Set Reviews</a></li>
       </ul>
     </nav>
-    <div class="jumbotron jumbotron-fluid rounded home-banner hb-song rounded box-shadow invisible" role="banner">
+    <div class="jumbotron jumbotron-fluid rounded home-banner hb-song rounded box-shadow invisible">
       <div class="top-spacer"></div><p class="lead">Lastest Song Recommendations</p>
     </div>
-    <div class="jumbotron jumbotron-fluid rounded home-banner hb-set rounded box-shadow invisible" role="banner">
+    <div class="jumbotron jumbotron-fluid rounded home-banner hb-set rounded box-shadow invisible">
       <div class="top-spacer"></div><p class="lead">Set Reviews</p>
     </div>
   <!-- song recommendations -->
@@ -268,11 +268,11 @@
               <fieldset>
                 <legend class="sr-only">User info</legend>
                 <label for="profile-firstname">First Name</label>
-                <input class="form-control form-control-sm" id="profile-firstname" name="firstName" type="text" value="<%= user.firstName %>" placeholder="<%= user.firstName %>" aria-labelledby="first name">
+                <input class="form-control form-control-sm" id="profile-firstname" name="firstName" type="text" value="<%= user.firstName %>" placeholder="<%= user.firstName %>" autocomplete="given-name"aria-labelledby="first name">
                 <label for="profile-lastname">Last Name</label>
-                <input class="form-control form-control-sm" id="profile-lastName" name="lastName" type="text" value="<%= user.lastName %>" placeholder="<%= user.lastName %>" aria-labelledby="last name">
+                <input class="form-control form-control-sm" id="profile-lastName" name="lastName" type="text" value="<%= user.lastName %>" placeholder="<%= user.lastName %>" autocomplete="family-name" aria-labelledby="last name">
                 <label for="profile-email">Email</label>
-                <input class="form-control form-control-sm" id="profile-email" name="email" type="text" value="<%= user.email %>" placeholder="<%= user.email %>" aria-labelledby="email">
+                <input class="form-control form-control-sm" id="profile-email" name="email" type="text" value="<%= user.email %>" placeholder="<%= user.email %>" autocomplete="email" aria-labelledby="email">
               </fieldset>
               <fieldset>
               <legend class="sr-only">User Experience</legend>
@@ -401,10 +401,10 @@
                   </div>
                   <div class="form-row">
                     <div class="col">
-                      <input type="text" id="mainLead" name="mainLead" class="form-control" class="form-control form-control-sm" placeholder="Praise Lead">
+                      <input type="text" id="mainLead" name="mainLead" class="form-control" class="form-control form-control-sm" autocomplete="name" placeholder="Praise Lead">
                     </div>
                     <div class="col">
-                      <input type="text" id="mainSpeaker" name="mainSpeaker" class="form-control" class="form-control form-control-sm" placeholder="Main Speaker">
+                      <input type="text" id="mainSpeaker" name="mainSpeaker" class="form-control" class="form-control form-control-sm" autocomplete="name" placeholder="Main Speaker">
                     </div>
                   </div>
                   <div class="form-row">
