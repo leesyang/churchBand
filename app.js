@@ -47,7 +47,6 @@ app.set('view engine', 'ejs');
 // ----- routes -----
 app.use('/', router);
 
-
 // ----- server -----
 let server;
 

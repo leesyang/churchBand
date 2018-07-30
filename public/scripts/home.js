@@ -266,9 +266,8 @@ function showErrorMessage(errMsg) {
 // ----- link and navigation -----
 function watchSongsLink () {
     $('#songs-link').click(function(){
-        $('.home-banner').html('<div class="top-spacer"></div><p class="lead">Lastest Song Recommendations</p>')
-        .css({'background-image': `url(${siteImagesPath}/home-banner.jpg)`})
-        .removeClass('invisible');
+        $('.hb-song').removeClass('invisible');
+        $('.hb-set').addClass('invisible');
         $('.home-welcome').slideUp('slow');
         $('#set-review-container').css('display', 'none');
         $('#song-recomm-container').fadeIn('slow');
@@ -277,9 +276,8 @@ function watchSongsLink () {
 
 function watchSetsLink () {
     $('#sets-link').click(function(){
-        $('.home-banner').html('<div class="top-spacer"></div><p class="lead">Set Reviews</p>')
-        .css({'background-image': `url(${siteImagesPath}/sets-banner.jpg)`})
-        .removeClass('invisible');
+        $('.hb-set').removeClass('invisible');
+        $('.hb-song').addClass('invisible')
         $('.home-welcome').slideUp('slow');
         $('#song-recomm-container').css('display', 'none');
         $('#set-review-container').fadeIn('slow');

@@ -11,7 +11,7 @@ body {
   display: none;
 }
 .invisible {
-  visibility: hidden;
+  display: none;
 }
 .row {
   margin-bottom: 0.5em;
@@ -98,6 +98,12 @@ body {
   color: white;
   margin-top: 1em;
   margin-bottom: 1em;
+}
+.hb-set {
+  background-image: url(https://s3-us-west-1.amazonaws.com/churchband/site-images/sets-banner.jpg);
+}
+.hb-song {
+  background-image:  url(https://s3-us-west-1.amazonaws.com/churchband/site-images/home-banner.jpg);
 }
 
 .nav {
