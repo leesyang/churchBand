@@ -139,6 +139,18 @@ usersCtrl.updateUser = function (req, res) {
         }
       })
     }
+
+    return User.findByIdAndUpdate(req.user.id, updateInfo, { new: true })
+    .then(user => {
+      res.status(201).json(user.serialize());
+    })
+    .catch(err => {
+      res.status(500).json({
+        code: 500,
+        message: 'Database Error'
+      })
+    })
+    
   })
 }
 
