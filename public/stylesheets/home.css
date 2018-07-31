@@ -310,9 +310,6 @@ body {
   .col {
     margin: 0.5em;
   }
-}
-
-@media (min-width: 400px) {
   .navbar {
     padding: .5rem .5rem;
     justify-content: space-between;

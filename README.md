@@ -6,7 +6,14 @@ Online plateform for a band to connect with it's members. This project was born 
 Built on Node.js with Express using Heroku, mLab and Amazon S3.
 
 ## Live Demo
-Link: https://boiling-lowlands-87845.herokuapp.com/
+###### Link
+
+https://boiling-lowlands-87845.herokuapp.com/
+
+
+###### Guest Account
+
+username: guest, password: password123
 
 ## Credits
 - Plyr : https://github.com/sampotts/plyr
