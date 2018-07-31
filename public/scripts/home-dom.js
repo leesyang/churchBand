@@ -15,7 +15,7 @@ function generateSongNav (song) {
         <div class="row justify-content-around">
           <div class="col-auto song-recomm-title">
           <img class="shadow rounded user-img" alt="user image ${username}" src="${profileImgPath}/${song.addedBy.profilePicture}">
-          <span class="no-wrap">${song.artist} - ${song.title}</span>
+          <span class="">${song.artist} - ${song.title}</span>
           </div>
           <div class="col-auto">
               <a class="icon-link margin" data-toggle="collapse" href="#youtube-plyer-${song._id}" role="button" aria-expanded="false" aria-controls="youtube-plyer"><img class="youtube-button" src="${iconPath}/youtube.png"></a>

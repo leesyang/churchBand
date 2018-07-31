@@ -126,9 +126,9 @@ body {
 .lnk-black {
   color: black;
 }
-.no-wrap {
+/* .no-wrap {
   white-space: nowrap;
-}
+} */
 .centered {
   justify-content: center;
 }
@@ -165,8 +165,12 @@ body {
 
 .song-recomm-title{
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
+}
+
+.col-auto {
+  flex: auto auto auto;
 }
 
 /* ----- new song forms ----- */
@@ -245,6 +249,10 @@ body {
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+}
+
+.col-auto {
+  width: 100%; 
 }
 
 @media screen and (max-height: 450px) {
@@ -328,6 +336,9 @@ body {
     display: flex;
     flex-direction: row;
     align-items: left;
+  }
+  .col-auto {
+    width: auto;
   }
 }
 
