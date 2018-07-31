@@ -13,7 +13,7 @@ function generateSongNav (song) {
     return `<div class="media text-muted pt-3 border-bottom border-gray song-recomm-nav">
     <div class="container">
         <div class="row justify-content-around">
-          <div class="col-auto mr-auto">
+          <div class="col-auto song-recomm-title">
           <img class="shadow rounded user-img" alt="user image ${username}" src="${profileImgPath}/${song.addedBy.profilePicture}">
           <span class="no-wrap">${song.artist} - ${song.title}</span>
           </div>
@@ -195,7 +195,7 @@ function populatePage (data) {
 function watchYoutubeClick () {
     $('.song-recomm-main').on('click', '.youtube-button', function() {
         let plyrId = $(this).closest('.song-recomm-unit').find('.plyer').attr('id');
-        let player = new Plyr(`#${plyrId}`);
+        let player = new Plyr(`#${plyrId}`)
     })
 }
 

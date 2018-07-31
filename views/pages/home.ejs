@@ -29,18 +29,18 @@
   </div>
 </nav>
 <!-- side nav bar -->
-<div id="mySidenav" class="sidenav">
+<div id="mySidenav" class="sidenav" role="navigation">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" aria-label="close sidenav">&times;</a>
   <a><img class="shadow rounded-circle user-img-loggedin" src="https://churchband.s3.amazonaws.com/user-profile-images/<%= user.profilePicture %>" alt="user profile thumb" href="/home"></a>
-  <a href="#" data-toggle="modal" data-target="#profileModal" aria-labelledby="view my profile">Profile</a>
+  <a href="#" data-toggle="modal" data-target="#profileModal">Profile</a>
   <a href="/auth/logout" aria-label="logout">Log Out</a>
 </div>
 <!-- main content -->
   <main role="main" class="container">
-    <div class="jumbotron jumbotron-fluid rounded home-welcome rounded box-shadow" role="banner">
+      <div class="jumbotron jumbotron-fluid rounded home-welcome rounded box-shadow container">
         <h1 class="display-4">Welcome</h1>
         <p class="lead">Find the latest song recommendations from current members and review past prasie sets.</p>
-    </div>
+      </div>
     <nav role="navigation">
       <ul class="pagination justify-content-center">
         <li class="page-item box-shadow"><a class="page-link lnk-black" id="songs-link" href="#">Song Recommendations</a></li>
@@ -56,7 +56,7 @@
   <!-- song recommendations -->
     <div id="song-recomm-container" class="hidden">
       <div class="content-news my-3 p-3 bg-white rounded box-shadow">
-        <button type="button" class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#newSongInput">Add a set</button>
+        <button type="button" class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#newSongInput">Recommend a song</button>
   <!-- insert songs from database -->
         <div class="song-recomm-main"></div>
       </div>
@@ -113,9 +113,9 @@
                 <div class="card card-body set-comments-container comments-container"></div>
                 <form class="form-horizontal set-commentForm" role="form">
                     <div class="form-group">
-                        <label for="comment" class="col-sm-offset-2 control-label small"><strong>Comment</strong></label>
+                        <label for="set-comment" class="col-sm-offset-2 control-label small"><strong>Comment</strong></label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" name="comment" id="comment">
+                          <input type="text" class="form-control" name="comment" id="set-comment">
                           <input type="hidden" id="comments-setId" name="setId" value="">
                         </div>
                     </div>

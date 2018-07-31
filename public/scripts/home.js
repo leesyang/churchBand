@@ -102,10 +102,11 @@ function displayNewSong (res) {
     let songUnit = generateMainSongUnit(song, song._id);
     $('.song-recomm-main').prepend(songUnit);
     $('.modal').modal('hide');
+    $('.newSongForm').trigger('reset')
     watchYoutubeClick();
 }
 
-function submitNewSong (endpoint, data, callback) {
+function submitNewSong (endpoint, data) {
     return $.ajax({
         method: 'POST',
         url: endpoint,
@@ -113,7 +114,7 @@ function submitNewSong (endpoint, data, callback) {
         dataType: 'json',
         data: JSON.stringify(data),
     })
-    .done(callback)
+    .done(displayNewSong)
     .fail(evalError)
 }
 
@@ -122,9 +123,8 @@ function watchNewSongSubmit () {
         event.preventDefault();
         let formValues = objectifyForm(this);
         if (formValues) {
-            submitNewSong(SONGS_EP, formValues, displayNewSong)
+            submitNewSong(SONGS_EP, formValues)
         }
-        $(this).trigger('reset');
     })
 }
 

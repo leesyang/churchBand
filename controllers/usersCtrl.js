@@ -140,9 +140,6 @@ usersCtrl.updateUser = function (req, res) {
       })
     }
   })
-
-
-
 }
 
 module.exports = usersCtrl;
