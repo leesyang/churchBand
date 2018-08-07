@@ -12,6 +12,17 @@ function evaluateServerResponse (res) {
     }
 };
 
+// ----- Preload Site Banner Images -----
+const siteImages = [
+    'https://s3-us-west-1.amazonaws.com/churchband/site-images/home-welcome-bg.jpg',
+    'https://s3-us-west-1.amazonaws.com/churchband/site-images/sets-banner.jpg',
+    'https://s3-us-west-1.amazonaws.com/churchband/site-images/home-banner.jpg' ]
+const newImages = [];
+for( let i = 0; i < siteImages.length; i++ ) {
+    newImages[i] = new Image();
+    newImages[i].src = siteImages[i];
+}
+
 // ----- DOM manipulation -----
 function showMsg (message) {
     $('.alert').html(`${message}`).fadeTo(1000, 1, function(){

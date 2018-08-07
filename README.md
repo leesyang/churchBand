@@ -2,18 +2,11 @@
 
 ## Summary
 ## Motivation
-Online plateform for a band to connect with it's members. This project was born out of a need for a way for my band to suggest new songs to band leaders and reivew previous live music sets for training purposes. 
-Built on Node.js with Express using Heroku, mLab and Amazon S3.
+Online platform for band leaders to connect with members. This project was born out of a need for a way for my band to suggest new songs and reivew previous live music sets.
+Built on Node.js with Express and MongoDB.
 
 ## Live Demo
-###### Link
-
-https://boiling-lowlands-87845.herokuapp.com/
-
-
-###### Guest Account
-
-username: guest, password: password123
+https://davisworship.herokuapp.com/
 
 ## Credits
 - Plyr : https://github.com/sampotts/plyr
