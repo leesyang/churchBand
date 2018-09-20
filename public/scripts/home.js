@@ -208,7 +208,7 @@ function getNewestComment (array) {
       return aDate - bDate;
     })
     return sortedArray[sortedArray.length - 1].comment;
-  }
+}
 
 function watchCommentUpdateSubmit () {
     $(`.comments-container`).on(`submit`, '.edit-comment', function(event) {

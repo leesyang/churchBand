@@ -15,6 +15,7 @@ const setsSchema = new Schema({
     eventType: String,
     mainLead: String,
     mainSpeaker: String,
+    setPart: String,
     bandMembers: Array,
     files: Array,
     comments: [ setCommentSchema ]

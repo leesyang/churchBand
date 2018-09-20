@@ -215,11 +215,16 @@ body {
 
 /* ----- SETS REVIEW ----- */
 .dropdown-sets {
-  height: 80px;
+  height: 100px;
   overflow-y: auto;
 }
 .loading-data {
   display: inline-block;
+}
+.refresh-sets {
+  font-size: 0.8em;
+  cursor: pointer;
+  color: grey;
 }
 
 /* ----- side navigation ----- */

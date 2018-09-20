@@ -1,7 +1,6 @@
 'use strict';
 // ----- add a new set -----
 function updateSetList (res) {
-    console.log(res)
     $('.sets-loader-form').toggleClass('hidden');
     $('#newSetInput').modal('hide');
 };
@@ -39,16 +38,24 @@ function addFilesPath (setFiles) {
     return setFiles;
 }
 
+function sortSetsNewest (array) {
+    let sortedArray = array.sort(function(a,b) {
+      let aDate = new Date (a.eventDate);
+      let bDate = new Date (b.eventDate);
+      return bDate - aDate;
+    })
+    return sortedArray;
+}
+
 function generateSetsString (sets) {
-    let setsArray = sets.map(set => {
+    let setsArray = sortSetsNewest(sets).map(set => {
         let date = simplifyDate(set.eventDate)
-        return `<a class="dropdown-item dropdown-set" href="#" data-setId="${set._id}">${date} - ${set.eventType}</a>`
+        return `<a class="dropdown-item dropdown-set" href="#" data-setId="${set._id}">${date} - ${set.eventType} - ${set.setPart}</a>`
     })
     return setsArray.join('');   
 }
 
 function generateNewSetsList (sets) {
-    console.log(sets)
     sets.map(set => {
         set.files = addFilesPath(set.files);
     })
@@ -67,7 +74,7 @@ function getListOfSets (endpoint) {
 }
 
 function watchSetsGet () {
-    $('#sets-link').click(function() {
+    $('#sets-link, .refresh-sets').click(function() {
         getListOfSets(SETS_EP)
         .done(generateNewSetsList)
         .fail(evalError)

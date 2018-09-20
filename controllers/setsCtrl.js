@@ -27,6 +27,7 @@ setsCtrl.getListOfSets = function(req, res) {
 
 // -- add a new set --
 setsCtrl.addNewSet = function(req, res) {
+    console.log(req.body);
     let files = [];
 
     if (req.files) {
@@ -40,7 +41,7 @@ setsCtrl.addNewSet = function(req, res) {
 
     let bandMembers = [];
 
-    let { eventDate, eventType, mainLead, mainSpeaker } = req.body;
+    let { eventDate, eventType, mainLead, mainSpeaker, setPart } = req.body;
 
     Object.keys(req.body).map(key => {
         
@@ -58,7 +59,8 @@ setsCtrl.addNewSet = function(req, res) {
         mainLead,
         mainSpeaker,
         bandMembers,
-        files
+        files,
+        setPart
     });
 
     set.save()

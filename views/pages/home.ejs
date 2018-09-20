@@ -74,6 +74,7 @@
                   <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownSets" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Choose a set
                   </a>
+                  <span class="refresh-sets">Refresh</span>
                   <div class="dropdown-menu dropdown-sets" aria-labelledby="dropdownSets"></div>
                 </div>
               </div>
@@ -397,7 +398,7 @@
                             <option value="Easter">Easter</option>
                             <option value="Good Friday">Good Friday</option>
                         </select>
-                      </div>
+                    </div>
                   </div>
                   <div class="form-row">
                     <div class="col">
@@ -405,6 +406,17 @@
                     </div>
                     <div class="col">
                       <input type="text" id="mainSpeaker" name="mainSpeaker" class="form-control" class="form-control form-control-sm" autocomplete="name" placeholder="Main Speaker">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="setPart">Set Part/Type</label>
+                      <select type="text" id="setPart" name="setPart" class="form-control">
+                          <option value="Opening">Opening</option>
+                          <option value="Post-Grad">Closing</option>
+                          <option value="Baptism">Special</option>
+                          <option value="Baptism">Misc</option>
+                      </select>
                     </div>
                   </div>
                   <div class="form-row">
