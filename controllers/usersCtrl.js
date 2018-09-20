@@ -108,7 +108,7 @@ usersCtrl.updateUser = function (req, res) {
   .then(user => {
     let profilePictureLink = user.profilePicture;
     
-    if (updateInfo.profilePicture) {
+    if (updateInfo.profilePicture && user.profilePicture !== 'default-user-image.png') {
       // ----- Amazon S3 -----
       aws.config.update({
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,

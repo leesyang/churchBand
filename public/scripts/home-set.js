@@ -143,10 +143,10 @@ function watchSetClick () {
         let setId = $(this).attr('data-setId');
         let set = findSetObject(setId);
         ee.emit('clear');
-        $('.sets-loader').toggleClass('hidden');
+        $('.sets-loader').toggleClass('hidden').addClass('inline-block');
         loadNewSet(set.files)
         .then(() => {
-            $('.sets-loader').toggleClass('hidden');
+            $('.sets-loader').toggleClass('hidden').removeClass('inline-block');
             $('.set-comments-container').empty();
             $('.set-comments').removeClass('hidden');
             populateSetComments(set);

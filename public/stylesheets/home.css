@@ -10,6 +10,10 @@ body {
 .hidden {
   display: none;
 }
+.inline-block {
+  display: inline-block;
+}
+
 .invisible {
   display: none;
 }
@@ -61,6 +65,7 @@ body {
   height: 20px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
+  margin-right: 0.3em;
 }
 
 /* Safari */
@@ -209,10 +214,12 @@ body {
 }
 
 /* ----- SETS REVIEW ----- */
-.dropdown-sets
-{
+.dropdown-sets {
   height: 80px;
   overflow-y: auto;
+}
+.loading-data {
+  display: inline-block;
 }
 
 /* ----- side navigation ----- */
