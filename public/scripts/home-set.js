@@ -95,7 +95,7 @@ let playlist = WaveformPlaylist.init({
       show: true, //whether or not to include the track controls
       width: 200 //width of controls in pixels
     },
-    zoomLevels: [500, 1000, 3000, 5000]
+    zoomLevels: [500, 1000, 3000, 5000],
   });
   
 function loadNewSet (files) {

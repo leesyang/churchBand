@@ -17,7 +17,9 @@ aws.config.update({
 const myBucket = process.env.S3_BUCKET_NAME;
 
 // ---- utility function -----
-let uniqueId = shortid.generate();
+const generateId = () => {
+  return shortid.generate();
+}
 
 // ----- amazon storage settings -----
 const setStorageAws = multerS3({
@@ -28,7 +30,9 @@ const setStorageAws = multerS3({
   key: function (req, file, cb) {
     let ext = file.originalname.slice(-4);
     let eventDate = req.body.eventDate;
-    cb(null, 'set-audio/' + eventDate + '-' + file.fieldname + '-' + uniqueId + ext)
+    let setPart = req.body.setPart;
+    let uniqueId = generateId();
+    cb(null, 'set-audio/' + eventDate + '-' + setPart + '-' + file.fieldname + '-' + uniqueId + ext)
   }
 });
 

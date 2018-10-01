@@ -1,7 +1,7 @@
 'use strict'; 
 // ----- utility function -----
 function simplifyDate (date) {
-    return new Date(date).toLocaleDateString('en-US');
+    return new Date(date).toLocaleDateString('en-US', {timeZone: 'UTC'});
 }
 
 // ----- generate one song unit html functions -----
