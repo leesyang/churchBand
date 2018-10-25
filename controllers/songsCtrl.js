@@ -126,17 +126,14 @@ songsCtrl.deleteComment = function(req, res) {
     console.log(req.body);
     let deleteRequestFrom = req.user.id;
 
-    Song.findById(req.params.songId)
+    return Song.findById(req.params.songId)
     .then(song => {
         let subDoc = song.comments.id(req.body.commentId);
         let commentOwner = subDoc.addedBy;
-        if( commentOwner == deleteRequestFrom ){
-            subDoc.remove();
-            song.save()
-            .then(res.status(204).end())
-            .catch(err => console.log(err));
-        }
-        else {
+        if (commentOwner == deleteRequestFrom) {
+            return Song.findByIdAndUpdate(req.params.songId, { $pull: { comments: { _id: req.body.commentId }}})
+            .then(res.status(204).end());
+        } else {
             res.status(403).json({
                 code: 401,
                 reason: 'Denied',
