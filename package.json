@@ -1,6 +1,9 @@
 {
   "name": "churchband",
   "version": "1.0.0",
+  "engines" : {
+    "node" : ">=8"
+    },
   "description": "",
   "main": "app.js",
   "directories": {
