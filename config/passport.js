@@ -28,6 +28,7 @@ const localStrategy = new LocalStrategy(
     function (username, password, callback) {
     let user;
     let mypass = password;
+    console.log(username, password)
     User.findOne({ username: username })
       .then(_user => {
         user = _user;

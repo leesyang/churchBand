@@ -19,12 +19,13 @@
         <img class="mb-4" src="https://churchband.s3.amazonaws.com/+site-icons/favicon-256.png" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal sr-only">Please sign in</h1>
           <label for="inputUsername" class="sr-only">Username</label>
-            <input type="text" id="inputUsername" class="form-control" placeholder="Username" name="username" required autofocus>
+          <input type="text" id="inputUsername" class="form-control" autocomplete="username" placeholder="Username" name="username" required autofocus>
           <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Password" autocomplete="current-password" name="password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <p class="mb-3 text-muted">Don't have an account? <a href="/register">Register</a> </p>
-        <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+        <p class="mb-3 text-muted">Don't have an account? <a href="/register">Register</a></p>
+        <p><button class="btn btn-info demo-login">Demo</button></p>
+        <p class="mt-3 mb-3 text-muted">&copy; 2017-2018</p>
       </form>
     </div>
   </body>

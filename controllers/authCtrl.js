@@ -13,6 +13,7 @@ const createAuthToken = function(user) {
 };
 
 authCtrl.login = function (req, res) {
+    console.log(req.body)
     let authToken = createAuthToken(req.user);
     res.cookie('authToken', authToken);
     res.status(200).json({ code: 201, message: 'Successful login', authToken: authToken });

@@ -36,7 +36,7 @@ function redirectHome () {
 }
 
 // ----- ajax -----
-function submitLogin (formValues, callback) {
+function submitLogin(formValues, callback) {
     return $.ajax({
         method: 'POST',
         url: '/auth/login',
@@ -47,6 +47,21 @@ function submitLogin (formValues, callback) {
     .fail(evaluateServerResponse)
     .done(callback || redirectHome)
 };
+
+function demoLogin() {
+    const demoUserInfo = {
+        username: 'demouser',
+        password: 'password123'
+    }
+    return $.ajax({
+        method: 'POST',
+        url: '/auth/login',
+        contentType: 'application/json',
+        data: JSON.stringify(demoUserInfo)
+    })
+    .fail(console.log)
+    .done(redirectHome)
+}
 
 // ----- handling form data -----
 function objectifyForm (formArray) {
@@ -67,8 +82,17 @@ function watchSubmit () {
     })
 };
 
+// ---- watch demo submit ----
+function watchDemoSubmit() {
+    $('.demo-login').click(function(e) {
+        e.preventDefault();
+        demoLogin();
+    })
+}
+
 function onLoad () {
     watchSubmit();
+    watchDemoSubmit();
 };
 
 $(onLoad);
