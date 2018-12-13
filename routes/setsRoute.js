@@ -16,8 +16,14 @@ const { uploader } = require('../middlewares/multer');
 // -- get list of sets --
 router.get('/', setsCtrl.getListOfSets);
 
+function route(req, res, next) {
+    console.log(req.files);
+    console.log(req.body);
+    next();
+}
+
 // -- add a new set --
-router.post('/', jwtAuth, uploader.Set, newSetFieldsCheck, setsCtrl.addNewSet);
+router.post('/', jwtAuth, route, uploader.Set, newSetFieldsCheck, setsCtrl.addNewSet);
 
 // -- get list of comments ---
 router.get('/:setId/comments', setsCtrl.getComments);

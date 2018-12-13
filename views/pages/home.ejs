@@ -371,7 +371,7 @@
       </div>
     </div>
 <!--- add new set modal -->
-    <div class="modal fade" id="newSetInput" tabindex="-1" role="dialog" aria-labelledby="set input modal" aria-hidden="true">
+<!--     <div class="modal fade" id="newSetInput" tabindex="-1" role="dialog" aria-labelledby="set input modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -526,6 +526,56 @@
                   </div>
                   <button class="btn btn-primary btn-sm" id="newSetForm-submit" type="submit">Submit</button>
               </form>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    
+    <!--- NEW SET MODAL -->
+    <div class="modal fade" id="newSetInput" tabindex="-1" role="dialog" aria-labelledby="set input modal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Upload New Set</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="dropzone" id="myAwesomeDropzone">
+            </form>
+            <script>
+              Dropzone.options.myAwesomeDropzone = {
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 20, // MB
+                accept: function(file, done) {
+                  if (file.name == "justinbieber.jpg") {
+                    done("Naha, you don't.");
+                  }
+                  else { done(); }
+                },
+                autoProcessQueue: true,
+                uploadMultiple: true,
+                url: function(files) {
+                  console.log(files);
+                  return '/api/sets';
+                },
+                previewTemplate: `
+                <div class="dz-preview dz-file-preview">
+                  <div class="dz-details">
+                    <div class="dz-filename"><span data-dz-name></span></div>
+                    <div class="dz-size" data-dz-size></div>
+                    <img data-dz-thumbnail />
+                  </div>
+                  <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+                  <div class="dz-success-mark"><span>✔</span></div>
+                  <div class="dz-error-mark"><span>✘</span></div>
+                  <div class="dz-error-message"><span data-dz-errormessage></span></div>
+                  <input placeholder="fieldName"></input>
+                </div>
+                `            
+              };
+            </script>
           </div>
         </div>
       </div>
