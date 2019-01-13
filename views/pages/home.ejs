@@ -127,6 +127,7 @@
                     </div>            
                 </form>
               </div>
+              <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdjF04MuMhAjmXa3K8XnfO41yR4qqgzoRTLWF7LgF26aPUn2g/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>              
         </div>
       </div>
     </div>
@@ -370,167 +371,6 @@
         </div>
       </div>
     </div>
-<!--- add new set modal -->
-<!--     <div class="modal fade" id="newSetInput" tabindex="-1" role="dialog" aria-labelledby="set input modal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Upload New Set</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-              <div class="loader sets-loader-form hidden"></div><span class="sets-loader-form hidden">Uploading Set ....</span>
-              <form id="newSetForm">
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="eventDate">Event Date</label>
-                      <input type="date" id="eventDate" name="eventDate" class="form-control" placeholder="Date of Event" required>
-                    </div>
-                    <div class="col">
-                        <label for="eventType">Event Type</label>
-                        <select type="text" id="eventType" name="eventType" class="form-control">
-                            <option value="SWS">SWS</option>
-                            <option value="Post-Grad">Post-Grad</option>
-                            <option value="Baptism">Baptism</option>
-                            <option value="TFN">TFN</option>
-                            <option value="Easter">Easter</option>
-                            <option value="Good Friday">Good Friday</option>
-                        </select>
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <input type="text" id="mainLead" name="mainLead" class="form-control" class="form-control form-control-sm" autocomplete="name" placeholder="Praise Lead">
-                    </div>
-                    <div class="col">
-                      <input type="text" id="mainSpeaker" name="mainSpeaker" class="form-control" class="form-control form-control-sm" autocomplete="name" placeholder="Main Speaker">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="setPart">Set Part/Type</label>
-                      <select type="text" id="setPart" name="setPart" class="form-control">
-                          <option value="Opening">Opening</option>
-                          <option value="Closing">Closing</option>
-                          <option value="Special">Special</option>
-                          <option value="Misc">Misc</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-vocals1" class="col-form-label-sm">Vocals 1</label>
-                      <input type="text" id="mem-vocals1" name="memVocals1" class="form-control form-control-sm" placeholder="Member">
-                      <input type="file" id="vocals1" name="vocals1" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-vocals2" class="col-form-label-sm">Vocals 2</label>
-                      <input type="text" id="mem-vocals2" name="memVocals2" class="form-control form-control-sm" placeholder="Member">
-                      <input type="file" id="vocals2" name="vocals2" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-vocals3" class="col-form-label-sm">Vocals 3</label>
-                      <input type="text" id="mem-vocals3" name="memVocals3" class="form-control form-control-sm" placeholder="Member">
-                      <input type="file" id="vocals3" name="vocals3" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-acGuitar" class="col-form-label-sm">Acoustic Guitar </label>
-                      <input type="text" id="mem-acGuitar" name="memAcGuitar" class="form-control form-control-sm" placeholder="Member">
-                      <input type="file" id="acGuitar" name="acGuitar" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-bass" class="col-form-label-sm">Bass Guitar </label>
-                      <input type="text" id="mem-bass" name="memBass" class="form-control form-control-sm" placeholder="Member">
-                      <input type="file" id="bass" name="bass" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-eg1" class="col-form-label-sm">EG 1</label>
-                      <input type="text" id="mem-eg1" name="memEg1" class="form-control form-control-sm" placeholder="Member">
-                      <input type="file" id="eg1" name="eg1" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-eg2" class="col-form-label-sm">EG 2</label>
-                      <input type="text" id="mem-eg2" name="memEg2" class="form-control form-control-sm" placeholder="Member">
-                      <input type="file" id="eg2" name="eg2" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-keys" class="col-form-label-sm">Keyboard</label>
-                      <input type="text" id="mem-keys" name="memKeys" class="form-control form-control-sm" placeholder="Member">
-                      <input type="file" id="keys" name="keys" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-pad" class="col-form-label-sm">Pad</label>
-                      <input type="text" id="mem-pad" name="memPad" class="form-control form-control-sm" placeholder="Member">
-                      <input type="file" id="pad" name="pad" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                      <div class="col">
-                        <label for="mem-drumer" class="col-form-label-sm">Drums - Overhead</label>
-                        <input type="text" id="mem-drummer" name="memDrum" class="form-control form-control-sm" placeholder="Member">
-                      </div>
-                    </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-drum-overhead" class="col-form-label-sm">Drums - Overhead</label>
-                      <input type="file" id="drumsOverhead" name="drumsOverhead" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-drum-snare" class="col-form-label-sm">Drums - Snare</label>
-                      <input type="file" id="drumSnare" name="drumSnare" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-drum-kick" class="col-form-label-sm">Drums - Kick</label>
-                      <input type="file" id="drumKick" name="drumKick" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-drum-tom1" class="col-form-label-sm">Drums - High Tom</label>
-                      <input type="file" id="drumTom1" name="drumTom1" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-drum-tom2" class="col-form-label-sm">Drums - Mid Tom</label>
-                      <input type="file" id="drumTom2" name="drumTom2" class="form-control-sm">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="mem-drum-tom3" class="col-form-label-sm">Drums - Floor Tom</label>
-                      <input type="file" id="drumTom3" name="drumTom3" class="form-control-sm">
-                    </div>
-                  </div>
-                  <button class="btn btn-primary btn-sm" id="newSetForm-submit" type="submit">Submit</button>
-              </form>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    
     <!--- NEW SET MODAL -->
     <div class="modal fade" id="newSetInput" tabindex="-1" role="dialog" aria-labelledby="set input modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -543,9 +383,63 @@
           </div>
           <div class="modal-body">
             <form class="dropzone" id="myAwesomeDropzone">
+              <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Set Date</span>
+                </div>
+                <input type="date" class="form-control set-input" id="set-date" aria-label="date" aria-describedby="inputGroup-sizing-sm" name="date">
+              </div>              
+              <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Speaker</span>
+                </div>
+                <input type="text" class="form-control set-input" id="asdf" aria-label="speaker" aria-describedby="inputGroup-sizing-sm" name="speaker">
+              </div>
+              <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Praise Lead</span>
+                </div>
+                <input type="text" class="form-control set-input" id="set-praise-lead" name="praiseLead" aria-label="praise leader" aria-describedby="inputGroup-sizing-sm">
+              </div>
+              <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Event</label>
+                </div>
+                <select class="custom-select set-input" id="inputGroupSelect01" name="event" id="set-event">
+                  <option selected>Choose...</option>
+                  <option value="SWS">SWS</option>
+                  <option value="TFN">TFN</option>
+                  <option value="EASTER">Easter</option>
+                  <option value="GoodFriday">Good Friday</option>
+                  <option value="OTHER">Other</option>
+                </select>
+              </div>
+              <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Part</label>
+                </div>
+                <select class="custom-select set-input" id="inputGroupSelect01" name="part" id="set-part">
+                  <option selected>Choose...</option>
+                  <option value="Opening">Opening</option>
+                  <option value="Closing">Closing</option>
+                </select>
+              </div>              
+              <button id="upload-set">Submit</button>
             </form>
+            <style>
+              .dz-filename {
+                display: inline-block;
+              }
+              .dz-size {
+                display: inline-block;
+              }
+            </style>
             <script>
-              Dropzone.options.myAwesomeDropzone = {
+
+              Dropzone.options.myAwesomeDropzone = false;
+
+              let myDropzone = new Dropzone("form#myAwesomeDropzone", 
+              {
                 paramName: "file", // The name that will be used to transfer the file
                 maxFilesize: 20, // MB
                 accept: function(file, done) {
@@ -554,10 +448,9 @@
                   }
                   else { done(); }
                 },
-                autoProcessQueue: true,
+                autoProcessQueue: false,
                 uploadMultiple: true,
                 url: function(files) {
-                  console.log(files);
                   return '/api/sets';
                 },
                 previewTemplate: `
@@ -565,16 +458,35 @@
                   <div class="dz-details">
                     <div class="dz-filename"><span data-dz-name></span></div>
                     <div class="dz-size" data-dz-size></div>
-                    <img data-dz-thumbnail />
                   </div>
-                  <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
-                  <div class="dz-success-mark"><span>✔</span></div>
-                  <div class="dz-error-mark"><span>✘</span></div>
-                  <div class="dz-error-message"><span data-dz-errormessage></span></div>
-                  <input placeholder="fieldName"></input>
-                </div>
-                `            
-              };
+                </div>`            
+              });
+
+              
+
+              $('#upload-set').on('click', function(e) {
+                e.preventDefault();
+
+                myDropzone.on('sending', 
+                  function(file, xhr, formData) {
+                    let lead = $('#set-lead').val();
+                    let speaker = $('#asdf').val();
+                    let type = $('#set-type').val();
+                    let part = $('#set-part').val();
+                    let date = $('#set-date').val();
+
+                   // lead? formData.append('lead', lead) : -1;
+                    //speaker? formData.append('speaker', speaker) : -1;
+                    //type? formData.append('type', type) : -1;
+                    //part? formData.append('part', part) : -1;
+
+                    console.log(formData);
+
+                  });
+
+                myDropzone.processQueue();
+              })
+
             </script>
           </div>
         </div>

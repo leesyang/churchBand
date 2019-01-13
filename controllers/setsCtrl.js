@@ -27,6 +27,9 @@ setsCtrl.getListOfSets = function(req, res) {
 
 // -- add a new set --
 setsCtrl.addNewSet = function(req, res) {
+    console.log('this is req.files');
+    console.log(req.files);
+    console.log('this is req.body');
     console.log(req.body);
     let files = [];
 

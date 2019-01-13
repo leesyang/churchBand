@@ -23,7 +23,7 @@ function route(req, res, next) {
 }
 
 // -- add a new set --
-router.post('/', jwtAuth, route, uploader.Set, newSetFieldsCheck, setsCtrl.addNewSet);
+router.post('/', jwtAuth, route, uploader.Set, /*newSetFieldsCheck,*/ setsCtrl.addNewSet);
 
 // -- get list of comments ---
 router.get('/:setId/comments', setsCtrl.getComments);
