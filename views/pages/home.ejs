@@ -63,6 +63,7 @@
     </div>
   <!-- set reviews -->
     <div id="set-review-container" class="hidden">
+      <button type="button" class="btn btn-outline-secondary feedback-button" data-toggle="modal" data-target="#exampleModalLong">Feedback</button>
       <div class="my-3 p-3 bg-white rounded box-shadow content-news">
         <div class="container">
             <div class="row">
@@ -127,10 +128,29 @@
                     </div>            
                 </form>
               </div>
-              <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdjF04MuMhAjmXa3K8XnfO41yR4qqgzoRTLWF7LgF26aPUn2g/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>              
         </div>
       </div>
     </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Google Feedback Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdjF04MuMhAjmXa3K8XnfO41yR4qqgzoRTLWF7LgF26aPUn2g/viewform?embedded=true" width="100%" height="500px" frameborder="0" marginheight="0" marginwidth="0" class="google-form">Loading...</iframe>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- new song modal-->
     <div class="modal fade" id="newSongInput" tabindex="-1" role="dialog" aria-labelledby="song input modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -371,6 +391,7 @@
         </div>
       </div>
     </div>
+
     <!--- NEW SET MODAL -->
     <div class="modal fade" id="newSetInput" tabindex="-1" role="dialog" aria-labelledby="set input modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -387,30 +408,33 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">Set Date</span>
                 </div>
-                <input type="date" class="form-control set-input" id="set-date" aria-label="date" aria-describedby="inputGroup-sizing-sm" name="date">
+                <input type="date" class="form-control set-input" id="set-date" aria-label="date" aria-describedby="inputGroup-sizing-sm" name="date" required>
               </div>              
               <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">Speaker</span>
                 </div>
-                <input type="text" class="form-control set-input" id="asdf" aria-label="speaker" aria-describedby="inputGroup-sizing-sm" name="speaker">
+                <input type="text" class="form-control set-input" id="asdf" aria-label="speaker" aria-describedby="inputGroup-sizing-sm" name="speaker" required>
               </div>
               <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">Praise Lead</span>
                 </div>
-                <input type="text" class="form-control set-input" id="set-praise-lead" name="praiseLead" aria-label="praise leader" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" class="form-control set-input" id="set-praise-lead" name="praiseLead" aria-label="praise leader" aria-describedby="inputGroup-sizing-sm" required>
               </div>
               <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="inputGroupSelect01">Event</label>
                 </div>
-                <select class="custom-select set-input" id="inputGroupSelect01" name="event" id="set-event">
+                <select class="custom-select set-input" id="inputGroupSelect01" name="event" id="set-event" required>
                   <option selected>Choose...</option>
                   <option value="SWS">SWS</option>
                   <option value="TFN">TFN</option>
                   <option value="EASTER">Easter</option>
                   <option value="GoodFriday">Good Friday</option>
+                  <option value="WR">Winter Retreat</option>
+                  <option value="TR">Thanksgiving</option>
+                  <option value="Practice Session">Practice Session</option>
                   <option value="OTHER">Other</option>
                 </select>
               </div>
@@ -418,13 +442,17 @@
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="inputGroupSelect01">Part</label>
                 </div>
-                <select class="custom-select set-input" id="inputGroupSelect01" name="part" id="set-part">
+                <select class="custom-select set-input" id="inputGroupSelect01" name="part" id="set-part" required>
                   <option selected>Choose...</option>
                   <option value="Opening">Opening</option>
                   <option value="Closing">Closing</option>
+                  <option value="Special">Special</option>
                 </select>
-              </div>              
-              <button id="upload-set">Submit</button>
+              </div>                     
+              <button id="upload-set" type="submit" class="btn btn-primary">Submit</button>
+              <div class="upload-spinner hidden">
+                <div class="loader sets-loader-form"></div><span> Uploading...do not close the window or navigate away.</span>
+              </div>
             </form>
             <style>
               .dz-filename {
@@ -449,44 +477,28 @@
                   else { done(); }
                 },
                 autoProcessQueue: false,
+                enqueueForUpload: false,
+                parallelUploads: 30,
                 uploadMultiple: true,
                 url: function(files) {
                   return '/api/sets';
-                },
+                },              
                 previewTemplate: `
                 <div class="dz-preview dz-file-preview">
                   <div class="dz-details">
                     <div class="dz-filename"><span data-dz-name></span></div>
                     <div class="dz-size" data-dz-size></div>
                   </div>
-                </div>`            
+                </div>`
               });
-
-              
 
               $('#upload-set').on('click', function(e) {
                 e.preventDefault();
-
-                myDropzone.on('sending', 
-                  function(file, xhr, formData) {
-                    let lead = $('#set-lead').val();
-                    let speaker = $('#asdf').val();
-                    let type = $('#set-type').val();
-                    let part = $('#set-part').val();
-                    let date = $('#set-date').val();
-
-                   // lead? formData.append('lead', lead) : -1;
-                    //speaker? formData.append('speaker', speaker) : -1;
-                    //type? formData.append('type', type) : -1;
-                    //part? formData.append('part', part) : -1;
-
-                    console.log(formData);
-
-                  });
-
                 myDropzone.processQueue();
+                $('#upload-set').addClass('hidden');
+                $('.dz-preview, .dz-default').addClass('hidden');
+                $('.upload-spinner').removeClass('hidden');
               })
-
             </script>
           </div>
         </div>

@@ -7,9 +7,6 @@ body {
   padding-top: 56px;
 }
 
-.hidden {
-  display: none;
-}
 .inline-block {
   display: inline-block;
 }
@@ -226,6 +223,13 @@ body {
   cursor: pointer;
   color: grey;
 }
+.feedback-button {
+  position: absolute;
+   bottom: 1em;
+}
+.upload-spinner {
+  display: flex;
+}
 
 /* ----- side navigation ----- */
 .sidenav {
@@ -371,4 +375,8 @@ body {
   .song-recomm-title {
     margin-right: auto;
   }
+}
+
+.hidden {
+  display: none;
 }

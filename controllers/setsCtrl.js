@@ -8,7 +8,15 @@ const setsCtrl = {};
 // ----- common functions -----
 const filterUserInfo = '-password -firstName -lastName -email -__v';
 
-// ----- utility function -----
+// ----- helper functions -----
+const stringCapitalizeFirst = (string) => {
+    return string.toLowerCase()
+    .split(' ')
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(' ');
+}
+
+// ----- utility functions -----
 let setUtil = {};
 
 setUtil.getSetPromise = (setId) => {
@@ -31,44 +39,56 @@ setsCtrl.addNewSet = function(req, res) {
     console.log(req.files);
     console.log('this is req.body');
     console.log(req.body);
+
+    let reqFiles = req.files;
+
     let files = [];
 
     if (req.files) {
-        Object.keys(req.files).map(key => {
+        for ( let i = 0; i < reqFiles.length; i++) {
             files.push({
-                src: req.files[key][0].key.substring(10),
-                name: req.files[key][0].fieldname
-            })
-        });
-    }
-
-    let bandMembers = [];
-
-    let { eventDate, eventType, mainLead, mainSpeaker, setPart } = req.body;
-
-    Object.keys(req.body).map(key => {
-        
-        if (key.slice(0,3) === 'mem') {
-            bandMembers.push({
-                instrument: key.substr(3),
-                name: req.body[key]
+                src: reqFiles[i].key,
+                name: reqFiles.fieldname
             })
         }
-    })
+    }
 
-    let set = new Set({
-        eventDate,
-        eventType,
-        mainLead,
-        mainSpeaker,
-        bandMembers,
-        files,
-        setPart
-    });
+    // if (req.files) {
+    //     Object.keys(req.files).map(key => {
+    //         files.push({
+    //             src: req.files[key][0].key.substring(10),
+    //             name: req.files[key][0].fieldname
+    //         })
+    //     });
+    // }
 
-    set.save()
-    .then(set => res.status(201).json(set))
-    .catch(err => console.log(err));
+    // let bandMembers = [];
+
+    // let { eventDate, eventType, mainLead, mainSpeaker, setPart } = req.body;
+
+    // Object.keys(req.body).map(key => {
+        
+    //     if (key.slice(0,3) === 'mem') {
+    //         bandMembers.push({
+    //             instrument: key.substr(3),
+    //             name: req.body[key]
+    //         })
+    //     }
+    // })
+
+    // let set = new Set({
+    //     eventDate,
+    //     eventType,
+    //     mainLead,
+    //     mainSpeaker,
+    //     bandMembers,
+    //     files,
+    //     setPart
+    // });
+
+    // set.save()
+    // .then(set => res.status(201).json(set))
+    // .catch(err => console.log(err));
 };
 
 // -- add a comment to a set --

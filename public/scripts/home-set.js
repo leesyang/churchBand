@@ -83,7 +83,7 @@ function watchSetsGet () {
 
 // ----- stem tracks -----
 let playlist = WaveformPlaylist.init({
-    samplesPerPixel: 1000,
+    samplesPerPixel: 4096,
     waveHeight: 100,
     container: document.getElementById("playlist"),
     timescale: true,

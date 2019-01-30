@@ -22,6 +22,12 @@ const generateId = () => {
 }
 
 // ----- helper functions ----
+const stringCombine = (string) => {
+    return string.toLowerCase()
+    .split(' ')
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join('_');
+}
 
 // ----- amazon storage settings -----
 const setStorageAws = multerS3({
@@ -30,10 +36,8 @@ const setStorageAws = multerS3({
   acl: 'public-read',
   contentType: multerS3.AUTO_CONTENT_TYPE, 
   key: function (req, file, cb) {
-    console.log(req.body, '-------------------multer req body -------------');
-    console.log(file);
 
-    let lead = req.body.praiseLead;
+    let lead = stringCombine(req.body.praiseLead);
     let event = req.body.event;
     let date = req.body.date;
     let part = req.body.part;
@@ -43,7 +47,7 @@ const setStorageAws = multerS3({
     const ext = file.originalname.match(/\.\w*/g)[0];
     let uniqueId = generateId();
 
-    cb(null, `set-audio/${date}-${event}-${lead}-${uniqueId}/` + originalName);
+    cb(null, `set-audio/${date}_${event}_${lead}/` + originalName);
   }
 });
 
@@ -58,22 +62,10 @@ const profileStorageAws = multerS3({
   }
 });
 
-// const newSetfields = [
-//   { name: 'vocals1' }, { name: 'vocals2' },
-//   { name: 'vocals3' }, { name: 'acGuitar' },
-//   { name: 'bass' }, { name: 'eg1' },
-//   { name: 'eg2' }, { name: 'keys' },
-//   { name: 'pad' }, { name: 'drumsOverhead'},
-//   { name: 'drumSnare' }, { name: 'drumKick'},
-//   { name: 'drumTom1' }, { name: 'drumTom2' },
-//   { name: 'drumTom3' }
-// ];
-
 const uploadPicAws = multer({ storage: profileStorageAws });
 const uploadSetAws = multer({ storage: setStorageAws });
 
 uploader.ProfilePic = uploadPicAws.single('userImg');
-// uploader.Set = uploadSetAws.fields(newSetfields);
 uploader.Set = uploadSetAws.any();
 
 module.exports = { uploader };

@@ -17,7 +17,9 @@ const setsSchema = new Schema({
     mainSpeaker: String,
     setPart: String,
     bandMembers: Array,
+    awsKey: String,
     files: Array,
+    dbUpdatedFlag: { type: Number, default: 0 },
     comments: [ setCommentSchema ]
 });
 
