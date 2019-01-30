@@ -247,111 +247,111 @@ describe('SETS EP', function () {
 
     });
 
-    describe('POST a new set ', function() {
-      it('should add set with the right fields', function() {
-        let inputtedSet = generateSetInputted(dbUsers[0]._id);
-        let resSet;
+    // describe('POST a new set ', function() {
+    //   it('should add set with the right fields', function() {
+    //     let inputtedSet = generateSetInputted(dbUsers[0]._id);
+    //     let resSet;
 
-        return agent
-        .post('/api/sets')
-        .send(inputtedSet)
-        .then(_res => {
-          resSet = _res.body;
-          expect(date(resSet.eventDate)).to.equal(date(inputtedSet.eventDate))
-          expect(resSet.eventType).to.equal(inputtedSet.eventType);
-          expect(resSet.mainLead).to.equal(inputtedSet.mainLead);
-          expect(resSet.mainSpeaker).to.equal(inputtedSet.mainSpeaker);
-          return Set.findById(resSet._id)
-        })
-        .then(set => {
-          expect(date(set.dateAdded)).to.equal(date(resSet.dateAdded));
-          expect(set._id.toString()).to.equal(resSet._id);
-          expect(set.bandMembers).to.deep.equal(resSet.bandMembers);
-          expect(set.eventType).to.equal(resSet.eventType);
-          expect(set.mainLead).to.equal(resSet.mainLead);
-          expect(set.mainSpeaker).to.equal(resSet.mainSpeaker);
-        })
-      });
+    //     return agent
+    //     .post('/api/sets')
+    //     .send(inputtedSet)
+    //     .then(_res => {
+    //       resSet = _res.body;
+    //       expect(date(resSet.eventDate)).to.equal(date(inputtedSet.eventDate))
+    //       expect(resSet.eventType).to.equal(inputtedSet.eventType);
+    //       expect(resSet.mainLead).to.equal(inputtedSet.mainLead);
+    //       expect(resSet.mainSpeaker).to.equal(inputtedSet.mainSpeaker);
+    //       return Set.findById(resSet._id)
+    //     })
+    //     .then(set => {
+    //       expect(date(set.dateAdded)).to.equal(date(resSet.dateAdded));
+    //       expect(set._id.toString()).to.equal(resSet._id);
+    //       expect(set.bandMembers).to.deep.equal(resSet.bandMembers);
+    //       expect(set.eventType).to.equal(resSet.eventType);
+    //       expect(set.mainLead).to.equal(resSet.mainLead);
+    //       expect(set.mainSpeaker).to.equal(resSet.mainSpeaker);
+    //     })
+    //   });
 
-      it('should not add a set if a field is missing', function() {
-        let setMissingField = {
-          evenDate: Date.now(),
-          eventType: 'SWS',
-          mainLea: 'this key is misspelled'
-        }
+    //   it('should not add a set if a field is missing', function() {
+    //     let setMissingField = {
+    //       evenDate: Date.now(),
+    //       eventType: 'SWS',
+    //       mainLea: 'this key is misspelled'
+    //     }
 
-        return agent
-        .post('/api/sets')
-        .send(setMissingField)
-        .then(_res => {
-          if (_res.ok) {
-            expect.fail(null, null, 'should not have added song with missing artist field')
-          }
-          else {
-            expect(_res).to.have.status(422);
-            expect(_res.body).to.be.a('object');
-            expect(_res.body.message).to.be.equal('Missing field');
-            expect(_res.body.reason).to.be.equal('ValidationError');
-          }
-        })
-      })
+    //     return agent
+    //     .post('/api/sets')
+    //     .send(setMissingField)
+    //     .then(_res => {
+    //       if (_res.ok) {
+    //         expect.fail(null, null, 'should not have added song with missing artist field')
+    //       }
+    //       else {
+    //         expect(_res).to.have.status(422);
+    //         expect(_res.body).to.be.a('object');
+    //         expect(_res.body.message).to.be.equal('Missing field');
+    //         expect(_res.body.reason).to.be.equal('ValidationError');
+    //       }
+    //     })
+    //   })
 
-      it('should add set and upload files to Amazon S3', function() {
-        let mockData = generateSetInputted(dbUsers[0]._id);
-        this.timeout(15000);
-        let resSet;
+    //   it('should add set and upload files to Amazon S3', function() {
+    //     let mockData = generateSetInputted(dbUsers[0]._id);
+    //     this.timeout(15000);
+    //     let resSet;
 
-        return agent
-        .post('/api/sets')
-        .attach('vocals1', fs.readFileSync('media/test/awave.wav'), 'awave.wav')
-        .field('eventDate', mockData.eventDate)
-        .field('eventType', mockData.eventType)
-        .field('mainLead', mockData.mainLead)
-        .field('memVocals1', mockData.memVocals1)
-        .then(_res => {
-          resSet = _res.body;
+    //     return agent
+    //     .post('/api/sets')
+    //     .attach('vocals1', fs.readFileSync('media/test/awave.wav'), 'awave.wav')
+    //     .field('eventDate', mockData.eventDate)
+    //     .field('eventType', mockData.eventType)
+    //     .field('mainLead', mockData.mainLead)
+    //     .field('memVocals1', mockData.memVocals1)
+    //     .then(_res => {
+    //       resSet = _res.body;
           
-          // ----- Amazon S3 -----
-          aws.config.update({
-            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-          });
+    //       // ----- Amazon S3 -----
+    //       aws.config.update({
+    //         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    //         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    //       });
 
-          const s3 = new aws.S3()
-          const myBucket = process.env.S3_BUCKET_NAME;
+    //       const s3 = new aws.S3()
+    //       const myBucket = process.env.S3_BUCKET_NAME;
 
-          let params = {
-            Bucket: myBucket, 
-            Key: 'set-audio/'+resSet.files[0].src
-          };
+    //       let params = {
+    //         Bucket: myBucket, 
+    //         Key: 'set-audio/'+resSet.files[0].src
+    //       };
 
-          return s3.deleteObject(params, function(err, data) {
-            if (err) {
-              expect.fail(null, null, 'file was not uploaded to aws properly')
-            };
-            expect(data).to.not.be.null;
-            expect(data).to.be.a('object');
-          }).promise()
-        })
-        .then(awsRes => {
-          expect(date(resSet.eventDate)).to.equal(date(mockData.eventDate));
-          expect(resSet.eventType).to.equal(mockData.eventType);
-          expect(resSet.mainLead).to.equal(mockData.mainLead);
-          expect(resSet.bandMembers[0].instrument).to.equal('Vocals1');
-          expect(resSet.bandMembers[0].name).to.equal(mockData.memVocals1);
-          return Set.findById(resSet._id)
-        })
-        .then(dbSet => {
-          expect(resSet.bandMembers).to.deep.equal(dbSet.bandMembers);
-          expect(resSet.files).to.deep.equal(dbSet.files);
-          expect(date(resSet.eventDate)).to.equal(date(resSet.eventDate));
-          expect(resSet.eventType).to.equal(resSet.eventType);
-          expect(resSet.mainLead).to.equal(resSet.mainLead);
-        })
-      })
+    //       return s3.deleteObject(params, function(err, data) {
+    //         if (err) {
+    //           expect.fail(null, null, 'file was not uploaded to aws properly')
+    //         };
+    //         expect(data).to.not.be.null;
+    //         expect(data).to.be.a('object');
+    //       }).promise()
+    //     })
+    //     .then(awsRes => {
+    //       expect(date(resSet.eventDate)).to.equal(date(mockData.eventDate));
+    //       expect(resSet.eventType).to.equal(mockData.eventType);
+    //       expect(resSet.mainLead).to.equal(mockData.mainLead);
+    //       expect(resSet.bandMembers[0].instrument).to.equal('Vocals1');
+    //       expect(resSet.bandMembers[0].name).to.equal(mockData.memVocals1);
+    //       return Set.findById(resSet._id)
+    //     })
+    //     .then(dbSet => {
+    //       expect(resSet.bandMembers).to.deep.equal(dbSet.bandMembers);
+    //       expect(resSet.files).to.deep.equal(dbSet.files);
+    //       expect(date(resSet.eventDate)).to.equal(date(resSet.eventDate));
+    //       expect(resSet.eventType).to.equal(resSet.eventType);
+    //       expect(resSet.mainLead).to.equal(resSet.mainLead);
+    //     })
+    //   })
 
 
-    })
+    // })
 
     describe('COMMENTS', function() {
       let resSet;
