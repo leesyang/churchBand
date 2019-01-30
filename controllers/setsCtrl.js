@@ -40,6 +40,8 @@ setsCtrl.addNewSet = function(req, res) {
     console.log('this is req.body');
     console.log(req.body);
 
+    let { date, speaker, praiseLead, event, part } = req.body;
+
     let reqFiles = req.files;
 
     let files = [];
@@ -48,10 +50,21 @@ setsCtrl.addNewSet = function(req, res) {
         for ( let i = 0; i < reqFiles.length; i++) {
             files.push({
                 src: reqFiles[i].key,
-                name: reqFiles.fieldname
+                name: reqFiles[i].originalname
             })
         }
     }
+
+    Set.create({
+        eventDate: date,
+        mainSpeaker: speaker,
+        mainLead: praiseLead,
+        setPart: part,
+        files: files,
+    })
+    .then(function(doc) {
+        console.log(doc);
+    });
 
     // if (req.files) {
     //     Object.keys(req.files).map(key => {

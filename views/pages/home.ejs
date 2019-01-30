@@ -404,6 +404,7 @@
           </div>
           <div class="modal-body">
             <form class="dropzone" id="myAwesomeDropzone">
+              <input type="hidden" name="dateNow" id="set-date-now">
               <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">Set Date</span>
@@ -414,7 +415,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">Speaker</span>
                 </div>
-                <input type="text" class="form-control set-input" id="asdf" aria-label="speaker" aria-describedby="inputGroup-sizing-sm" name="speaker" required>
+                <input type="text" class="form-control set-input" id="set-speaker" aria-label="speaker" aria-describedby="inputGroup-sizing-sm" name="speaker" required>
               </div>
               <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
@@ -463,6 +464,10 @@
               }
             </style>
             <script>
+              // set hidden input, date now to create unique folders for files on s3
+              $('#myAwesomeDropzone').on('click', '#set-date', function() {
+                $('#set-date-now').val(Date.now());
+              });
 
               Dropzone.options.myAwesomeDropzone = false;
 

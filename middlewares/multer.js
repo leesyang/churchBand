@@ -41,13 +41,14 @@ const setStorageAws = multerS3({
     let event = req.body.event;
     let date = req.body.date;
     let part = req.body.part;
+    let dateNow = req.body.dateNow;
 
     let originalName = file.originalname;
 
     const ext = file.originalname.match(/\.\w*/g)[0];
     let uniqueId = generateId();
 
-    cb(null, `set-audio/${date}_${event}_${lead}/` + originalName);
+    cb(null, `set-audio/${date}_${dateNow}_${event}_${lead}/` + originalName);
   }
 });
 
